@@ -1,0 +1,15 @@
+.sign-in-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    h2 {
+        margin: 0px 0;
+        text-align: center;
+    }
+
+    .buttons-container {
+        display: flex;
+        justify-content: space-between;
+    }
+}
