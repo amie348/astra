@@ -1,7 +1,9 @@
 import { useState } from "react";
 
 import FormInput from "../form-input/form-input.component";
-import Button from "../button/button.component";
+// import Button from "../button/button.component";
+
+import Button from "@mui/material/Button";
 
 import './sign-in-form.styles.scss'
 
@@ -38,7 +40,16 @@ const SignInForm = () => {
                 <FormInput label='Password' type="password" name="password" onChange={changeHandler} value={password} required />
 
                 <div className="buttons-container">
-                    <Button type="submit">Sign In</Button>
+
+                    
+                    <Button variant="contained"  color = "error" disabled  > SIgn in </Button>
+                    
+                    {/* <Button variant="contained"  color = "error"  > Sign in    </Button> */}
+                    
+
+                
+                    {/* <Button type="submit">Sign In</Button> */}
+                
                 </div>
             </form>
         </div>

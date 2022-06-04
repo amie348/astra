@@ -1,9 +1,10 @@
 import './form-input.styles.scss'
 
 const FormInput = ({ label, ...inputOptions }) => (
-    <div className='group'>
+    <div className='group form-group '>
         <label className={`form-input-label`}>{label}</label>
         <input className=' form-input' {...inputOptions} />
+        
     </div>
 )
 
