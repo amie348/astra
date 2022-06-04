@@ -31,13 +31,12 @@ const Login = () => {
     }, [])
 
     return (
-        <div className="login-container container-fluid">
+        <div className="login-container">
             <div className="login-body">
-                <ImageSideBar imageUrl={imageUrl} quote={quote} />
-
                 <div className='login-form'>
                     <SignInForm />
                 </div>
+                <ImageSideBar imageUrl={imageUrl} quote={quote} />
             </div>
         </div>
     )
