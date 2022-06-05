@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import ImageSideBar from '../../components/image-side-bar/imageSideBar.component';
 import SignInForm from '../../components/sign-in-form/sign-in-form.component';
 
+// import { ReactComponent as Logo } from '../../assets/logo/color.svg'
+import logo from '../../assets/logo/color.png'
+
 import './login.styles.scss'
 
 const Login = () => {
@@ -32,6 +35,9 @@ const Login = () => {
 
     return (
         <div className="login-container">
+            <div className="astra-logo-container">
+                <img src={logo} alt="" />
+            </div>
             <div className="login-body">
                 <div className='login-form'>
                     <SignInForm />

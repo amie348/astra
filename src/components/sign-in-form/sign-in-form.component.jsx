@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
 
 import FormInput from "../form-input/form-input.component";
-// import Button from "../button/button.component";
 
 import Button from "@mui/material/Button";
+import Spinner from "../spinner/spinner.component";
 
 import './sign-in-form.styles.scss'
 
@@ -13,47 +15,58 @@ const defaultFormFields = {
 }
 
 const SignInForm = () => {
-    const [formFields, setFormFields] = useState(defaultFormFields);
-    const { email, password } = formFields;
+    const [singingIn, setSigningIn] = useState(false)
 
-    const changeHandler = (event) => {
-        const { name, value } = event.target;
-        setFormFields({ ...formFields, [name]: value });
-    }
+    const validate = Yup.object({
+        email: Yup.string()
+            .email('Email is invalid')
+            .required('Email is required'),
 
-    const handleSubmit = async (event) => {
-        event.preventDefault()
+        password: Yup.string()
+            .min(6, 'Password must be atleast 6 characters')
+            .required('Password is required')
+    })
 
+    const handleSubmit = (values) => {
         try {
-
+            console.log(values);
+            setSigningIn(true)
         } catch (error) {
             console.log(`SignInComponent: ${error}`);
         }
     }
 
-    return <>
-        <div className="sign-in-container">
-            <h2>Welcome Back!</h2>
-            <form onSubmit={handleSubmit}>
-                <FormInput label='Email' type="email" name="email" onChange={changeHandler} value={email} required />
+    return <Formik
+        initialValues={{
+            email: '',
+            password: ''
+        }}
 
-                <FormInput label='Password' type="password" name="password" onChange={changeHandler} value={password} required />
+        validationSchema={validate}
 
-                <div className="buttons-container">
+        onSubmit={values => { handleSubmit(values) }}
+    >
 
-                    
-                    <Button variant="contained"  color = "error" disabled  > SIgn in </Button>
-                    
-                    {/* <Button variant="contained"  color = "error"  > Sign in    </Button> */}
-                    
+        {
+            form => (
+                <div className="sign-in-container">
+                    <h2>Welcome Back!</h2>
+                    <Form onSubmit={form.handleSubmit}>
+                        <FormInput label='Email' type="email" name="email" />
+                        <FormInput label='Password' type="password" name="password" />
 
-                
-                    {/* <Button type="submit">Sign In</Button> */}
-                
+                        <div className="buttons-container">
+                            <Button className="sign-in-btn" variant="contained" color="error" type="submit" disabled={!(form.isValid && form.dirty)}>
+                                {
+                                    singingIn ? <Spinner /> : `Sign in`
+                                }
+                            </Button>
+                        </div>
+                    </Form>
                 </div>
-            </form>
-        </div>
-    </>
+            )
+        }
+    </Formik>
 }
 
 export default SignInForm;
