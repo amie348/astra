@@ -1,0 +1,16 @@
+.SpinnerOverlay {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .astra-logo-container {
+        img {
+            width: 100%;
+            object-fit: contain;
+            height: 60px;
+        }
+    }
+}

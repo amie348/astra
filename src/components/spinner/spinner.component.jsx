@@ -1,10 +1,18 @@
-import * as React from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
-
 import './spinner.styles.scss'
 
-export default function Spinner() {
-    return (
-        <CircularProgress size={`15px`} sx={{ color: `white`, margin: `6px 20px` }} />
-    );
+import logo from '../../assets/logo/astraLogo.png'
+
+const Spinner = () => {
+    return <>
+        <div className="SpinnerOverlay">
+            <div className="astra-logo-container">
+                <img src={logo} alt="" />
+            </div>
+            <div className="spinner-border text-danger mt-3" role="status">
+                <span className="sr-only">Loading...</span>
+            </div>
+        </div>
+    </>
 }
+
+export default Spinner

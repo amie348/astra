@@ -4,7 +4,7 @@ $main-color: black;
 .group {
   width: 100%;
   position: relative;
-  margin: 35px 0px 30px 0px;
+  margin: 25px 0px 30px 0px;
 
   .error {
     position: absolute;
@@ -14,16 +14,8 @@ $main-color: black;
   }
 
   .form-input {
-    background-color: white;
-    color: $sub-color;
-    font-size: 14px;
-    padding: 20px 13px;
-    display: block;
-    width: 100%;
     border-radius: 10px;
-    border: 1px solid $sub-color;
     margin: 2px 0px 2px 0px;
-    outline: solid 0px $main-color;
   }
 
   input[type='password'] {

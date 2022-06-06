@@ -2,15 +2,17 @@ import { useEffect, useState } from 'react';
 import ImageSideBar from '../../components/image-side-bar/imageSideBar.component';
 import SignInForm from '../../components/sign-in-form/sign-in-form.component';
 
-// import { ReactComponent as Logo } from '../../assets/logo/color.svg'
-import logo from '../../assets/logo/color.png'
+import logo from '../../assets/logo/astra-logo-transparent.png'
 
 import './login.styles.scss'
+import Spinner from '../../components/spinner/spinner.component';
 
 const Login = () => {
 
     const [quote, setQuote] = useState({ text: '', author: '' });
     const [imageUrl, setImageUrl] = useState('')
+
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         const fecthQuote = async () => {
@@ -28,23 +30,29 @@ const Login = () => {
                 .then(response => response.json())
                 .then(response => setImageUrl(response[Math.floor(Math.random() * 10)].urls.regular))
         }
-        fetchImage()
 
+        const pageDoneLoading = () => {
+            setTimeout(() => { setIsLoading(false) }, 3000)
+        }
+
+        pageDoneLoading()
+        fetchImage()
         fecthQuote()
     }, [])
 
     return (
-        <div className="login-container">
-            <div className="astra-logo-container">
-                <img src={logo} alt="" />
-            </div>
-            <div className="login-body">
-                <div className='login-form'>
-                    <SignInForm />
+        isLoading ? <Spinner /> :
+            <div className="login-container">
+                <div className="astra-logo-container">
+                    <img src={logo} alt="" />
                 </div>
-                <ImageSideBar imageUrl={imageUrl} quote={quote} />
+                <div className="login-body">
+                    <div className='login-form'>
+                        <SignInForm />
+                    </div>
+                    <ImageSideBar imageUrl={imageUrl} quote={quote} />
+                </div>
             </div>
-        </div>
     )
 }
 

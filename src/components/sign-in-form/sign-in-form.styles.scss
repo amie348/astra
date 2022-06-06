@@ -8,8 +8,7 @@
         text-align: center;
     }
 
-    .buttons-container {
-        display: flex;
-        justify-content: space-between;
+    button {
+        min-width: 70px;
     }
 }

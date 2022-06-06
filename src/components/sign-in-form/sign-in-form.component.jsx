@@ -4,9 +4,6 @@ import * as Yup from 'yup'
 
 import FormInput from "../form-input/form-input.component";
 
-import Button from "@mui/material/Button";
-import Spinner from "../spinner/spinner.component";
-
 import './sign-in-form.styles.scss'
 
 const defaultFormFields = {
@@ -52,16 +49,23 @@ const SignInForm = () => {
                 <div className="sign-in-container">
                     <h2>Welcome Back!</h2>
                     <Form onSubmit={form.handleSubmit}>
+
+                        <div class="alert alert-danger py-1 mt-3 text-center" role="alert">
+                            Invalid Email!
+                        </div>
+
                         <FormInput label='Email' type="email" name="email" />
                         <FormInput label='Password' type="password" name="password" />
 
-                        <div className="buttons-container">
-                            <Button className="sign-in-btn" variant="contained" color="error" type="submit" disabled={!(form.isValid && form.dirty)}>
-                                {
-                                    singingIn ? <Spinner /> : `Sign in`
-                                }
-                            </Button>
-                        </div>
+                        <button type="submit" className="btn btn-danger" disabled={!(form.isValid && form.dirty)}>
+                            {
+                                singingIn ?
+                                    <div className="spinner-border spinner-border-sm text-light" role="status">
+                                        <span className="sr-only">Loading...</span>
+                                    </div>
+                                    : `Sign in`
+                            }
+                        </button>
                     </Form>
                 </div>
             )
