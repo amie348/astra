@@ -10,5 +10,10 @@
 
     button {
         min-width: 70px;
+        box-shadow: none;
+    }
+
+    button:focus {
+        box-shadow: none;
     }
 }

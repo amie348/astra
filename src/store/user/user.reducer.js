@@ -16,5 +16,15 @@ export const userReducer = (state = INITIAL_STATE, action) => {
 }
 
 const INITIAL_STATE = {
-    currentUser: null
+    currentUser: {
+        "user": {
+            "id": 1,
+            "username": "Ahmad Yaqoob",
+            "email": "ahmad@gmail.com",
+            "companyName": "Ahmad&co",
+            "dp": ""
+        },
+        "accessToken": null
+    }
 }
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQ3NDQyNjUsImlhdCI6MTY1NDcyMjY2NSwiaWQiOjEsInVzZXJuYW1lIjoiQWhtYWQgWWFxb29iIiwiZW1haWwiOiJhaG1hZEBnbWFpbC5jb20iLCJjb21wYW55TmFtZSI6IkFobWFkJmNvIiwiZHAiOiIifQ.M3MD1Tgi29DTv5snFXMGdi9OMtmmm2GD3_cd05G3dtE

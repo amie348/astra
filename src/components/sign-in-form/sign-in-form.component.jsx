@@ -4,6 +4,11 @@ import * as Yup from 'yup'
 
 import axios from 'axios'
 
+import { useNavigate } from 'react-router'
+
+import { useSelector } from 'react-redux'
+import { currentUserSelector } from '../../store/user/user.selectors';
+
 import FormInput from "../form-input/form-input.component";
 
 import './sign-in-form.styles.scss'
@@ -13,10 +18,16 @@ const defaultFormFields = {
     password: '',
 }
 
+
 const baseUrl = 'https://script.googleusercontent.com/macros/echo?user_content_key=PAz5MMLfMy_oS6oyYYxmjxPTCs9jq2mSQO_B4WtmwDoLiwwcfn175MZUMhFzHiDkXEcKNtuPy5OxpZB1vZh0Pnz572wCRHa9m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnD8AB45YMIKdN_xFiIJZiwXEMxjMPCVLsKUaLkKD2pDO9qLeosrNMSNaGIAA-IFU9LulRK4PYyjUBhM62VbDsv5FvnZ3JX3SHg&lib=M-0NAAdT4ZTFWJRgc1zBTW7Ys4wonrQEQ'
 
 const SignInForm = () => {
     const [singingIn, setSigningIn] = useState(false)
+    const currentUser = useSelector(currentUserSelector)
+
+    const naviagte = useNavigate()
+
+    const { user, accessToken } = currentUser;
 
     const validate = Yup.object({
         email: Yup.string()
@@ -30,14 +41,14 @@ const SignInForm = () => {
 
     const handleSubmit = ({ email, password }) => {
         try {
-            axios.post(baseUrl, {
-                "operation": "SIGNIN",
-                "email": `${email}`,
-                "password": `${password}`
-            }
-            ).then((response) => {
-                console.log(response.data);
-            });
+            // axios.post(baseUrl, {
+            //     "operation": "SIGNIN",
+            //     "email": `${email}`,
+            //     "password": `${password}`
+            // }
+            // ).then((response) => {
+            //     console.log(response.data);
+            // });
 
             // fetch(baseUrl, {
             //     method: 'POST',
@@ -53,6 +64,7 @@ const SignInForm = () => {
             // })
 
             setSigningIn(true)
+            naviagte('/dashboard')
         } catch (error) {
             console.log(`SignInComponent: ${error}`);
         }
@@ -75,9 +87,9 @@ const SignInForm = () => {
                     <h2>Welcome Back!</h2>
                     <Form onSubmit={form.handleSubmit}>
 
-                        {/* <div class="alert alert-danger py-1 mt-3 text-center" role="alert">
-                            Invalid Email!
-                        </div> */}
+                        {!accessToken ? <div class="alert alert-danger py-1 mt-3 text-center" role="alert">
+                            Invalid Email/Password!
+                        </div> : null}
 
                         <FormInput label='Email' type="email" name="email" />
                         <FormInput label='Password' type="password" name="password" />
