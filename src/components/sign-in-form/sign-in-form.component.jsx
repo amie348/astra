@@ -19,11 +19,12 @@ const defaultFormFields = {
 }
 
 
-const baseUrl = 'https://script.googleusercontent.com/macros/echo?user_content_key=PAz5MMLfMy_oS6oyYYxmjxPTCs9jq2mSQO_B4WtmwDoLiwwcfn175MZUMhFzHiDkXEcKNtuPy5OxpZB1vZh0Pnz572wCRHa9m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnD8AB45YMIKdN_xFiIJZiwXEMxjMPCVLsKUaLkKD2pDO9qLeosrNMSNaGIAA-IFU9LulRK4PYyjUBhM62VbDsv5FvnZ3JX3SHg&lib=M-0NAAdT4ZTFWJRgc1zBTW7Ys4wonrQEQ'
+const baseUrl = 'https://script.google.com/macros/s/AKfycbxhSRVV91B2ajFKO_dVk1GYUaTyZP-PjVAQJfEWzNBgl-S7-1_-mvMPWuANuO5MB_E/exec'
 
 const SignInForm = () => {
     const [singingIn, setSigningIn] = useState(false)
     const currentUser = useSelector(currentUserSelector)
+    const [isError , setisError] = useState(false);
 
     const naviagte = useNavigate()
 
@@ -39,35 +40,74 @@ const SignInForm = () => {
             .required('Password is required')
     })
 
+
+    const handleLoginError = () => {
+
+        setisError(!isError)
+
+    }
+
+    const handleSigningIn = () =>{
+
+        setSigningIn(!singingIn);
+
+    }
+
     const handleSubmit = ({ email, password }) => {
-        try {
-            // axios.post(baseUrl, {
-            //     "operation": "SIGNIN",
-            //     "email": `${email}`,
-            //     "password": `${password}`
-            // }
-            // ).then((response) => {
-            //     console.log(response.data);
-            // });
 
-            // fetch(baseUrl, {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     mode: 'no-cors',
-            //     body: {
-            //         "operation": "SIGNIN",
-            //         "email": `${email}`,
-            //         "password": `${password}`
-            //     }
-            // }).then((response) => {
-            //     console.log(response.json());
-            // })
+        handleSigningIn()
 
-            setSigningIn(true)
-            naviagte('/dashboard')
-        } catch (error) {
-            console.log(`SignInComponent: ${error}`);
+        // axios.post(baseUrl, {
+        //     operation: "SIGNIN",
+        //     email,
+        //     password
+        // }, {mode: 'no-cors',
+		//     headers: {
+		// 	'Access-Control-Allow-Origin': '*',
+		// 	Accept: 'application/json',
+		// 	'Content-Type': 'application/json',
+		// },}
+        // ).then((response) => {
+        //     console.log(response.data);
+        //     handleSigningIn()
+        //     naviagte('/dashboard')
+        // }).catch(error => {
+
+        //     console.log(`SignInComponent: ${error}`);
+        //     handleLoginError()
+        //     handleSigningIn()
+        //     naviagte('/dashboard')  // for temporary purpose untill the api issue is not resolved
+        // })
+
+        const data = {
+            operation: "SIGNIN",
+            email,
+            password
         }
+
+        fetch(baseUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: { 'Content-Type': 'application/json' },
+            // redirect: "manual",
+            body: JSON.stringify(data)
+        }).then(async (response) => {
+            
+            const string = await  response.text();
+            const json = string === "" ? {} : JSON.parse(string);
+            console.log(`json`, json)
+
+        })
+        .catch(error => {console.log(error)})
+
+        // fetch(baseUrl).then(response => response.json()).then(response =>   {
+
+        //     console.log(response)
+
+        // })
+
     }
 
     return <Formik
@@ -84,12 +124,16 @@ const SignInForm = () => {
         {
             form => (
                 <div className="sign-in-container">
-                    <h2>Welcome Back!</h2>
+                    <h2>Login Account</h2>
+                    <span> Enter Email and Password to login </span>
                     <Form onSubmit={form.handleSubmit}>
 
-                        {!accessToken ? <div class="alert alert-danger py-1 mt-3 text-center" role="alert">
-                            Invalid Email/Password!
-                        </div> : null}
+                        {isError ?
+                         <div class="alert alert-danger py-1 mt-3 text-center" role="alert">
+                            The Login correct 
+                        </div>
+                         : null
+                         }
 
                         <FormInput label='Email' type="email" name="email" />
                         <FormInput label='Password' type="password" name="password" />
