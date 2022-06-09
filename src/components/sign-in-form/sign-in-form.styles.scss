@@ -3,9 +3,15 @@
     flex-direction: column;
     width: 100%;
 
-    h2 {
+    h4 {
         margin: 0px 0;
         text-align: center;
+    }
+
+    span {
+        font-size: small;
+        text-align: center;
+        color: grey;
     }
 
     button {

@@ -24,7 +24,7 @@ const baseUrl = 'https://script.google.com/macros/s/AKfycbxhSRVV91B2ajFKO_dVk1GY
 const SignInForm = () => {
     const [singingIn, setSigningIn] = useState(false)
     const currentUser = useSelector(currentUserSelector)
-    const [isError , setisError] = useState(false);
+    const [isError, setisError] = useState(false);
 
     const naviagte = useNavigate()
 
@@ -47,7 +47,7 @@ const SignInForm = () => {
 
     }
 
-    const handleSigningIn = () =>{
+    const handleSigningIn = () => {
 
         setSigningIn(!singingIn);
 
@@ -62,11 +62,11 @@ const SignInForm = () => {
         //     email,
         //     password
         // }, {mode: 'no-cors',
-		//     headers: {
-		// 	'Access-Control-Allow-Origin': '*',
-		// 	Accept: 'application/json',
-		// 	'Content-Type': 'application/json',
-		// },}
+        //     headers: {
+        // 	'Access-Control-Allow-Origin': '*',
+        // 	Accept: 'application/json',
+        // 	'Content-Type': 'application/json',
+        // },}
         // ).then((response) => {
         //     console.log(response.data);
         //     handleSigningIn()
@@ -94,13 +94,13 @@ const SignInForm = () => {
             // redirect: "manual",
             body: JSON.stringify(data)
         }).then(async (response) => {
-            
-            const string = await  response.text();
+
+            const string = await response.text();
             const json = string === "" ? {} : JSON.parse(string);
             console.log(`json`, json)
 
         })
-        .catch(error => {console.log(error)})
+            .catch(error => { console.log(error) })
 
         // fetch(baseUrl).then(response => response.json()).then(response =>   {
 
@@ -124,16 +124,16 @@ const SignInForm = () => {
         {
             form => (
                 <div className="sign-in-container">
-                    <h2>Login Account</h2>
+                    <h4>Login Account</h4>
                     <span> Enter Email and Password to login </span>
                     <Form onSubmit={form.handleSubmit}>
 
                         {isError ?
-                         <div class="alert alert-danger py-1 mt-3 text-center" role="alert">
-                            The Login correct 
-                        </div>
-                         : null
-                         }
+                            <div class="alert alert-danger py-1 mt-3 text-center" role="alert">
+                                The Login correct
+                            </div>
+                            : null
+                        }
 
                         <FormInput label='Email' type="email" name="email" />
                         <FormInput label='Password' type="password" name="password" />

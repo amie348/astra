@@ -1,0 +1,1 @@
+export const isSideNavBarOpenSelector = (state) => (state.dashboard.isSideNavBarOpen)

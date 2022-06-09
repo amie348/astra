@@ -14,16 +14,15 @@ $main-color: black;
   }
 
   .form-control {
-    border-radius: 10px;
+    padding-top: 9px;
+    padding-bottom: 9px;
     margin: 2px 0px 2px 0px;
-    background-color: #f3f6f9;
-    border-color: rgba(0, 0, 0, 0.501);
+    border-color: lightgrey;
+    color: gray;
   }
 
   .form-control:focus {
     box-shadow: none;
-    border-color: rgba(0, 0, 0, 0.792);
-    background-color: #e9edf2;
   }
 
   .form-contorl:valid {

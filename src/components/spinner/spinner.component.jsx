@@ -9,7 +9,7 @@ const Spinner = () => {
                 <img src={logo} alt="" />
             </div>
             <div className="spinner-border text-danger mt-3" role="status">
-                <span className="sr-only">Loading...</span>
+                <span className="sr-only"></span>
             </div>
         </div>
     </>
