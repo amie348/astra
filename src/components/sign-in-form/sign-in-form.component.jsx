@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 import { currentUserSelector } from '../../store/user/user.selectors';
 
+import { Navigate } from "react-router";
+
 import FormInput from "../form-input/form-input.component";
 
 import './sign-in-form.styles.scss'
@@ -26,7 +28,7 @@ const SignInForm = () => {
     const currentUser = useSelector(currentUserSelector)
     const [isError, setisError] = useState(false);
 
-    const naviagte = useNavigate()
+    const navigate = useNavigate()
 
     const { user, accessToken } = currentUser;
 
@@ -79,34 +81,36 @@ const SignInForm = () => {
         //     naviagte('/dashboard')  // for temporary purpose untill the api issue is not resolved
         // })
 
-        const data = {
-            operation: "SIGNIN",
-            email,
-            password
-        }
+        // const data = {
+        //     operation: "SIGNIN",
+        //     email,
+        //     password
+        // }
 
-        fetch(baseUrl, {
-            method: 'POST',
-            mode: 'no-cors',
-            cache: "no-cache",
-            credentials: "same-origin",
-            headers: { 'Content-Type': 'application/json' },
-            // redirect: "manual",
-            body: JSON.stringify(data)
-        }).then(async (response) => {
+        // fetch(baseUrl, {
+        //     method: 'POST',
+        //     mode: 'no-cors',
+        //     cache: "no-cache",
+        //     credentials: "same-origin",
+        //     headers: { 'Content-Type': 'application/json' },
+        //     // redirect: "manual",
+        //     body: JSON.stringify(data)
+        // }).then(async (response) => {
 
-            const string = await response.text();
-            const json = string === "" ? {} : JSON.parse(string);
-            console.log(`json`, json)
-
-        })
-            .catch(error => { console.log(error) })
-
-        // fetch(baseUrl).then(response => response.json()).then(response =>   {
-
-        //     console.log(response)
+        //     const string = await response.text();
+        //     const json = string === "" ? {} : JSON.parse(string);
+        //     console.log(`json`, json)
 
         // })
+        //     .catch(error => { console.log(error) })
+
+        // // fetch(baseUrl).then(response => response.json()).then(response =>   {
+
+        // //     console.log(response)
+
+        // // })
+
+        navigate('/dashboard')
 
     }
 

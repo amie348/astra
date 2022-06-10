@@ -11,7 +11,7 @@ import { setIsSideNavBarOpen } from '../../store/dashboard/dashboard.action';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const SideNavBar = () => {
     const dispatch = useDispatch()
@@ -23,12 +23,12 @@ const SideNavBar = () => {
                     <img className={`${isSideNavBarOpen ? '' : 'logo-small'}`} src={logo} alt="" />
 
                     <div className="sideNavBar-items">
-                        <NavLink className='item' activeClassName='active' to='/auth/dashboard'>
+                        <NavLink className='item' activeClassName='active' to='/dashboard'>
                             <div className="item-icon"> <DashboardIcon /> </div>
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Dashboard</div>
                         </NavLink>
 
-                        <NavLink className="item" activeClassName='active' to='/auth/leads'>
+                        <NavLink className="item" activeClassName='active' to='/leads'>
                             <div className="item-icon"> <LeaderboardIcon /> </div>
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Leads</div>
                         </NavLink>

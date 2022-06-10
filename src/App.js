@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router'
 import './App.css';
 import Login from './routes/login/login.component';
 import Dashboard from './routes/Dashboard/dashboard.component'
-import Home from './routes/home/home.component';
 import Leads from './routes/leads/leads.component';
 
 function App() {
@@ -12,13 +11,10 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<Navigate to='/login' />} />
-
       <Route path='login' element={<Login />} />
-      <Route path='auth' element={<Home />}>
-        <Route path='dashboard' element={<Dashboard />} />
-        <Route path='leads' element={<Leads />} />
-      </Route>
 
+      <Route path='dashboard' element={<Dashboard />} />
+      <Route path='leads' element={<Leads />} />
     </Routes>
   );
 }
