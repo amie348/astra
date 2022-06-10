@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
 
-    min-width: 20%;
+    min-width: 200px;
     height: 100vh;
     background-color: white;
     transition: min-width 0.3s;
@@ -23,7 +23,7 @@
         margin: 20px 0px 0px 25px;
         width: fit-content;
         object-fit: contain;
-        height: 25px;
+        height: 50px;
     }
 
     .logo-small {
@@ -42,8 +42,12 @@
         .item {
             display: flex;
             align-items: center;
-            margin-left: 8px;
-            padding: 10px 15px;
+            // margin-left: 8px;
+            padding: 10px 19px;
+
+            border-bottom: 1px solid lightgrey;
+
+            transition: background-color 0.5s;
 
             text-decoration: none;
             color: black;
@@ -62,11 +66,17 @@
         }
 
         .active {
-            background-color: rgba(211, 211, 211, 0.501);
+            background-color: red;
+            color: white;
         }
 
         .item:hover {
             background-color: rgba(211, 211, 211, 0.501);
+        }
+
+        .active:hover {
+            background-color: red;
+            color: white;
         }
     }
 }

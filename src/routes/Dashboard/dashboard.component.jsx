@@ -10,6 +10,7 @@ import { Outlet } from 'react-router-dom'
 
 import './dashboard.styles.scss'
 import Header from '../../components/header/header.component'
+import ReactBootstrapTable from '../../components/react-bootstrap-table2/react-bootstrap-table.component'
 
 const Dashboard = () => {
     const navigate = useNavigate()
@@ -29,6 +30,8 @@ const Dashboard = () => {
                                 <p>{user.email}</p>
                             </div>
                     }
+
+                    <ReactBootstrapTable />
                 </div>
             </div>
         </div>
