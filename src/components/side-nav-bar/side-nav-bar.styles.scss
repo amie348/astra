@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
 
-    min-width: 20%;
+    min-width: 200px;
     height: 100vh;
     background-color: white;
     transition: min-width 0.3s;
@@ -23,7 +23,7 @@
         margin: 20px 0px 0px 25px;
         width: fit-content;
         object-fit: contain;
-        height: 25px;
+        height: 50px;
     }
 
     .logo-small {
