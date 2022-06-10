@@ -4,11 +4,14 @@ import logo from '../../assets/logo/astraLogo.png'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 
 import { isSideNavBarOpenSelector } from '../../store/dashboard/dashboard.selector';
 import { setIsSideNavBarOpen } from '../../store/dashboard/dashboard.action';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+
+import { Link, NavLink, Outlet } from 'react-router-dom';
 
 const SideNavBar = () => {
     const dispatch = useDispatch()
@@ -20,15 +23,15 @@ const SideNavBar = () => {
                     <img className={`${isSideNavBarOpen ? '' : 'logo-small'}`} src={logo} alt="" />
 
                     <div className="sideNavBar-items">
-                        <div className="item">
+                        <NavLink className='item' activeClassName='active' to='/auth/dashboard'>
                             <div className="item-icon"> <DashboardIcon /> </div>
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Dashboard</div>
-                        </div>
+                        </NavLink>
 
-                        <div className="item">
-                            <div className="item-icon"> <DashboardIcon /> </div>
-                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Dashboard</div>
-                        </div>
+                        <NavLink className="item" activeClassName='active' to='/auth/leads'>
+                            <div className="item-icon"> <LeaderboardIcon /> </div>
+                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Leads</div>
+                        </NavLink>
                     </div>
                 </div>
 
