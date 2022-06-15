@@ -2,17 +2,33 @@ import './header.styles.scss'
 
 import { useSelector } from 'react-redux'
 import { currentUserSelector } from '../../store/user/user.selectors'
+import { useDispatch } from 'react-redux'
+import { setCurrentUser } from '../../store/user/user.action'
+
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
-
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const { user } = useSelector(currentUserSelector)
-    const { username, companyName } = user;
+    const { name, companyName } = user;
 
+    const resetUser = {
+        user: {},
+        accessToken: ''
+    }
 
     return (
         <div className='header-container'>
-            <span className='companyName'>{companyName}</span>
-            <span className='userName'>{username}</span>
+            <div className='content'>
+                <span className='companyName'>{companyName}</span>
+                <span className='userName'>{name}</span>
+            </div>
+
+            <span className='logout' onClick={() => {
+                dispatch(setCurrentUser(resetUser))
+                navigate('/')
+            }}>Logout</span>
         </div>
     )
 }

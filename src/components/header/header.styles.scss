@@ -9,4 +9,21 @@
     padding: 0px 30px;
 
     background-color: white;
+
+    .content {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .userName {
+            margin-right: 20px;
+        }
+    }
+
+    .logout:hover {
+        cursor: pointer;
+        color: red;
+        transition: all 0.2s;
+    }
 }

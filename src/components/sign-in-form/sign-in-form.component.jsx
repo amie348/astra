@@ -10,10 +10,12 @@ import { useSelector } from 'react-redux'
 import { currentUserSelector } from '../../store/user/user.selectors';
 
 import { Navigate } from "react-router";
+import { useDispatch } from "react-redux";
 
 import FormInput from "../form-input/form-input.component";
 
 import './sign-in-form.styles.scss'
+import { setCurrentUser } from "../../store/user/user.action";
 
 const defaultFormFields = {
     email: '',
@@ -21,12 +23,13 @@ const defaultFormFields = {
 }
 
 
-const baseUrl = 'https://script.google.com/macros/s/AKfycbxhSRVV91B2ajFKO_dVk1GYUaTyZP-PjVAQJfEWzNBgl-S7-1_-mvMPWuANuO5MB_E/exec'
+const baseUrl = 'https://astra-crm.herokuapp.com/api/user/signin'
 
 const SignInForm = () => {
+    const dispatch = useDispatch();
     const [singingIn, setSigningIn] = useState(false)
     const currentUser = useSelector(currentUserSelector)
-    const [isError, setisError] = useState(false);
+    const [isError, setisError] = useState({ 401: false, 404: false });
 
     const navigate = useNavigate()
 
@@ -38,80 +41,46 @@ const SignInForm = () => {
             .required('Email is required'),
 
         password: Yup.string()
-            .min(6, 'Password must be atleast 6 characters')
+            .min(5, 'Password must be atleast 5 characters')
             .required('Password is required')
     })
 
-
-    const handleLoginError = () => {
-
-        setisError(!isError)
-
-    }
-
-    const handleSigningIn = () => {
-
-        setSigningIn(!singingIn);
-
-    }
-
     const handleSubmit = ({ email, password }) => {
+        setSigningIn(true)
+        axios.post(baseUrl, {
+            email,
+            password
+        }, {
+            mode: 'no-cors',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        }
+        ).then((response) => {
+            dispatch(setCurrentUser(response.data.data))
+            setSigningIn(false)
+            navigate('/dashboard')
+        }).catch(error => {
+            setSigningIn(false)
+            console.log(`SignInComponent: ${error.response.status}`);
+            switch (error.response.status) {
+                case 401:
+                    console.log('Wrong Password');
+                    setisError({ 401: true, 404: false })
+                    break;
 
-        handleSigningIn()
+                case 404:
+                    console.log('User Not Found');
+                    setisError({ 401: false, 404: true })
+                    break;
 
-        // axios.post(baseUrl, {
-        //     operation: "SIGNIN",
-        //     email,
-        //     password
-        // }, {mode: 'no-cors',
-        //     headers: {
-        // 	'Access-Control-Allow-Origin': '*',
-        // 	Accept: 'application/json',
-        // 	'Content-Type': 'application/json',
-        // },}
-        // ).then((response) => {
-        //     console.log(response.data);
-        //     handleSigningIn()
-        //     naviagte('/dashboard')
-        // }).catch(error => {
-
-        //     console.log(`SignInComponent: ${error}`);
-        //     handleLoginError()
-        //     handleSigningIn()
-        //     naviagte('/dashboard')  // for temporary purpose untill the api issue is not resolved
-        // })
-
-        // const data = {
-        //     operation: "SIGNIN",
-        //     email,
-        //     password
-        // }
-
-        // fetch(baseUrl, {
-        //     method: 'POST',
-        //     mode: 'no-cors',
-        //     cache: "no-cache",
-        //     credentials: "same-origin",
-        //     headers: { 'Content-Type': 'application/json' },
-        //     // redirect: "manual",
-        //     body: JSON.stringify(data)
-        // }).then(async (response) => {
-
-        //     const string = await response.text();
-        //     const json = string === "" ? {} : JSON.parse(string);
-        //     console.log(`json`, json)
-
-        // })
-        //     .catch(error => { console.log(error) })
-
-        // // fetch(baseUrl).then(response => response.json()).then(response =>   {
-
-        // //     console.log(response)
-
-        // // })
-
-        navigate('/dashboard')
-
+                default:
+                    console.log('UnHandled Error')
+                    break;
+            }
+        })
     }
 
     return <Formik
@@ -132,11 +101,18 @@ const SignInForm = () => {
                     <span> Enter Email and Password to login </span>
                     <Form onSubmit={form.handleSubmit}>
 
-                        {isError ?
+                        {isError[404] ?
                             <div class="alert alert-danger py-1 mt-3 text-center" role="alert">
-                                The Login correct
+                                User doesn't exist
                             </div>
                             : null
+                        }
+
+                        {
+                            isError[401] ?
+                                <div class="alert alert-danger py-1 mt-3 text-center" role="alert">
+                                    Wrong Password
+                                </div> : null
                         }
 
                         <FormInput label='Email' type="email" name="email" />
@@ -146,7 +122,7 @@ const SignInForm = () => {
                             {
                                 singingIn ?
                                     <div className="spinner-border spinner-border-sm text-light" role="status">
-                                        <span className="sr-only">Loading...</span>
+                                        <span className="sr-only"></span>
                                     </div>
                                     : `Sign in`
                             }
