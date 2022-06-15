@@ -1,9 +1,12 @@
 .dashboard-container {
+    
+      
     display: flex;
     background-color: rgba(242, 242, 242, 0.448);
 
     .dashboard-body {
-        width: 100%;
+        padding-left: 200px;
+        height: 100%;
 
         .dashboard-content {
             object-fit: contain;

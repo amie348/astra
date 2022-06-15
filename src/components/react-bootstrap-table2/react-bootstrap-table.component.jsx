@@ -19,7 +19,16 @@ const columns = [{
 const ReactBootstrapTable = () => {
     return (
         <div className="table-container">
-            <BootstrapTable keyField='id' data={products} columns={columns} pagination={paginationFactory()} />
+            <BootstrapTable
+            wrapperClasses="table-responsive"
+            bordered={true}
+            classes="table table-head-custom table-vertical-center overflow-hidden"
+            bootstrap4
+            remote 
+            keyField='id' 
+            data={products} 
+            columns={columns} 
+            pagination={paginationFactory()} />
         </div>
     )
 }

@@ -13,8 +13,11 @@ function App() {
       <Route path='/' element={<Navigate to='/login' />} />
       <Route path='login' element={<Login />} />
 
-      <Route path='dashboard' element={<Dashboard />} />
-      <Route path='leads' element={<Leads />} />
+      
+        <Route path='dashboard' element={<Dashboard />} />
+        <Route path='leads' element={<Leads />} />
+      
+
     </Routes>
   );
 }
