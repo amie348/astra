@@ -1,15 +1,26 @@
-import { Outlet, Link, Navigate } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setCurrentUser } from '../../store/user/user.action'
+import { setIsProfileDropDownOpen } from '../../store/dashboard/dashboard.action'
 import './profile-dropdown.styles.scss'
 
+const resetUser = {
+    user: {},
+    accessToken: ''
+}
 
 const ProfileDropDown = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     return (
-        <div className="cart-dropdown-container">
-            <div className="cart-items">
-
-            </div>
-            <button><Navigate to={'/'} /></button>
+        <div className="profile-dropdown-container">
+            <button className="btn btn-danger" onClick={() => {
+                dispatch(setCurrentUser(resetUser))
+                dispatch(setIsProfileDropDownOpen(false))
+                navigate('/')
+            }}>
+                Logout
+            </button>
         </div>
     )
 }

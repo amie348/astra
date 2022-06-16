@@ -28,7 +28,7 @@ const SideNavBar = () => {
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Dashboard</div>
                         </NavLink>
 
-                        <NavLink className="item" activeClassName='active' to='/leads'>
+                        <NavLink className="item" activeClassName='active dg-danger' to='/leads'>
                             <div className="item-icon"> <LeaderboardIcon /> </div>
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Leads</div>
                         </NavLink>

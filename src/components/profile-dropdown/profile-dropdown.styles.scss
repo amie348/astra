@@ -1,33 +1,22 @@
-.cart-dropdown-container {
+.profile-dropdown-container {
   position: absolute;
-  width: 240px;
-  height: 340px;
+  width: 180px;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   padding: 20px;
   border: 1px solid black;
   background-color: white;
-  top: 90px;
-  right: 40px;
+  top: 50px;
+  right: 30px;
   z-index: 5;
 
-  .empty-message {
-    font-size: 18px;
-    margin: 50px auto;
+  border-color: lightgrey;
+  border-radius: 10px;
+
+  button {
+    margin-top: auto;
   }
 
-  .cart-items {
-    height: 240px;
-    display: flex;
-    flex-direction: column;
-    overflow: scroll;
-  }
-
-  // button {
-  //   margin-top: auto;
-  // }
-
-  .button:hover {
-    color: black;
-  }
+  button:hover {}
 }

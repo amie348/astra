@@ -10,6 +10,12 @@ export const dashboardReducer = (state = INITIAL_STATE, action) => {
                 isSideNavBarOpen: payload
             }
 
+        case DASHBOARD_ACTIONS_TYPES.SET_IS_PROFILE_DROP_DOWN_OPEN:
+            return {
+                ...state,
+                isProfileDropDownOpen: payload
+            }
+
         default:
             return state
     }
@@ -17,4 +23,5 @@ export const dashboardReducer = (state = INITIAL_STATE, action) => {
 
 const INITIAL_STATE = {
     isSideNavBarOpen: true,
+    isProfileDropDownOpen: false
 }

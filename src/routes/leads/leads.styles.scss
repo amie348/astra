@@ -1,12 +1,19 @@
 .leads-container {
+    height: 100vh;
     display: flex;
     background-color: rgba(242, 242, 242, 0.448);
 
     .leads-body {
+        height: 100%;
         width: 100%;
 
         .leads-content {
             padding: 30px 30px;
         }
+    }
+
+    .leads-body-compressed {
+        padding-left: 200px;
+        height: 100%;
     }
 }

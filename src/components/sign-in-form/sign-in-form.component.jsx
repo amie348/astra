@@ -5,11 +5,6 @@ import * as Yup from 'yup'
 import axios from 'axios'
 
 import { useNavigate } from 'react-router'
-
-import { useSelector } from 'react-redux'
-import { currentUserSelector } from '../../store/user/user.selectors';
-
-import { Navigate } from "react-router";
 import { useDispatch } from "react-redux";
 
 import FormInput from "../form-input/form-input.component";
@@ -28,12 +23,9 @@ const baseUrl = 'https://astra-crm.herokuapp.com/api/user/signin'
 const SignInForm = () => {
     const dispatch = useDispatch();
     const [singingIn, setSigningIn] = useState(false)
-    const currentUser = useSelector(currentUserSelector)
     const [isError, setisError] = useState({ 401: false, 404: false });
 
     const navigate = useNavigate()
-
-    const { user, accessToken } = currentUser;
 
     const validate = Yup.object({
         email: Yup.string()
