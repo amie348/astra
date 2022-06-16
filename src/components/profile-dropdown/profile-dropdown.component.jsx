@@ -15,8 +15,8 @@ const ProfileDropDown = () => {
     return (
         <div className="profile-dropdown-container">
             <button className="btn btn-danger" onClick={() => {
-                dispatch(setCurrentUser(resetUser))
                 dispatch(setIsProfileDropDownOpen(false))
+                dispatch(setCurrentUser(resetUser))
                 navigate('/')
             }}>
                 Logout

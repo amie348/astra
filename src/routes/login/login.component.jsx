@@ -7,14 +7,7 @@ import logo from '../../assets/logo/astra-logo-transparent.png'
 import './login.styles.scss'
 import Spinner from '../../components/spinner/spinner.component';
 
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router'
-import { currentUserSelector } from '../../store/user/user.selectors';
-
 const Login = () => {
-    const { accessToken } = useSelector(currentUserSelector)
-    const navigate = useNavigate()
-
     const [quote, setQuote] = useState({ text: '', author: '' });
     const [imageUrl, setImageUrl] = useState('')
 
@@ -49,7 +42,7 @@ const Login = () => {
     }, [])
 
     return (
-        accessToken ? navigate('/dashboard') : isLoading ? <Spinner /> :
+        isLoading ? <Spinner /> :
             <div className="login-container">
                 <div className="astra-logo-container">
                     <img src={logo} alt="" />

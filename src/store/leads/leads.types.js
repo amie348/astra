@@ -1,0 +1,3 @@
+export const LEADS_ACTIONS_TYPES = {
+    SET_LEADS: 'SET_LEADS'
+}

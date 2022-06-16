@@ -13,26 +13,8 @@ import Header from '../../components/header/header.component'
 import ReactBootstrapTable from '../../components/react-bootstrap-table2/react-bootstrap-table.component'
 
 const Dashboard = () => {
-    const { user, accessToken } = useSelector(currentUserSelector)
+    const { accessToken } = useSelector(currentUserSelector)
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
-
-    useEffect(() => {
-        axios.post('https://astra-crm.herokuapp.com/api/lead/get', {
-            pageNumber: 1,
-            offset: 1,
-            searchFilters: {}
-        }, {
-            mode: 'no-cors',
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-        }
-        ).then((response) => {
-            console.log(response);
-        })
-    }, [])
 
     return (
         <div className='dashboard-container'>

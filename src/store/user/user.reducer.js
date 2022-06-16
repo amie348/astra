@@ -5,8 +5,9 @@ export const userReducer = (state = INITIAL_STATE, action) => {
 
     switch (type) {
         case USER_ACTIONS_TYPES.SET_CURRENT_USER:
+            const { user, accessToken } = payload
             return {
-                currentUser: payload
+                currentUser: { user, accessToken: `${accessToken ? `bearer `.concat(accessToken) : ''}` }
             }
 
         default:
