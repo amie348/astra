@@ -51,9 +51,7 @@ const Leads = () => {
 
 
     const handleChangeShowDeleteModal = () => {
-
         setShowDeleteModal(false);
-
     }
 
     useEffect(() => {

@@ -1,19 +1,24 @@
 /* eslint-disable no-restricted-imports */
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import { leadsSelector } from "../../store/leads/leads.selectors";
 import { currentUserSelector } from "../../store/user/user.selectors"
 
+import { useDispatch } from "react-redux";
+import { fetchLeadsStart, fetchLeadsSuccess } from "../../store/leads/leads.action";
+
 // import { ModalProgressBar } from "../../../../../../_metronic/_partials/controls";
 
 export function DeleteLeadDialogue({ show, onHide }) {
-  
-  const { clickedRow } = useSelector(leadsSelector)
+
+  const { clickedRow, pageNumber, offset } = useSelector(leadsSelector)
   const { accessToken } = useSelector(currentUserSelector)
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch()
 
 
 
@@ -21,18 +26,33 @@ export function DeleteLeadDialogue({ show, onHide }) {
 
     setIsLoading(true)
     axios.delete(`https://astra-crm.herokuapp.com/api/lead/delete/${clickedRow._id}`, {
-        headers: {
-            authorization: `${accessToken}`
-        },
+      headers: {
+        authorization: `${accessToken}`
+      },
     }
     ).then((response) => {
-        setIsLoading(false)
-        console.log('delete:', response);
-        // dispatch(fetchLeadsSuccess(response.data.leads))
-        onHide();
+      setIsLoading(false)
+      console.log('delete:', response);
+      // dispatch(fetchLeadsSuccess(response.data.leads))
+      onHide();
+
+      dispatch(fetchLeadsStart())
+      axios.post('https://astra-crm.herokuapp.com/api/lead/get', {
+        pageNumber,
+        offset,
+        searchFilters: {}
+      }, {
+        headers: {
+          authorization: `${accessToken}`
+        },
+      }
+      ).then((response) => {
+        console.log(response);
+        dispatch(fetchLeadsSuccess(response.data.leads))
+      })
     }).catch(error => {
-        setIsLoading(false)
-        console.log(error.response)
+      setIsLoading(false)
+      console.log(error.response)
     })
 
   }
