@@ -20,6 +20,7 @@ import IconButton from '@mui/material/IconButton';
 import ActionItem from '../action-item/action-item.component';
 
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 import { useDispatch } from 'react-redux';
 import { setLeadsPageNumber, setLeadsOffset, setClickedRow } from '../../store/leads/leads.action';
@@ -39,7 +40,6 @@ function ReactBootstrapTable() {
 
     const { leadsData, isLoading } = useSelector(leadsSelector)
     const [expanded, setExpanded] = useState(true);
-    const [clickedRowIndex, setClickedRowIndex] = useState()
 
     const disptch = useDispatch()
 
@@ -47,16 +47,10 @@ function ReactBootstrapTable() {
         setExpanded(!expanded);
     };
 
-    const deleteItem = () => {
-        disptch(setClickedRow(clickedRowIndex))
+    const deleteItem = (row) => {
+        console.log(row);
+        disptch(setClickedRow(row))
     }
-
-    const rowEvents = {
-        onClick: (e, row, rowIndex) => {
-            setClickedRowIndex(rowIndex)
-            console.log(rowIndex);
-        }
-    };
 
     const columns = [
         {
@@ -108,9 +102,11 @@ function ReactBootstrapTable() {
             headerStyle: (colum, colIndex) => {
                 return { width: '120px' };
             },
-            formatter: (cell) => (
+            formatter: (cell, row) => (
                 cell ? cell : <>
-                    <span onClick={() => { deleteItem() }}><DeleteIcon fontSize='small' sx={{ color: '#dc3545' }} /></span>
+                    <span onClick={() => { deleteItem(row) }}><DeleteIcon fontSize='small' className='deleteButton' /></span>
+                    <span onClick={() => { deleteItem(row) }}><EditIcon fontSize='small' className='editButton' /></span>
+
                 </>
             )
         }
@@ -172,10 +168,7 @@ function ReactBootstrapTable() {
                                 keyField='_id'
                                 data={leadsData}
                                 columns={columns}
-                                pagination={paginationFactory(options)}
-                                rowEvents={rowEvents} />
-                            <br />
-
+                                pagination={paginationFactory(options)} />
                         </>}
 
                     </CardContent>

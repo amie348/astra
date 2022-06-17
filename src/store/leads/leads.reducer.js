@@ -37,7 +37,7 @@ export const leadsReducer = (state = INITIAL_STATE, action) => {
         case LEADS_ACTIONS_TYPES.SET_CLICKED_ROW:
             return {
                 ...state,
-                offset: payload
+                clickedRow: payload
             }
 
 
@@ -52,5 +52,5 @@ const INITIAL_STATE = {
     error: null,
     pageNumber: 1,
     offset: 10,
-    clickedRow: null
+    clickedRow: {}
 }

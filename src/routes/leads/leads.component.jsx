@@ -21,6 +21,8 @@ const Leads = () => {
     const dispatch = useDispatch()
     const { isLoading, pageNumber, offset, clickedRow } = useSelector(leadsSelector)
 
+    const { _id } = clickedRow
+
     useEffect(() => {
         dispatch(fetchLeadsStart())
         axios.post('https://astra-crm.herokuapp.com/api/lead/get', {
@@ -36,22 +38,20 @@ const Leads = () => {
             console.log(response);
             dispatch(fetchLeadsSuccess(response.data.leads))
         })
+
+
     }, [pageNumber, offset])
 
     useEffect(() => {
-        // axios.post('https://astra-crm.herokuapp.com/api/lead/get', {
-        //     pageNumber,
-        //     offset,
-        //     searchFilters: {}
-        // }, {
-        //     headers: {
-        //         authorization: `${accessToken}`
-        //     },
-        // }
-        // ).then((response) => {
-        //     console.log(response);
-        //     dispatch(fetchLeadsSuccess(response.data.leads))
-        // })
+        axios.delete(`https://astra-crm.herokuapp.com/api/lead/delete/${_id}`, {
+            headers: {
+                authorization: `${accessToken}`
+            },
+        }
+        ).then((response) => {
+            console.log('delete:', response);
+            // dispatch(fetchLeadsSuccess(response.data.leads))
+        })
 
         console.log(clickedRow);
     }, [clickedRow])
