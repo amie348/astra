@@ -36,7 +36,7 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-function ReactBootstrapTable() {
+function ReactBootstrapTable({setShowDeleteModal}) {
 
     const { leadsData, isLoading } = useSelector(leadsSelector)
     const [expanded, setExpanded] = useState(true);
@@ -50,6 +50,7 @@ function ReactBootstrapTable() {
     const deleteItem = (row) => {
         console.log(row);
         disptch(setClickedRow(row))
+        setShowDeleteModal(true)
     }
 
     const columns = [

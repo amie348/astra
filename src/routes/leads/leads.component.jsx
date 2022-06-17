@@ -4,7 +4,7 @@ import './leads.styles.scss'
 import Header from "../../components/header/header.component"
 import ReactBootstrapTable from '../../components/leads-table/leads-table.component'
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 
 import { useSelector } from "react-redux"
@@ -14,14 +14,21 @@ import { leadsSelector } from "../../store/leads/leads.selectors"
 
 import { useDispatch } from "react-redux"
 import { fetchLeadsStart, fetchLeadsSuccess } from "../../store/leads/leads.action"
+import  {DeleteLeadDialogue}  from "../../components/lead-delete-dialogue/lead-delete-component";
+
 
 const Leads = () => {
+
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
     const { accessToken } = useSelector(currentUserSelector)
+    
     const dispatch = useDispatch()
+    
     const { isLoading, pageNumber, offset, clickedRow } = useSelector(leadsSelector)
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-    const { _id } = clickedRow
+
+ 
 
     useEffect(() => {
         dispatch(fetchLeadsStart())
@@ -42,18 +49,30 @@ const Leads = () => {
 
     }, [pageNumber, offset])
 
-    useEffect(() => {
-        axios.delete(`https://astra-crm.herokuapp.com/api/lead/delete/${_id}`, {
-            headers: {
-                authorization: `${accessToken}`
-            },
-        }
-        ).then((response) => {
-            console.log('delete:', response);
-            // dispatch(fetchLeadsSuccess(response.data.leads))
-        })
 
+    const handleChangeShowDeleteModal = () => {
+
+        setShowDeleteModal(false);
+
+    }
+
+    useEffect(() => {
+
+        // axios.delete(`https://astra-crm.herokuapp.com/api/lead/delete/${clickedRow._id}`, {
+        //     headers: {
+        //         authorization: `${accessToken}`
+        //     },
+        // }
+        // ).then((response) => {
+        //     console.log('delete:', response);
+        //     // dispatch(fetchLeadsSuccess(response.data.leads))
+        // })
+
+        // setShowDeleteModal(!showDeleteModal);
+
+        console.log(`showDeleteModal`, showDeleteModal)
         console.log(clickedRow);
+
     }, [clickedRow])
 
     return (
@@ -62,7 +81,11 @@ const Leads = () => {
             <div className={`${isSideNavBarOpen ? 'leads-body leads-body-compressed' : 'leads-body'}`}>
                 <Header />
                 <div className="leads-content">
-                    <ReactBootstrapTable />
+                    
+                    <DeleteLeadDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal}/>
+
+                    <ReactBootstrapTable setShowDeleteModal={setShowDeleteModal}/>
+                
                 </div>
             </div>
         </div>
