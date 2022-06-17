@@ -10,20 +10,25 @@ import axios from "axios"
 import { useSelector } from "react-redux"
 import { isSideNavBarOpenSelector } from "../../store/dashboard/dashboard.selector"
 import { currentUserSelector } from "../../store/user/user.selectors"
+import { leadsSelector } from "../../store/leads/leads.selectors"
 
 import { useDispatch } from "react-redux"
-import { setLeadsData } from "../../store/leads/leads.action"
+import { fetchLeadsStart, fetchLeadsSuccess } from "../../store/leads/leads.action"
+
+import Spinner from '../../components/spinner/spinner.component'
 
 
 const Leads = () => {
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
     const { accessToken } = useSelector(currentUserSelector)
     const dispatch = useDispatch()
+    const { isLoading } = useSelector(leadsSelector)
 
     useEffect(() => {
+        dispatch(fetchLeadsStart())
         axios.post('https://astra-crm.herokuapp.com/api/lead/get', {
             pageNumber: 1,
-            offset: 5,
+            offset: 100,
             searchFilters: {}
         }, {
             mode: 'no-cors',
@@ -32,13 +37,13 @@ const Leads = () => {
             },
         }
         ).then((response) => {
-            // console.log(response.data.leads);
-            dispatch(setLeadsData(response.data.leads))
+            console.log(response);
+            dispatch(fetchLeadsSuccess(response.data.leads))
         })
     }, [])
 
     return (
-        <div className="leads-container">
+        isLoading ? <Spinner /> : <div className="leads-container">
             <SideNavBar />
             <div className={`${isSideNavBarOpen ? 'leads-body leads-body-compressed' : 'leads-body'}`}>
                 <Header />
