@@ -67,15 +67,15 @@ const Leads = () => {
         //     // dispatch(fetchLeadsSuccess(response.data.leads))
         // })
 
-        axios.delete(`https://astra-crm.herokuapp.com/api/lead/delete/${clickedRow._id}`, {
-            headers: {
-                authorization: `${accessToken}`
-            },
-        }
-        ).then((response) => {
-            console.log('delete:', response);
-            // dispatch(fetchLeadsSuccess(response.data.leads))
-        })
+        // axios.delete(`https://astra-crm.herokuapp.com/api/lead/delete/${clickedRow._id}`, {
+        //     headers: {
+        //         authorization: `${accessToken}`
+        //     },
+        // }
+        // ).then((response) => {
+        //     console.log('delete:', response);
+        //     // dispatch(fetchLeadsSuccess(response.data.leads))
+        // })
 
         // setShowDeleteModal(!showDeleteModal);
 
