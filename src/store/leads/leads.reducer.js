@@ -22,6 +22,25 @@ export const leadsReducer = (state = INITIAL_STATE, action) => {
                 error: payload
             }
 
+        case LEADS_ACTIONS_TYPES.SET_LEADS_PAGE_NUMBER:
+            return {
+                ...state,
+                pageNumber: payload
+            }
+
+        case LEADS_ACTIONS_TYPES.SET_LEADS_OFFSET:
+            return {
+                ...state,
+                offset: payload
+            }
+
+        case LEADS_ACTIONS_TYPES.SET_CLICKED_ROW:
+            return {
+                ...state,
+                offset: payload
+            }
+
+
         default:
             return state
     }
@@ -30,5 +49,8 @@ export const leadsReducer = (state = INITIAL_STATE, action) => {
 const INITIAL_STATE = {
     leadsData: [],
     isLoading: false,
-    error: null
+    error: null,
+    pageNumber: 1,
+    offset: 10,
+    clickedRow: null
 }

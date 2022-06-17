@@ -2,7 +2,7 @@ import SideNavBar from "../../components/side-nav-bar/side-nav-bar.component"
 import './leads.styles.scss'
 
 import Header from "../../components/header/header.component"
-import ReactBootstrapTable from '../../components/react-bootstrap-table2/react-bootstrap-table.component'
+import ReactBootstrapTable from '../../components/leads-table/leads-table.component'
 
 import { useEffect } from "react"
 import axios from "axios"
@@ -15,23 +15,19 @@ import { leadsSelector } from "../../store/leads/leads.selectors"
 import { useDispatch } from "react-redux"
 import { fetchLeadsStart, fetchLeadsSuccess } from "../../store/leads/leads.action"
 
-import Spinner from '../../components/spinner/spinner.component'
-
-
 const Leads = () => {
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
     const { accessToken } = useSelector(currentUserSelector)
     const dispatch = useDispatch()
-    const { isLoading } = useSelector(leadsSelector)
+    const { isLoading, pageNumber, offset, clickedRow } = useSelector(leadsSelector)
 
     useEffect(() => {
         dispatch(fetchLeadsStart())
         axios.post('https://astra-crm.herokuapp.com/api/lead/get', {
-            pageNumber: 1,
-            offset: 100,
+            pageNumber,
+            offset,
             searchFilters: {}
         }, {
-            mode: 'no-cors',
             headers: {
                 authorization: `${accessToken}`
             },
@@ -40,15 +36,32 @@ const Leads = () => {
             console.log(response);
             dispatch(fetchLeadsSuccess(response.data.leads))
         })
-    }, [])
+    }, [pageNumber, offset])
+
+    useEffect(() => {
+        // axios.post('https://astra-crm.herokuapp.com/api/lead/get', {
+        //     pageNumber,
+        //     offset,
+        //     searchFilters: {}
+        // }, {
+        //     headers: {
+        //         authorization: `${accessToken}`
+        //     },
+        // }
+        // ).then((response) => {
+        //     console.log(response);
+        //     dispatch(fetchLeadsSuccess(response.data.leads))
+        // })
+
+        console.log(clickedRow);
+    }, [clickedRow])
 
     return (
-        isLoading ? <Spinner /> : <div className="leads-container">
+        <div className="leads-container">
             <SideNavBar />
             <div className={`${isSideNavBarOpen ? 'leads-body leads-body-compressed' : 'leads-body'}`}>
                 <Header />
                 <div className="leads-content">
-                    <h1>LEADS</h1>
                     <ReactBootstrapTable />
                 </div>
             </div>

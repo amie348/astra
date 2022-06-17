@@ -1,11 +1,12 @@
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 
-import './react-bootstrap-table.styles.scss'
+import './leads-table.styles.scss'
 import { useState } from 'react';
 
 import { useSelector } from 'react-redux';
 import { leadsSelector } from '../../store/leads/leads.selectors';
+
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -16,7 +17,12 @@ import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton from '@mui/material/IconButton';
+import ActionItem from '../action-item/action-item.component';
 
+import DeleteIcon from '@mui/icons-material/Delete';
+
+import { useDispatch } from 'react-redux';
+import { setLeadsPageNumber, setLeadsOffset, setClickedRow } from '../../store/leads/leads.action';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -29,89 +35,50 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-
-
-
 function ReactBootstrapTable() {
 
-    const { leadsData } = useSelector(leadsSelector)
+    const { leadsData, isLoading } = useSelector(leadsSelector)
     const [expanded, setExpanded] = useState(true);
+    const [clickedRowIndex, setClickedRowIndex] = useState()
 
+    const disptch = useDispatch()
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
 
-    const pageButtonRenderer = ({
-        page,
-        active,
-        disable,
-        title,
-        onPageChange
-    }) => {
-        const handleClick = (e) => {
-            e.preventDefault();
-            onPageChange(page);
-        };
-        const activeStyle = {};
-        if (active) {
-            activeStyle.backgroundColor = '#dc3545';
-            activeStyle.boxShadow = 'none';
-            activeStyle.color = 'white';
-        } else {
-            activeStyle.boxShadow = 'none';
-            activeStyle.backgroundColor = 'gray';
-            activeStyle.color = 'white';
-        }
-        if (typeof page === 'string') {
-            activeStyle.boxShadow = 'none';
-            activeStyle.backgroundColor = '#dc3545';
-            activeStyle.color = 'white';
-        }
-        return (
-            <li className="page-item" title={page}>
-                <a href="#" className='page-link' onClick={handleClick} style={activeStyle}>{page}</a>
-            </li>
-        );
-    };
+    const deleteItem = () => {
+        disptch(setClickedRow(clickedRowIndex))
+    }
 
-    const sizePerPageRenderer = ({
-        options,
-        currSizePerPage,
-        onSizePerPageChange
-    }) => (
-        <div className="btn-group" role="group">
-            {
-                options.map((option) => {
-                    const isSelect = currSizePerPage === `${option.page}`;
-                    return (
-                        <button
-                            key={option.text}
-                            type="button"
-                            onClick={() => onSizePerPageChange(option.page)}
-                            className={`btn ${isSelect ? 'btn-danger' : 'btn-secondary'}`}
-                            style={{ boxShadow: 'none' }}
-                        >
-                            {option.text}
-                        </button>
-                    );
-                })
-            }
-        </div>
-    );
+    const rowEvents = {
+        onClick: (e, row, rowIndex) => {
+            setClickedRowIndex(rowIndex)
+            console.log(rowIndex);
+        }
+    };
 
     const columns = [
         {
             dataField: 'firstName',
-            text: 'First Name'
+            text: 'First Name',
+            headerStyle: (colum, colIndex) => {
+                return { width: '120px' };
+            }
         }, {
             dataField: 'lastName',
-            text: 'Last Name'
+            text: 'Last Name',
+            headerStyle: (colum, colIndex) => {
+                return { width: '120px' };
+            }
         }, {
             dataField: 'email',
             text: 'Email',
             style: {
                 'overflow-x': 'scroll'
+            },
+            headerStyle: (colum, colIndex) => {
+                return { width: '250px' };
             },
             classes: 'hide-scroll-bar'
         }, {
@@ -122,33 +89,49 @@ function ReactBootstrapTable() {
             text: 'Funnel Stage',
             formatter: (cell) => (
                 cell ? cell : "-"
-            )
+            ),
+            headerStyle: (colum, colIndex) => {
+                return { width: '120px', textAlign: 'center' };
+            }
         }, {
             dataField: 'followUpDate',
             text: 'Follow Up Date',
             formatter: (cell) => (
                 cell ? cell : "-"
+            ),
+            headerStyle: (colum, colIndex) => {
+                return { width: '120px', textAlign: 'center' };
+            }
+        }, {
+            dataField: 'actions',
+            text: 'Actions',
+            headerStyle: (colum, colIndex) => {
+                return { width: '120px' };
+            },
+            formatter: (cell) => (
+                cell ? cell : <>
+                    <span onClick={() => { deleteItem() }}><DeleteIcon fontSize='small' sx={{ color: '#dc3545' }} /></span>
+                </>
             )
-        },
+        }
     ];
 
     const options = {
-        sizePerPageRenderer,
-        pageButtonRenderer,
-        // paginationSize: 2,
-        pageStartIndex: 1,
+        // pageButtonRenderer,
+        // paginationSize: 5,
+        // pageStartIndex: 1,
         // alwaysShowAllBtns: true, // Always show next and previous button
         // withFirstAndLast: false, // Hide the going to First and Last page button
         // hideSizePerPage: true, // Hide the sizePerPage dropdown always
         // hidePageListOnlyOnePage: true, // Hide the pagination list when only one page
-        showTotal: true,
-        sizePerPageList: [{
-            text: '5', value: 5
-        }, {
-            text: '8', value: 8
+        // showTotal: true,
+        onSizePerPageChange: (sizePerPage, page) => {
+            disptch(setLeadsOffset(sizePerPage))
+            disptch(setLeadsPageNumber(page))
+        },
+        onPageChange: (page, sizePerPage) => {
+            disptch(setLeadsOffset(sizePerPage), setLeadsPageNumber(page))
         }
-        ],// A numeric array is also available. the purpose of above example is custom the text
-
     };
 
 
@@ -175,18 +158,25 @@ function ReactBootstrapTable() {
 
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
 
-                    <CardContent>
+                    <CardContent className={`${isLoading ? 'card-container-spinner' : 'card-container'}`}>
 
-                        <BootstrapTable
-                            wrapperClasses="table-responsive"
-                            bordered={true}
-                            classes="table table-head-custom table-vertical-center overflow-hidden"
-                            bootstrap4
-                            remote
-                            keyField='_id'
-                            data={leadsData}
-                            columns={columns}
-                            pagination={paginationFactory(options)} />
+                        {isLoading ? <div className="spinner-border text-danger mt-3 spinner" role="status" style={{}}>
+                            <span className="sr-only"></span>
+                        </div> : <>
+                            <BootstrapTable
+                                wrapperClasses="table-responsive"
+                                bordered={true}
+                                classes="table table-head-custom table-vertical-center overflow-hidden"
+                                bootstrap4
+                                remote
+                                keyField='_id'
+                                data={leadsData}
+                                columns={columns}
+                                pagination={paginationFactory(options)}
+                                rowEvents={rowEvents} />
+                            <br />
+
+                        </>}
 
                     </CardContent>
 
