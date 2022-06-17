@@ -14,3 +14,5 @@ export const fetchLeadsSuccess = (leadsData) => ({ type: LEADS_ACTIONS_TYPES.FET
 export const fetchLeadsFailed = (error) => ({ type: LEADS_ACTIONS_TYPES.FETCH_LEADS_FAILED, payload: error })
 
 export const setClickedRow = (clickedRow) => ({ type: LEADS_ACTIONS_TYPES.SET_CLICKED_ROW, payload: clickedRow })
+
+export const setShowModal = (showModal) => ({ type: LEADS_ACTIONS_TYPES.SET_SHOW_MODAL, payload: showModal })

@@ -14,21 +14,21 @@ import { leadsSelector } from "../../store/leads/leads.selectors"
 
 import { useDispatch } from "react-redux"
 import { fetchLeadsStart, fetchLeadsSuccess } from "../../store/leads/leads.action"
-import  {DeleteLeadDialogue}  from "../../components/lead-delete-dialogue/lead-delete-component";
+import { DeleteLeadDialogue } from "../../components/lead-delete-dialogue/lead-delete-component";
 
 
 const Leads = () => {
 
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
     const { accessToken } = useSelector(currentUserSelector)
-    
+
     const dispatch = useDispatch()
-    
+
     const { isLoading, pageNumber, offset, clickedRow } = useSelector(leadsSelector)
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
 
- 
+
 
     useEffect(() => {
         dispatch(fetchLeadsStart())
@@ -57,8 +57,7 @@ const Leads = () => {
     }
 
     useEffect(() => {
-
-        // axios.delete(`https://astra-crm.herokuapp.com/api/lead/delete/${clickedRow._id}`, {
+        // axios.delete(`https://astra-crm.herokuapp.com/api/lead/delete/${_id}`, {
         //     headers: {
         //         authorization: `${accessToken}`
         //     },
@@ -67,6 +66,16 @@ const Leads = () => {
         //     console.log('delete:', response);
         //     // dispatch(fetchLeadsSuccess(response.data.leads))
         // })
+
+        axios.delete(`https://astra-crm.herokuapp.com/api/lead/delete/${clickedRow._id}`, {
+            headers: {
+                authorization: `${accessToken}`
+            },
+        }
+        ).then((response) => {
+            console.log('delete:', response);
+            // dispatch(fetchLeadsSuccess(response.data.leads))
+        })
 
         // setShowDeleteModal(!showDeleteModal);
 
@@ -81,11 +90,11 @@ const Leads = () => {
             <div className={`${isSideNavBarOpen ? 'leads-body leads-body-compressed' : 'leads-body'}`}>
                 <Header />
                 <div className="leads-content">
-                    
-                    <DeleteLeadDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal}/>
 
-                    <ReactBootstrapTable setShowDeleteModal={setShowDeleteModal}/>
-                
+                    <DeleteLeadDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal} />
+
+                    <ReactBootstrapTable setShowDeleteModal={setShowDeleteModal} />
+
                 </div>
             </div>
         </div>

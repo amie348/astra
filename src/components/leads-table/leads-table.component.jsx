@@ -23,7 +23,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import { useDispatch } from 'react-redux';
-import { setLeadsPageNumber, setLeadsOffset, setClickedRow } from '../../store/leads/leads.action';
+import { setLeadsPageNumber, setLeadsOffset, setClickedRow, setShowModal } from '../../store/leads/leads.action';
+import { render } from 'react-dom';
+import Example from '../edit-lead-modal/edit-lead-modal.component';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -48,9 +50,13 @@ function ReactBootstrapTable({setShowDeleteModal}) {
     };
 
     const deleteItem = (row) => {
-        console.log(row);
         disptch(setClickedRow(row))
         setShowDeleteModal(true)
+    }
+
+    const editItem = (row) => {
+        disptch(setClickedRow(row))
+        disptch(setShowModal(true))
     }
 
     const columns = [
@@ -86,7 +92,7 @@ function ReactBootstrapTable({setShowDeleteModal}) {
                 cell ? cell : "-"
             ),
             headerStyle: (colum, colIndex) => {
-                return { width: '120px', textAlign: 'center' };
+                return { width: '120px' };
             }
         }, {
             dataField: 'followUpDate',
@@ -95,19 +101,18 @@ function ReactBootstrapTable({setShowDeleteModal}) {
                 cell ? cell : "-"
             ),
             headerStyle: (colum, colIndex) => {
-                return { width: '120px', textAlign: 'center' };
+                return { width: '120px' };
             }
         }, {
             dataField: 'actions',
             text: 'Actions',
             headerStyle: (colum, colIndex) => {
-                return { width: '120px' };
+                return { width: '120px', textAlign: 'center' };
             },
             formatter: (cell, row) => (
                 cell ? cell : <>
                     <span onClick={() => { deleteItem(row) }}><DeleteIcon fontSize='small' className='deleteButton' /></span>
-                    <span onClick={() => { deleteItem(row) }}><EditIcon fontSize='small' className='editButton' /></span>
-
+                    <span onClick={() => { editItem(row) }}><EditIcon fontSize='small' className='editButton' /></span>
                 </>
             )
         }
@@ -135,7 +140,7 @@ function ReactBootstrapTable({setShowDeleteModal}) {
 
     return (
         <div className="table-container">
-
+            <Example />
             <Card sx={{ maxWidth: "100%" }} >
                 <CardHeader
                     action={
@@ -177,7 +182,6 @@ function ReactBootstrapTable({setShowDeleteModal}) {
                 </Collapse>
 
             </Card>
-
         </div>
     )
 }

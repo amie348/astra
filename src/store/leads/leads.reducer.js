@@ -40,6 +40,12 @@ export const leadsReducer = (state = INITIAL_STATE, action) => {
                 clickedRow: payload
             }
 
+        case LEADS_ACTIONS_TYPES.SET_SHOW_MODAL:
+            return {
+                ...state,
+                showModal: payload
+            }
+
 
         default:
             return state
@@ -52,5 +58,6 @@ const INITIAL_STATE = {
     error: null,
     pageNumber: 1,
     offset: 10,
-    clickedRow: {}
+    clickedRow: {},
+    showModal: false
 }
