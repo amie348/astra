@@ -24,8 +24,11 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { useDispatch } from 'react-redux';
 import { setLeadsPageNumber, setLeadsOffset, setClickedRow, setShowEditModal } from '../../store/leads/leads.action';
-import { render } from 'react-dom';
 import Example from '../edit-lead-modal/edit-lead-modal.component';
+
+// import Pagination from 'react-bootstrap/Pagination'
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -40,10 +43,8 @@ const ExpandMore = styled((props) => {
 
 function ReactBootstrapTable({ setShowDeleteModal }) {
 
-    const { leadsData, isLoading } = useSelector(leadsSelector)
+    const { leadsData, leadsRawData, isLoading } = useSelector(leadsSelector)
     const [expanded, setExpanded] = useState(true);
-
-    const data = [{ firstName: 'test' }, { firstName: 'test1' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test8' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test3' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test9' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test0' }]
 
     const disptch = useDispatch()
 
@@ -158,6 +159,10 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
                                 keyField='_id'
                                 data={leadsData}
                                 columns={columns} />
+
+                            <Stack spacing={2}>
+                                <Pagination count={leadsRawData.totalPages} shape="rounded" color='primary' size='small' />
+                            </Stack>
                         </>}
 
                     </CardContent>

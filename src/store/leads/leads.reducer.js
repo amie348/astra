@@ -52,12 +52,19 @@ export const leadsReducer = (state = INITIAL_STATE, action) => {
                 showConfirmUpdateModal: payload
             }
 
+        case LEADS_ACTIONS_TYPES.SET_LEADS_RAW_DATA:
+            return {
+                ...state,
+                leadsRawData: payload
+            }
+
         default:
             return state
     }
 }
 
 const INITIAL_STATE = {
+    leadsRawData: {},
     leadsData: [],
     isLoading: false,
     error: null,

@@ -13,7 +13,7 @@ import { currentUserSelector } from "../../store/user/user.selectors"
 import { leadsSelector } from "../../store/leads/leads.selectors"
 
 import { useDispatch } from "react-redux"
-import { fetchLeadsStart, fetchLeadsSuccess } from "../../store/leads/leads.action"
+import { fetchLeadsStart, fetchLeadsSuccess, setLeadsRawData } from "../../store/leads/leads.action"
 import { DeleteLeadDialogue } from "../../components/lead-delete-dialogue/lead-delete-component";
 
 
@@ -24,7 +24,7 @@ const Leads = () => {
 
     const dispatch = useDispatch()
 
-    const { isLoading, pageNumber, offset, clickedRow } = useSelector(leadsSelector)
+    const { isLoading, pageNumber, offset, clickedRow, leadsRawData } = useSelector(leadsSelector)
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
 
@@ -43,6 +43,7 @@ const Leads = () => {
         }
         ).then((response) => {
             console.log(response);
+            dispatch(setLeadsRawData(response.data))
             dispatch(fetchLeadsSuccess(response.data.leads))
         })
 

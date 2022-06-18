@@ -10,6 +10,7 @@ export const setLeadsOffset = (offset) => ({ type: LEADS_ACTIONS_TYPES.SET_LEADS
 export const fetchLeadsStart = () => ({ type: LEADS_ACTIONS_TYPES.FETCH_LEADS_START, payload: null })
 
 export const fetchLeadsSuccess = (leadsData) => ({ type: LEADS_ACTIONS_TYPES.FETCH_LEADS_SUCCESS, payload: leadsData })
+export const setLeadsRawData = (leadsRawData) => ({ type: LEADS_ACTIONS_TYPES.SET_LEADS_RAW_DATA, payload: leadsRawData })
 
 export const fetchLeadsFailed = (error) => ({ type: LEADS_ACTIONS_TYPES.FETCH_LEADS_FAILED, payload: error })
 
