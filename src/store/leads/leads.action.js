@@ -15,4 +15,6 @@ export const fetchLeadsFailed = (error) => ({ type: LEADS_ACTIONS_TYPES.FETCH_LE
 
 export const setClickedRow = (clickedRow) => ({ type: LEADS_ACTIONS_TYPES.SET_CLICKED_ROW, payload: clickedRow })
 
-export const setShowModal = (showModal) => ({ type: LEADS_ACTIONS_TYPES.SET_SHOW_MODAL, payload: showModal })
+export const setShowEditModal = (showEditModal) => ({ type: LEADS_ACTIONS_TYPES.SET_SHOW_EDIT_MODAL, payload: showEditModal })
+
+export const setShowConfirmUpdateModal = (showConfirmUpdateModal) => ({ type: LEADS_ACTIONS_TYPES.SET_SHOW_CONFIRM_UPDATE_MODAL, payload: showConfirmUpdateModal })

@@ -23,7 +23,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import { useDispatch } from 'react-redux';
-import { setLeadsPageNumber, setLeadsOffset, setClickedRow, setShowModal } from '../../store/leads/leads.action';
+import { setLeadsPageNumber, setLeadsOffset, setClickedRow, setShowEditModal } from '../../store/leads/leads.action';
 import { render } from 'react-dom';
 import Example from '../edit-lead-modal/edit-lead-modal.component';
 
@@ -38,7 +38,7 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-function ReactBootstrapTable({setShowDeleteModal}) {
+function ReactBootstrapTable({ setShowDeleteModal }) {
 
     const { leadsData, isLoading } = useSelector(leadsSelector)
     const [expanded, setExpanded] = useState(true);
@@ -56,7 +56,7 @@ function ReactBootstrapTable({setShowDeleteModal}) {
 
     const editItem = (row) => {
         disptch(setClickedRow(row))
-        disptch(setShowModal(true))
+        disptch(setShowEditModal(true))
     }
 
     const columns = [
