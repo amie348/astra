@@ -62,7 +62,7 @@ function Example() {
 
         // console.log(lastContactedDate);
 
-    }, [])
+    }, [lastContacted, followUpDate, updatedAt])
 
     const updateLead = () => {
         console.log('new values to be updated: ', updatedValues);

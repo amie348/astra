@@ -77,9 +77,6 @@ const Leads = () => {
 
         // setShowDeleteModal(!showDeleteModal);
 
-        console.log(`showDeleteModal`, showDeleteModal)
-        console.log(clickedRow);
-
     }, [clickedRow])
 
     return (

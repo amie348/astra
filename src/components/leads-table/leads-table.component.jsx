@@ -43,6 +43,8 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
     const { leadsData, isLoading } = useSelector(leadsSelector)
     const [expanded, setExpanded] = useState(true);
 
+    const data = [{ firstName: 'test' }, { firstName: 'test1' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test8' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test3' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test9' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test0' }]
+
     const disptch = useDispatch()
 
     const handleExpandClick = () => {
@@ -118,24 +120,6 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
         }
     ];
 
-    const options = {
-        // pageButtonRenderer,
-        // paginationSize: 5,
-        // pageStartIndex: 1,
-        // alwaysShowAllBtns: true, // Always show next and previous button
-        // withFirstAndLast: false, // Hide the going to First and Last page button
-        // hideSizePerPage: true, // Hide the sizePerPage dropdown always
-        // hidePageListOnlyOnePage: true, // Hide the pagination list when only one page
-        // showTotal: true,
-        onSizePerPageChange: (sizePerPage, page) => {
-            disptch(setLeadsOffset(sizePerPage))
-            disptch(setLeadsPageNumber(page))
-        },
-        onPageChange: (page, sizePerPage) => {
-            disptch(setLeadsOffset(sizePerPage), setLeadsPageNumber(page))
-        }
-    };
-
 
 
     return (
@@ -173,8 +157,7 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
                                 remote
                                 keyField='_id'
                                 data={leadsData}
-                                columns={columns}
-                                pagination={paginationFactory(options)} />
+                                columns={columns} />
                         </>}
 
                     </CardContent>
