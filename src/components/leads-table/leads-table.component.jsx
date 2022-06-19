@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { leadsSelector } from '../../store/leads/leads.selectors';
 
 import { styled } from '@mui/material/styles';
+
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -18,9 +19,21 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton from '@mui/material/IconButton';
 import ActionItem from '../action-item/action-item.component';
+import { Tooltip } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import moment from "moment";
+
+
 
 import { useDispatch } from 'react-redux';
 import { setLeadsPageNumber, setLeadsOffset, setClickedRow, setShowEditModal } from '../../store/leads/leads.action';
@@ -41,10 +54,43 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
+
+const useStyles = makeStyles({
+
+    root:{
+            backgroundColor: `#dc3545`,
+            color: `#FFF`,
+            fontSize: "25px",
+            padding: `3px 3px`,
+            borderRadius: `3px`,
+            margin: `0px 15px`,
+        '&:hover': {
+            backgroundColor: "#FFF",
+            color: `#dc3545`
+                         
+        }
+    }
+
+})
+
+const paginationTheme = createTheme({
+    palette: {
+      primary: {
+        main: "#dc3545",
+      },
+    },
+});
+
 function ReactBootstrapTable({ setShowDeleteModal }) {
 
-    const { leadsData, leadsRawData, isLoading } = useSelector(leadsSelector)
+    
+    const classes = useStyles()
+    const { leadsData, isLoading, leadsRawData, pageNumber, offset } = useSelector(leadsSelector)
     const [expanded, setExpanded] = useState(true);
+
+    // const [pageNumber, setPageNumber] = useState(1);
+
+    const data = [{ firstName: 'test' }, { firstName: 'test1' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test8' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test3' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test9' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test' }, { firstName: 'test0' }]
 
     const disptch = useDispatch()
 
@@ -62,18 +108,33 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
         disptch(setShowEditModal(true))
     }
 
+    const handlePaginationChange = (event, value) => {
+
+        disptch(setLeadsPageNumber(value))
+
+    } 
+
+    const handlePaginationPageSizeChange = (e) => {
+
+
+        // console.log(e)
+
+        disptch(setLeadsPageNumber(e.target.value))
+
+    }
+
     const columns = [
         {
             dataField: 'firstName',
             text: 'First Name',
             headerStyle: (colum, colIndex) => {
-                return { width: '120px' };
+                return { width: '10%' };
             }
         }, {
             dataField: 'lastName',
             text: 'Last Name',
             headerStyle: (colum, colIndex) => {
-                return { width: '120px' };
+                return { width: '10%' };
             }
         }, {
             dataField: 'email',
@@ -82,12 +143,15 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
                 'overflow-x': 'scroll'
             },
             headerStyle: (colum, colIndex) => {
-                return { width: '250px' };
+                return { width: '20%' };
             },
             classes: 'hide-scroll-bar'
         }, {
             dataField: 'phone',
-            text: 'Phone'
+            text: 'Phone',
+            headerStyle: (colum, colIndex) => {
+                return { width: '10%' };
+            },
         }, {
             dataField: 'funnelStage',
             text: 'Funnel Stage',
@@ -95,28 +159,58 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
                 cell ? cell : "-"
             ),
             headerStyle: (colum, colIndex) => {
-                return { width: '120px' };
+                return { width: '10%' };
             }
         }, {
             dataField: 'followUpDate',
             text: 'Follow Up Date',
-            formatter: (cell) => (
-                cell ? cell : "-"
-            ),
             headerStyle: (colum, colIndex) => {
-                return { width: '120px' };
-            }
+                return { width: '10%', textAlign: 'center' };
+            },
+            formatter: (cell) => ( 
+                <span style={{
+                    textAlign: "center",
+                    cursor: "pointer",
+                    padding: "4px 8px",
+                    color: "#fff",
+                    backgroundColor: "#dc3545",
+                    borderRadius: "6px",
+                  }} >
+                    {cell ? 
+                    <Tooltip title={moment(cell).format(`MMMM Do YYYY`)}>
+                        <span>{" " + moment(cell).fromNow()}</span>
+                    </Tooltip>
+                    :
+                    "-"
+                    }
+                    
+                </span>
+                  
+                 
+            )
         }, {
             dataField: 'actions',
             text: 'Actions',
             headerStyle: (colum, colIndex) => {
-                return { width: '120px', textAlign: 'center' };
+                return { width: '15%', textAlign: 'center' };
             },
             formatter: (cell, row) => (
-                cell ? cell : <>
-                    <span onClick={() => { deleteItem(row) }}><DeleteIcon fontSize='small' className='deleteButton' /></span>
-                    <span onClick={() => { editItem(row) }}><EditIcon fontSize='small' className='editButton' /></span>
-                </>
+                cell ? cell : 
+                <div style={{display: "flex", justifyContent: "center"}}>
+                
+                <Tooltip title ="Delete Lead">
+                    <span onClick={() => {  deleteItem(row) }}>
+                        <DeleteIcon fontSize='small' className={classes.root} />
+                    </span>
+                </Tooltip>
+                    
+                <Tooltip title ="Edit/View Lead">
+                    <span onClick={() => {  editItem(row)}} >
+                        <EditIcon fontSize='small' className={classes.root} /> 
+                    </span>
+                </Tooltip>
+                
+                </div>
             )
         }
     ];
@@ -161,7 +255,45 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
                                 columns={columns} />
 
                             <Stack spacing={2}>
-                                <Pagination count={leadsRawData.totalPages} shape="rounded" color='primary' size='small' />
+                            
+                            <div style={{display: "flex", justifyContent: "space-between"}} >
+
+
+                            {/* show pagination select field here */}
+                            
+                            {/* <Box sx={{minWidth: 30}}>
+                                <FormControl fullWidth>
+                                    <InputLabel id="size">Size</InputLabel>
+                                    <Select
+                                    labelId="size"
+                                    id="paginationSize"
+                                    value={offset}
+                                    label="Size"
+                                    onChange={handlePaginationPageSizeChange}
+                                    >
+                                    <MenuItem value={10}>10</MenuItem>
+                                    <MenuItem value={2}>2</MenuItem>
+                                    <MenuItem value={1}>1</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Box> */}
+
+
+                            <ThemeProvider theme={paginationTheme}>
+                                <Pagination 
+                                count={leadsRawData.totalPages} 
+                                shape="rounded" 
+                                color='primary' 
+                                size='small'
+                                page={pageNumber}
+                                onChange={handlePaginationChange}
+                                boundaryCount={5}
+                                />
+                            </ThemeProvider>
+
+
+                            </div>
+
                             </Stack>
                         </>}
 

@@ -15,7 +15,7 @@ import { leadsSelector } from "../../store/leads/leads.selectors"
 import { useDispatch } from "react-redux"
 import { fetchLeadsStart, fetchLeadsSuccess, setLeadsRawData } from "../../store/leads/leads.action"
 import { DeleteLeadDialogue } from "../../components/lead-delete-dialogue/lead-delete-component";
-
+import { LeadFIlters } from "../../components/lead-filters/lead-filters-component";
 
 const Leads = () => {
 
@@ -55,30 +55,7 @@ const Leads = () => {
         setShowDeleteModal(false);
     }
 
-    useEffect(() => {
-        // axios.delete(`https://astra-crm.herokuapp.com/api/lead/delete/${_id}`, {
-        //     headers: {
-        //         authorization: `${accessToken}`
-        //     },
-        // }
-        // ).then((response) => {
-        //     console.log('delete:', response);
-        //     // dispatch(fetchLeadsSuccess(response.data.leads))
-        // })
 
-        // axios.delete(`https://astra-crm.herokuapp.com/api/lead/delete/${clickedRow._id}`, {
-        //     headers: {
-        //         authorization: `${accessToken}`
-        //     },
-        // }
-        // ).then((response) => {
-        //     console.log('delete:', response);
-        //     // dispatch(fetchLeadsSuccess(response.data.leads))
-        // })
-
-        // setShowDeleteModal(!showDeleteModal);
-
-    }, [clickedRow])
 
     return (
         <div className="leads-container">
@@ -88,7 +65,10 @@ const Leads = () => {
                 <div className="leads-content">
 
                     <DeleteLeadDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal} />
-
+                    
+                    <div style={{marginBottom: "30px"}}>
+                    <LeadFIlters  />
+                    </div>
                     <ReactBootstrapTable setShowDeleteModal={setShowDeleteModal} />
 
                 </div>
