@@ -140,12 +140,21 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
         }, {
             dataField: 'phone',
             text: 'Phone',
+            style: {
+                'overflow-x': 'scroll'
+            },
+            classes: 'hide-scroll-bar',
             headerStyle: (colum, colIndex) => {
                 return { width: '10%' };
             },
         }, {
             dataField: 'funnelStage',
             text: 'Funnel Stage',
+            
+            style: {
+                'overflow-x': 'scroll'
+            },
+            classes: 'hide-scroll-bar',
             formatter: (cell) => (
                 cell === "DEAD" ? 
                 
