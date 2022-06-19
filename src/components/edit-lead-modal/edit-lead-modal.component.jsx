@@ -7,7 +7,7 @@ import './edit-lead-modal.styles.scss'
 import { useSelector } from 'react-redux'
 import { leadsSelector } from '../../store/leads/leads.selectors';
 import { currentUserSelector } from '../../store/user/user.selectors';
-import { BASE_API_URL } from "../../config";
+import { BASE_API_URL } from "../../assets/config";
 
 
 import Alert from '@mui/material/Alert';
@@ -37,10 +37,10 @@ const defaultFormFields = {
     response: '',
     followUpDate: '',
     funnelStage: '',
-    purchasesPrice: "",
+    purchasesPrice: 0,
     finance: "",
     paidInFull: "",
-    futureRevenue: ""
+    futureRevenue: 0
 }
 
 function Example() {
@@ -53,7 +53,6 @@ function Example() {
     const { _id, createdAt, email, firstName, lastName, phone, updatedAt, lastContacted, contactType, response, followUpDate, noOfTimesContacted, funnelStage } = clickedRow
 
     const [updatedValues, setUpdatedValues] = useState(defaultFormFields)
-    // console.log('default:', defaultFormFields, "up values:", updatedValues);
 
     useEffect(() => {
 
@@ -99,7 +98,6 @@ function Example() {
                 },
             }
             ).then((response) => {
-                console.log(response);
                 dispatch(setLeadsRawData(response.data))
                 dispatch(fetchLeadsSuccess(response.data.leads))
             })

@@ -147,7 +147,125 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
             dataField: 'funnelStage',
             text: 'Funnel Stage',
             formatter: (cell) => (
-                cell ? cell : "-"
+                cell === "DEAD" ? 
+                
+                (<span style={{
+                    textAlign: "center",
+                    cursor: "pointer",
+                    padding: "4px 8px",
+                    color: "#fff",
+                    backgroundColor: "#dc3545",
+                    borderRadius: "6px",
+                }} >
+                {cell} 
+                </span>
+                )
+                : cell === "PURCHASED" ? 
+                
+                (<span style={{
+                    textAlign: "center",
+                    cursor: "pointer",
+                    padding: "4px 8px",
+                    color: "#fff",
+                    backgroundColor: "#0001E6",
+                    borderRadius: "6px",
+                }} >
+                {cell} 
+                </span>
+                )
+                : cell === "NEW LEAD" ? 
+                
+                (<span style={{
+                    textAlign: "center",
+                    cursor: "pointer",
+                    padding: "4px 8px",
+                    color: "#fff",
+                    backgroundColor: "#D10E73",
+                    borderRadius: "6px",
+                }} >
+                {cell} 
+                </span>
+                )
+                :cell === "FOLLOW UP" ? 
+                
+                (<span style={{
+                    textAlign: "center",
+                    cursor: "pointer",
+                    padding: "4px 8px",
+                    color: "#fff",
+                    backgroundColor: "#F2C80C",
+                    borderRadius: "6px",
+                }} >
+                {cell} 
+                </span>
+                )
+                : cell === "CONSULTATION BOOKED" ? 
+                
+                (<span style={{
+                    textAlign: "center",
+                    cursor: "pointer",
+                    padding: "4px 8px",
+                    color: "#fff",
+                    backgroundColor: "#0BDE89",
+                    borderRadius: "6px",
+                }} >
+                {cell} 
+                </span>
+                )
+                :
+                cell === "CONSULTATION COMPLETE" ? 
+                
+                (<span style={{
+                    textAlign: "center",
+                    cursor: "pointer",
+                    padding: "4px 8px",
+                    color: "#fff",
+                    backgroundColor: "#0ACF0E",
+                    borderRadius: "6px",
+                }} >
+                {cell} 
+                </span>
+                )
+                :
+                cell === "OBJECTION" ? 
+                
+                (<span style={{
+                    textAlign: "center",
+                    cursor: "pointer",
+                    padding: "4px 8px",
+                    color: "#fff",
+                    backgroundColor: "#B80BDE",
+                    borderRadius: "6px",
+                }} >
+                {cell} 
+                </span>
+                )
+                :
+                cell === "WAITING FOR" ? 
+                
+                (<span style={{
+                    textAlign: "center",
+                    cursor: "pointer",
+                    padding: "4px 8px",
+                    color: "#fff",
+                    backgroundColor: "#777D60",
+                    borderRadius: "6px",
+                }} >
+                {cell} 
+                </span>
+                )
+                :
+                (<span style={{
+                    textAlign: "center",
+                    cursor: "pointer",
+                    padding: "4px 8px",
+                    color: "#fff",
+                    backgroundColor: "#dc3545",
+                    borderRadius: "6px",
+                }} >
+                {"-"} 
+                </span>
+                )
             ),
             headerStyle: (colum, colIndex) => {
                 return { width: '10%' };
@@ -264,7 +382,7 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
                                                 onChange={handlePaginationPageSizeChange}
                                             >
                                                 <MenuItem value={10}>10</MenuItem>
-                                                <MenuItem value={2}>2</MenuItem>
+                                                <MenuItem value={25}>25</MenuItem>
                                                 <MenuItem value={50}>50</MenuItem>
                                                 <MenuItem value={100}>100</MenuItem>
                                             </Select>

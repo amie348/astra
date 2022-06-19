@@ -20,7 +20,10 @@ const Header = () => {
     return (
         <div className='header-container'>
             <div className='content'>
-                <span className='companyName'>{companyName}</span>
+                <span className='companyName'> 
+                <strong>
+                {companyName}
+                </strong> </span>
                 <span className='userName'>
                     <span onClick={() => { dispatch(setIsProfileDropDownOpen(!isProfileDropDownOpen)) }}> <AccountCircleIcon /> </span>
                     {name}
