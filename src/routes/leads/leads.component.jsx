@@ -17,7 +17,7 @@ import { fetchLeadsStart, fetchLeadsSuccess, setLeadsRawData, setIsLoading } fro
 import { DeleteLeadDialogue } from "../../components/lead-delete-dialogue/lead-delete-component";
 import { LeadFIlters } from "../../components/lead-filters/lead-filters-component";
 import { BASE_API_URL } from "../../assets/config"
-
+import ErrorHandling from "../../components/errorHandler";
 
 const Leads = () => {
 
@@ -48,7 +48,8 @@ const Leads = () => {
             dispatch(fetchLeadsSuccess(response.data.leads))
         }).catch(error => {
 
-            console.log(error.response)
+            dispatch(setIsLoading(false))
+            ErrorHandling(error)
 
         })
 

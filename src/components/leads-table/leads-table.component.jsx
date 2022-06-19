@@ -350,9 +350,12 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
 
                     <CardContent className={`${isLoading ? 'card-container-spinner' : 'card-container'}`}>
 
-                        {isLoading ? <div className="spinner-border text-danger mt-3 spinner" role="status" style={{}}>
+                        {isLoading ? 
+                        <div className="spinner-border text-danger mt-3 spinner" role="status" style={{}}>
                             <span className="sr-only"></span>
-                        </div> : <>
+                        </div> : leadsData.length > 0 ?
+                        
+                        <>
                             <BootstrapTable
                                 wrapperClasses="table-responsive"
                                 bordered={true}
@@ -406,7 +409,14 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
                                 </div>
 
                             </Stack>
-                        </>}
+                        </>
+                        :
+                        <div style={{display: "flex", justifyContent: "center"}}>
+                            <h6>
+                                <strong> No Records Found </strong>
+                            </h6>
+                        </div>
+                        }
 
                     </CardContent>
 
