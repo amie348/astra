@@ -1,0 +1,20 @@
+.input-fields-styles {}
+
+.input-fields-styles:active {}
+
+.form-control:focus {
+    border-color: #FF0000;
+    box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.378);
+}
+
+.form-select:focus {
+    border-color: #FF0000;
+    box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.378);
+}
+
+.form-select {
+    // option {
+    //     color: #FF0000;
+    //     box-shadow: 0 0 10px 100px #000 inset;
+    // }
+}

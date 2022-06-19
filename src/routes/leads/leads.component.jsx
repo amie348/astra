@@ -24,18 +24,17 @@ const Leads = () => {
 
     const dispatch = useDispatch()
 
-    const { isLoading, pageNumber, offset, clickedRow, leadsRawData } = useSelector(leadsSelector)
+    const { isLoading, pageNumber, offset, clickedRow, leadsRawData, searchFilters } = useSelector(leadsSelector)
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-
-
-
     useEffect(() => {
+        console.log(searchFilters);
         dispatch(fetchLeadsStart())
-        axios.post('https://astra-crm.herokuapp.com/api/lead/get', {
+        // https://astra-crm.herokuapp.com/api/lead/get
+        axios.post('https://6ba4-182-187-71-78.in.ngrok.io/api/lead/get', {
             pageNumber,
             offset,
-            searchFilters: {}
+            searchFilters
         }, {
             headers: {
                 authorization: `${accessToken}`
@@ -48,7 +47,7 @@ const Leads = () => {
         })
 
 
-    }, [pageNumber, offset])
+    }, [pageNumber, offset, searchFilters])
 
 
     const handleChangeShowDeleteModal = () => {
@@ -65,9 +64,9 @@ const Leads = () => {
                 <div className="leads-content">
 
                     <DeleteLeadDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal} />
-                    
-                    <div style={{marginBottom: "30px"}}>
-                    <LeadFIlters  />
+
+                    <div style={{ marginBottom: "30px" }}>
+                        <LeadFIlters />
                     </div>
                     <ReactBootstrapTable setShowDeleteModal={setShowDeleteModal} />
 

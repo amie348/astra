@@ -19,3 +19,9 @@ export const setClickedRow = (clickedRow) => ({ type: LEADS_ACTIONS_TYPES.SET_CL
 export const setShowEditModal = (showEditModal) => ({ type: LEADS_ACTIONS_TYPES.SET_SHOW_EDIT_MODAL, payload: showEditModal })
 
 export const setShowConfirmUpdateModal = (showConfirmUpdateModal) => ({ type: LEADS_ACTIONS_TYPES.SET_SHOW_CONFIRM_UPDATE_MODAL, payload: showConfirmUpdateModal })
+export const setLeadsDeleteError = (deleteError) => ({ type: LEADS_ACTIONS_TYPES.SET_LEADS_DELETE_ERROR, payload: deleteError })
+export const setLeadsUpdateError = (updateError) => ({ type: LEADS_ACTIONS_TYPES.SET_LEADS_UPDATE_ERROR, payload: updateError })
+export const setLeadsSuccessFullyDeleted = (successfullyDeleted) => ({ type: LEADS_ACTIONS_TYPES.SET_LEADS_SUCCESSFULLY_DELETED, payload: successfullyDeleted })
+export const setLeadsSuccessFullyUpdated = (successfullyUpdated) => ({ type: LEADS_ACTIONS_TYPES.SET_LEADS_SUCCESSFULLY_UPDATED, payload: successfullyUpdated })
+export const setSearchFilters = (searchFilters) => ({ type: LEADS_ACTIONS_TYPES.SET_SEARCH_FILTERS, payload: searchFilters })
+

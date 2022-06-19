@@ -14,7 +14,7 @@ const Dashboard = () => {
     const { accessToken } = useSelector(currentUserSelector)
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
 
-    console.log(accessToken);
+    // console.log(accessToken);
 
     return (
         <div className='dashboard-container'>

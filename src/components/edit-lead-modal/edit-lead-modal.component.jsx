@@ -2,21 +2,24 @@ import Modal from 'react-bootstrap/Modal'
 import { Button, Form, Col, Row } from 'react-bootstrap'
 import { useEffect, useState } from 'react';
 
+import './edit-lead-modal.styles.scss'
+
 import { useSelector } from 'react-redux'
 import { leadsSelector } from '../../store/leads/leads.selectors';
 import { currentUserSelector } from '../../store/user/user.selectors';
 
+import Alert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
 // import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 // import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
-import DatePicker from 'react-date-picker';
+// import DatePicker from 'react-date-picker';
 
 import axios from 'axios';
 
 import { useDispatch } from 'react-redux';
-import { setShowEditModal, setShowConfirmUpdateModal } from '../../store/leads/leads.action';
+import { setShowEditModal, setShowConfirmUpdateModal, fetchLeadsStart, fetchLeadsSuccess, setLeadsRawData, setLeadsUpdateError, setLeadsDeleteError, setLeadsSuccessFullyUpdated, setLeadsSuccessFullyDeleted } from '../../store/leads/leads.action';
 
 import moment from 'moment';
 import { Tooltip } from '@mui/material';
@@ -43,7 +46,7 @@ function Example() {
     const [isLoading, setIsLoading] = useState(false);
 
     const dispatch = useDispatch()
-    const { showEditModal, clickedRow, showConfirmUpdateModal } = useSelector(leadsSelector)
+    const { showEditModal, clickedRow, showConfirmUpdateModal, pageNumber, offset, deleteError, updateError, successfullyDeleted, successfullyUpdated } = useSelector(leadsSelector)
     const { accessToken } = useSelector(currentUserSelector)
     const { _id, createdAt, email, firstName, lastName, phone, updatedAt, lastContacted, contactType, response, followUpDate, noOfTimesContacted, funnelStage } = clickedRow
 
@@ -68,14 +71,10 @@ function Example() {
         // setFollowUp(moment(followUpDate).format(moment.HTML5_FMT.DATE))
         setUpdatedAtDate(moment(updatedAt).format(moment.HTML5_FMT.DATE))
 
-        // console.log(lastContactedDate);
-
     }, [lastContacted, followUpDate, updatedAt])
 
     const updateLead = () => {
-        console.log('new values to be updated: ', updatedValues);
         setIsLoading(true)
-        // console.log('updatedValues: ', updatedValues)
         axios.patch(`https://astra-crm.herokuapp.com/api/lead/update/${_id}`, updatedValues, {
             headers: {
                 authorization: `${accessToken}`
@@ -83,15 +82,53 @@ function Example() {
         }
         ).then((response) => {
             setIsLoading(false)
+            dispatch(setLeadsSuccessFullyUpdated(true))
             dispatch(setShowConfirmUpdateModal(false))
             dispatch(setShowEditModal(false))
-            console.log('update:', response);
-            // onHide();
+
+            dispatch(fetchLeadsStart())
+            axios.post('https://astra-crm.herokuapp.com/api/lead/get', {
+                pageNumber,
+                offset,
+                searchFilters: {}
+            }, {
+                headers: {
+                    authorization: `${accessToken}`
+                },
+            }
+            ).then((response) => {
+                console.log(response);
+                dispatch(setLeadsRawData(response.data))
+                dispatch(fetchLeadsSuccess(response.data.leads))
+            })
+
+        }).catch(error => {
+            setIsLoading(false)
+            // setIsError(true)
+            dispatch(setLeadsUpdateError(true))
+            dispatch(setShowConfirmUpdateModal(false))
+            dispatch(setShowEditModal(false))
         })
     }
 
     return (
         <>
+            {successfullyUpdated ? <Alert onClose={() => { dispatch(setLeadsSuccessFullyUpdated(false)) }} sx={{ marginBottom: '10px' }} variant="filled" severity="success" >
+                Success - Lead Updated SuccessFully!
+            </Alert > : <></>}
+
+            {successfullyDeleted ? <Alert onClose={() => { dispatch(setLeadsSuccessFullyDeleted(false)) }} sx={{ marginBottom: '10px' }} variant="filled" severity="success" >
+                Success - Lead Deleted SuccessFully!
+            </Alert > : <></>}
+
+            {deleteError ? <Alert onClose={() => { dispatch(setLeadsDeleteError(false)) }} sx={{ marginBottom: '10px' }} variant="filled" severity="error" >
+                Error - Couldn't Delete the lead try again!
+            </Alert > : <></>
+            }
+
+            {updateError ? <Alert onClose={() => { dispatch(setLeadsUpdateError(false)) }} sx={{ marginBottom: '10px' }} variant="filled" severity="error">
+                Error - Couldn't Update the lead try again!
+            </Alert> : <></>}
             <Modal
                 show={showEditModal}
                 onHide={() => dispatch(setShowEditModal(false))}
@@ -142,7 +179,7 @@ function Example() {
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridLastContacted">
-{/*                                 
+                                {/*                                 
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DesktopDatePicker
                                     label="Last Contacted"
@@ -155,18 +192,18 @@ function Example() {
                                     renderInput={(params) => <TextField {...params} />}
                                     />
                             </LocalizationProvider> */}
-                                
+
                                 <Form.Label>Last Contacted</Form.Label>
-                                <Form.Control 
-                                 name='lastContacted'
-                                 type="date"
-                                 defaultValue="dd/mm/yyyy"
-                                 placeholder="Enter Last Contacted"
-                                  onChange={(e) => {
-                                    const { name, value } = e.target;
-                                    setUpdatedValues({ ...updatedValues, [name]: value })
-                                }} 
-                                value={updatedValues.lastContacted} />
+                                <Form.Control
+                                    name='lastContacted'
+                                    type="date"
+                                    defaultValue="dd/mm/yyyy"
+                                    placeholder="Enter Last Contacted"
+                                    onChange={(e) => {
+                                        const { name, value } = e.target;
+                                        setUpdatedValues({ ...updatedValues, [name]: value })
+                                    }}
+                                    value={updatedValues.lastContacted} />
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridContactType">
@@ -177,18 +214,19 @@ function Example() {
                                 }} value={updatedValues.contactType} /> */}
 
                                 <Form.Select aria-label="Default select example"
-                                    name='contactType' 
-                                    placeholder="" 
-                                    onChange={(e) => { const { name, value } = e.target;
-                                      setUpdatedValues({ ...updatedValues, [name]: value })
-                                    }} 
+                                    name='contactType'
+                                    placeholder=""
+                                    onChange={(e) => {
+                                        const { name, value } = e.target;
+                                        setUpdatedValues({ ...updatedValues, [name]: value })
+                                    }}
                                     value={updatedValues.contactType}
                                 >
                                     <option value="">Select</option>
                                     <option value="PHONE">PHONE</option>
                                     <option value="EMAIL">EMAIL</option>
                                     <option value="PHONE AND EMAIL">PHONE AND EMAIL</option>
-                                    
+
                                 </Form.Select>
 
                             </Form.Group>
@@ -205,18 +243,18 @@ function Example() {
 
                             <Form.Group as={Col} controlId="formGridFollowUpDate">
                                 <Form.Label>Follow Up Date</Form.Label>
-                                <Form.Control 
-                                name='followUpDate' 
-                                type="date" 
-                                placeholder="" 
-                                defaultValue="dd/mm/yyyy"
-                                onChange={(e) => {
-                                    const { name, value } = e.target;
-                                    setUpdatedValues({ ...updatedValues, [name]: value })
-                                }} 
-                                value={ (updatedValues.funnelStage == "NEW LEAD" || updatedValues.funnelStage == "FOLLOW UP") ? updatedValues.followUpDate : null  } 
-                                disable = {(updatedValues.funnelStage == "NEW LEAD" || updatedValues.funnelStage == "FOLLOW UP") ? false : true}
-                                
+                                <Form.Control
+                                    name='followUpDate'
+                                    type="date"
+                                    placeholder=""
+                                    defaultValue="dd/mm/yyyy"
+                                    onChange={(e) => {
+                                        const { name, value } = e.target;
+                                        setUpdatedValues({ ...updatedValues, [name]: value })
+                                    }}
+                                    value={(updatedValues.funnelStage == "NEW LEAD" || updatedValues.funnelStage == "FOLLOW UP") ? updatedValues.followUpDate : null}
+                                    disable={(updatedValues.funnelStage == "NEW LEAD" || updatedValues.funnelStage == "FOLLOW UP") ? false : true}
+
                                 />
                             </Form.Group>
 
@@ -227,11 +265,12 @@ function Example() {
                                     setUpdatedValues({ ...updatedValues, [name]: value })
                                 }} value={updatedValues.funnelStage} /> */}
                                 <Form.Select aria-label="Default select example"
-                                    name='funnelStage' 
-                                    placeholder="" 
-                                    onChange={(e) => { const { name, value } = e.target;
-                                      setUpdatedValues({ ...updatedValues, [name]: value })
-                                    }} 
+                                    name='funnelStage'
+                                    placeholder=""
+                                    onChange={(e) => {
+                                        const { name, value } = e.target;
+                                        setUpdatedValues({ ...updatedValues, [name]: value })
+                                    }}
                                     value={updatedValues.funnelStage}
                                 >
                                     <option value="">Select</option>
@@ -247,6 +286,59 @@ function Example() {
                             </Form.Group>
                         </Row>
 
+                        <Row className="mb-3">
+                            <Form.Group as={Col} controlId="formGridPurchasesPrice">
+                                <Form.Label>Purchases Price</Form.Label>
+                                <Form.Control name='purchasesPrice' type="number" placeholder="Enter Purchases Price" onChange={(e) => {
+                                    const { name, value } = e.target;
+                                    setUpdatedValues({ ...updatedValues, [name]: value })
+                                }} value={updatedValues.purchasesPrice} />
+                            </Form.Group>
+
+                            <Form.Group as={Col} controlId="formGridFinance">
+                                <Form.Label>Finance</Form.Label>
+                                <Form.Select aria-label="Default select example"
+                                    name='finance'
+                                    placeholder=""
+                                    onChange={(e) => {
+                                        const { name, value } = e.target;
+                                        setUpdatedValues({ ...updatedValues, [name]: value })
+                                    }}
+                                    value={updatedValues.finance}
+                                >
+                                    <option value="">Select</option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </Form.Select>
+                            </Form.Group>
+
+                            <Form.Group as={Col} controlId="formGridPaidInFull">
+                                <Form.Label>Paid In Full</Form.Label>
+                                <Form.Select aria-label="Default select example"
+                                    name='paidInFull'
+                                    placeholder=""
+                                    onChange={(e) => {
+                                        const { name, value } = e.target;
+                                        setUpdatedValues({ ...updatedValues, [name]: value })
+                                    }}
+                                    value={updatedValues.paidInFull}
+                                >
+                                    <option value="">Select</option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </Form.Select>
+
+                            </Form.Group>
+
+                            <Form.Group as={Col} controlId="formGridFutureRevenue">
+                                <Form.Label>Future Revenue</Form.Label>
+                                <Form.Control name='futureRevenue' type="number" placeholder="Enter Future Revenue" onChange={(e) => {
+                                    const { name, value } = e.target;
+                                    setUpdatedValues({ ...updatedValues, [name]: value })
+                                }} value={updatedValues.futureRevenue} />
+                            </Form.Group>
+                        </Row>
+
                         <Form.Group className="mb-3" controlId="formGridResponse">
                             <Form.Label>Response</Form.Label>
                             <Form.Control name='response' type="text" placeholder="Enter Rsponse" onChange={(e) => {
@@ -257,7 +349,7 @@ function Example() {
 
                         <Form.Group className="mb-3" controlId="formGridCreatedAt">
                             <Form.Label>Created:</Form.Label>
-                            <span style={{cursor: "pointer"}} >
+                            <span style={{ cursor: "pointer" }} >
                                 <Tooltip title={moment(createdAt).format(`MMMM Do YYYY, h:mm:ss a`)}>
                                     <span>{" " + moment(createdAt).fromNow()}</span>
                                 </Tooltip>
@@ -266,7 +358,7 @@ function Example() {
 
                         <Form.Group className="mb-3" controlId="formGridUpdatedAt">
                             <Form.Label>Updated:</Form.Label>
-                            <span style={{cursor: "pointer"}} >
+                            <span style={{ cursor: "pointer" }} >
                                 <Tooltip title={moment(updatedAt).format(`MMMM Do YYYY, h:mm:ss a`)}>
                                     <span>{" " + moment(updatedAt).fromNow()}</span>
                                 </Tooltip>

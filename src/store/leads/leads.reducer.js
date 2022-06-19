@@ -58,6 +58,36 @@ export const leadsReducer = (state = INITIAL_STATE, action) => {
                 leadsRawData: payload
             }
 
+        case LEADS_ACTIONS_TYPES.SET_LEADS_DELETE_ERROR:
+            return {
+                ...state,
+                deleteError: payload
+            }
+
+        case LEADS_ACTIONS_TYPES.SET_LEADS_UPDATE_ERROR:
+            return {
+                ...state,
+                updateError: payload
+            }
+
+        case LEADS_ACTIONS_TYPES.SET_LEADS_SUCCESSFULLY_DELETED:
+            return {
+                ...state,
+                successfullyDeleted: payload
+            }
+
+        case LEADS_ACTIONS_TYPES.SET_LEADS_SUCCESSFULLY_UPDATED:
+            return {
+                ...state,
+                successfullyUpdated: payload
+            }
+
+        case LEADS_ACTIONS_TYPES.SET_SEARCH_FILTERS:
+            return {
+                ...state,
+                searchFilters: payload
+            }
+
         default:
             return state
     }
@@ -67,10 +97,14 @@ const INITIAL_STATE = {
     leadsRawData: {},
     leadsData: [],
     isLoading: false,
-    error: null,
+    updateError: false,
+    deleteError: false,
     pageNumber: 1,
     offset: 10,
     clickedRow: {},
     showEditModal: false,
-    showConfirmUpdateModal: false
+    showConfirmUpdateModal: false,
+    successfullyUpdated: false,
+    successfullyDeleted: false,
+    searchFilters: {}
 }

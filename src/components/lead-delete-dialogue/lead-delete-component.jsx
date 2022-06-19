@@ -7,14 +7,18 @@ import { leadsSelector } from "../../store/leads/leads.selectors";
 import { currentUserSelector } from "../../store/user/user.selectors"
 
 import { useDispatch } from "react-redux";
-import { fetchLeadsStart, fetchLeadsSuccess } from "../../store/leads/leads.action";
+import { fetchLeadsStart, fetchLeadsSuccess, setLeadsDeleteError, setLeadsSuccessFullyDeleted } from "../../store/leads/leads.action";
+import Alert from '@mui/material/Alert';
+
 
 // import { ModalProgressBar } from "../../../../../../_metronic/_partials/controls";
 
 export function DeleteLeadDialogue({ show, onHide }) {
 
-  const { clickedRow, pageNumber, offset } = useSelector(leadsSelector)
+  const { clickedRow, pageNumber, offset, successfullyDeleted } = useSelector(leadsSelector)
   const { accessToken } = useSelector(currentUserSelector)
+  const [isError, setIsError] = useState(false)
+
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -31,6 +35,7 @@ export function DeleteLeadDialogue({ show, onHide }) {
       },
     }
     ).then((response) => {
+      dispatch(setLeadsSuccessFullyDeleted(true))
       setIsLoading(false)
       console.log('delete:', response);
       // dispatch(fetchLeadsSuccess(response.data.leads))
@@ -51,6 +56,8 @@ export function DeleteLeadDialogue({ show, onHide }) {
         dispatch(fetchLeadsSuccess(response.data.leads))
       })
     }).catch(error => {
+      dispatch(setLeadsDeleteError(true))
+      onHide()
       setIsLoading(false)
       console.log(error.response)
     })
@@ -58,42 +65,44 @@ export function DeleteLeadDialogue({ show, onHide }) {
   }
 
   return (
-    <Modal
-      show={show}
-      onHide={onHide}
-      aria-labelledby="example-modal-sizes-title-lg"
-    >
-      {/* {isLoading && <ModalProgressBar variant="query" />} */}
-      <Modal.Header closeButton>
-        <Modal.Title id="example-modal-sizes-title-lg">
-          Lead Delete
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {!isLoading && (
-          <span>Are you sure to permanently delete this Lead?</span>
-        )}
-        {isLoading && <span>Lead is deleting...</span>}
-      </Modal.Body>
-      <Modal.Footer>
-        <div>
-          <button
-            type="button"
-            onClick={onHide}
-            className="btn btn-light btn-elevate"
-          >
-            Cancel
-          </button>
-          <> </>
-          <button
-            type="button"
-            onClick={deleteLead}
-            className="btn btn-danger btn-elevate"
-          >
-            Delete
-          </button>
-        </div>
-      </Modal.Footer>
-    </Modal>
+    <>
+      <Modal
+        show={show}
+        onHide={onHide}
+        aria-labelledby="example-modal-sizes-title-lg"
+      >
+        {/* {isLoading && <ModalProgressBar variant="query" />} */}
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-lg">
+            Lead Delete
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {!isLoading && (
+            <span>Are you sure to permanently delete this Lead?</span>
+          )}
+          {isLoading && <span>Lead is deleting...</span>}
+        </Modal.Body>
+        <Modal.Footer>
+          <div>
+            <button
+              type="button"
+              onClick={onHide}
+              className="btn btn-light btn-elevate"
+            >
+              Cancel
+            </button>
+            <> </>
+            <button
+              type="button"
+              onClick={deleteLead}
+              className="btn btn-danger btn-elevate"
+            >
+              Delete
+            </button>
+          </div>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }
