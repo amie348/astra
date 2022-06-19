@@ -194,6 +194,7 @@ export function LeadFIlters() {
                                     placeholder=""
                                     onChange={(e) => {
                                         const { name, value } = e.target;
+                                        console.log(`value`, value)
                                         setFiltersValues({ ...filtersValues, [name]: value })
                                     }}
                                     value={filtersValues.funnelStage}
@@ -232,8 +233,8 @@ export function LeadFIlters() {
                                     value={filtersValues.finance}
                                 >
                                     <option value="">Select</option>
-                                    <option value="true">Yes</option>
-                                    <option value="false">No</option>
+                                    <option value={true}>Yes</option>
+                                    <option value={false}>No</option>
                                 </Form.Select>
                             </Form.Group>
 
@@ -249,8 +250,8 @@ export function LeadFIlters() {
                                     value={filtersValues.paidInFull}
                                 >
                                     <option value="">Select</option>
-                                    <option value="true">Yes</option>
-                                    <option value="false">No</option>
+                                    <option value={true}>Yes</option>
+                                    <option value={false}>No</option>
                                 </Form.Select>
 
                             </Form.Group>

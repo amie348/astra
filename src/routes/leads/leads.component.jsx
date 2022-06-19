@@ -16,6 +16,8 @@ import { useDispatch } from "react-redux"
 import { fetchLeadsStart, fetchLeadsSuccess, setLeadsRawData } from "../../store/leads/leads.action"
 import { DeleteLeadDialogue } from "../../components/lead-delete-dialogue/lead-delete-component";
 import { LeadFIlters } from "../../components/lead-filters/lead-filters-component";
+import { BASE_API_URL } from "../../config"
+
 
 const Leads = () => {
 
@@ -49,6 +51,7 @@ const Leads = () => {
 
 
     }, [pageNumber, offset, searchFilters])
+
 
 
     const handleChangeShowDeleteModal = () => {

@@ -7,6 +7,8 @@ import './edit-lead-modal.styles.scss'
 import { useSelector } from 'react-redux'
 import { leadsSelector } from '../../store/leads/leads.selectors';
 import { currentUserSelector } from '../../store/user/user.selectors';
+import { BASE_API_URL } from "../../config";
+
 
 import Alert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
@@ -31,20 +33,20 @@ const defaultFormFields = {
     phone: '',
     lastContacted: '',
     contactType: '',
-    noOfTimesContacted: '',
+    noOfTimesContacted: 0,
     response: '',
     followUpDate: '',
     funnelStage: '',
-    purchasesPrice: 10,
-    finance: null,
-    paidInFull: null,
-    futureRevenue: 10
+    purchasesPrice: "",
+    finance: "",
+    paidInFull: "",
+    futureRevenue: ""
 }
 
 function Example() {
     const [updatedAtDate, setUpdatedAtDate] = useState()
     const [isLoading, setIsLoading] = useState(false);
-
+    const [fetchAgain, setFetchAgain] = useState(false);
     const dispatch = useDispatch()
     const { showEditModal, clickedRow, showConfirmUpdateModal, pageNumber, offset, deleteError, updateError, successfullyDeleted, successfullyUpdated } = useSelector(leadsSelector)
     const { accessToken } = useSelector(currentUserSelector)
@@ -71,11 +73,11 @@ function Example() {
         // setFollowUp(moment(followUpDate).format(moment.HTML5_FMT.DATE))
         setUpdatedAtDate(moment(updatedAt).format(moment.HTML5_FMT.DATE))
 
-    }, [lastContacted, followUpDate, updatedAt])
+    }, [lastContacted, followUpDate, updatedAt, fetchAgain])
 
     const updateLead = () => {
         setIsLoading(true)
-        axios.patch(`https://astra-crm.herokuapp.com/api/lead/update/${_id}`, updatedValues, {
+        axios.patch(`${BASE_API_URL}/api/lead/update/${_id}`, updatedValues, {
             headers: {
                 authorization: `${accessToken}`
             },
@@ -87,7 +89,7 @@ function Example() {
             dispatch(setShowEditModal(false))
 
             dispatch(fetchLeadsStart())
-            axios.post('https://astra-crm.herokuapp.com/api/lead/get', {
+            axios.post(`${BASE_API_URL}/api/lead/get`, {
                 pageNumber,
                 offset,
                 searchFilters: {}
@@ -213,7 +215,7 @@ function Example() {
                                     setUpdatedValues({ ...updatedValues, [name]: value })
                                 }} value={updatedValues.contactType} /> */}
 
-                                <Form.Select size='sm' size='sm' aria-label="Default select example"
+                                <Form.Select size='sm' aria-label="Default select example"
                                     name='contactType'
                                     placeholder=""
                                     onChange={(e) => {

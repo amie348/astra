@@ -264,7 +264,7 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
                                                 onChange={handlePaginationPageSizeChange}
                                             >
                                                 <MenuItem value={10}>10</MenuItem>
-                                                <MenuItem value={25}>25</MenuItem>
+                                                <MenuItem value={2}>2</MenuItem>
                                                 <MenuItem value={50}>50</MenuItem>
                                                 <MenuItem value={100}>100</MenuItem>
                                             </Select>
