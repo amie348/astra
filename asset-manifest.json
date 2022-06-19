@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/astra/static/css/main.0d2404ed.css",
+    "main.js": "/astra/static/js/main.16507bd1.js",
+    "static/media/astra-logo-transparent.png": "/astra/static/media/astra-logo-transparent.17cc98a76944dbc5c397.png",
+    "static/media/astraLogo.png": "/astra/static/media/astraLogo.9ab9bbf2e4e49186aac2.png",
+    "index.html": "/astra/index.html",
+    "main.0d2404ed.css.map": "/astra/static/css/main.0d2404ed.css.map",
+    "main.16507bd1.js.map": "/astra/static/js/main.16507bd1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0d2404ed.css",
+    "static/js/main.16507bd1.js"
+  ]
+}
