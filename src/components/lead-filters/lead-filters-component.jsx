@@ -14,7 +14,7 @@ import IconButton from '@mui/material/IconButton';
 import { Button, Form, Col, Row } from 'react-bootstrap'
 import { Tooltip } from '@mui/material';
 
-import { setSearchFilters } from '../../store/leads/leads.action';
+import { setSearchFilters, setIsLoading } from '../../store/leads/leads.action';
 import { currentUserSelector } from '../../store/user/user.selectors';
 
 import axios from 'axios';
@@ -49,9 +49,10 @@ const ExpandMore = styled((props) => {
 
 export function LeadFIlters() {
 
+    const { isLoading } = useSelector(leadsSelector)
     const { accessToken } = useSelector(currentUserSelector)
     const [expanded, setExpanded] = useState(false);
-    const [isLoading, setIsLoading] = useState(false)
+    // const [isLoading, setIsLoading] = useState(false)
     const [filtersValues, setFiltersValues] = useState(defaultFormFields)
 
     const dispatch = useDispatch()
@@ -61,6 +62,7 @@ export function LeadFIlters() {
     }
 
     const searchLead = () => {
+        dispatch(setIsLoading(true))
         let valuesToBeFiltered = Object.fromEntries(Object.entries(filtersValues).filter(([_, v]) => v != null && v != ''));
         console.log(valuesToBeFiltered);
         dispatch(setSearchFilters(valuesToBeFiltered))
@@ -273,13 +275,15 @@ export function LeadFIlters() {
                             }} value={filtersValues.response} />
                         </Form.Group> */}
 
-                        <Button variant="danger" type="button" onClick={() => {
+                        <Button variant="danger" type="button" disabled={isLoading} style={{ minWidth: '70px' }} onClick={() => {
                             searchLead()
                         }}>
-                            Search
+                            {isLoading ? <div className="spinner-border spinner-border-sm text-light" role="status">
+                                <span className="sr-only"></span>
+                            </div> : 'Search'}
                         </Button>
 
-                        <Button variant="secondary" type="button" style={{ marginLeft: '10px' }} onClick={() => {
+                        <Button variant="secondary" type="button" style={{ marginLeft: '10px' }} disabled={isLoading} onClick={() => {
                             setFiltersValues({
                                 firstName: '',
                                 lastName: '',

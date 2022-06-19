@@ -13,7 +13,7 @@ import { currentUserSelector } from "../../store/user/user.selectors"
 import { leadsSelector } from "../../store/leads/leads.selectors"
 
 import { useDispatch } from "react-redux"
-import { fetchLeadsStart, fetchLeadsSuccess, setLeadsRawData } from "../../store/leads/leads.action"
+import { fetchLeadsStart, fetchLeadsSuccess, setLeadsRawData, setIsLoading } from "../../store/leads/leads.action"
 import { DeleteLeadDialogue } from "../../components/lead-delete-dialogue/lead-delete-component";
 import { LeadFIlters } from "../../components/lead-filters/lead-filters-component";
 import { BASE_API_URL } from "../../config"
@@ -45,6 +45,7 @@ const Leads = () => {
         }
         ).then((response) => {
             console.log(response);
+            dispatch(setIsLoading(false))
             dispatch(setLeadsRawData(response.data))
             dispatch(fetchLeadsSuccess(response.data.leads))
         })

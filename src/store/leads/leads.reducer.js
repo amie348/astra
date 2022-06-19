@@ -88,6 +88,12 @@ export const leadsReducer = (state = INITIAL_STATE, action) => {
                 searchFilters: payload
             }
 
+        case LEADS_ACTIONS_TYPES.SET_IS_LOADING:
+            return {
+                ...state,
+                isLoading: payload
+            }
+
         default:
             return state
     }

@@ -24,4 +24,5 @@ export const setLeadsUpdateError = (updateError) => ({ type: LEADS_ACTIONS_TYPES
 export const setLeadsSuccessFullyDeleted = (successfullyDeleted) => ({ type: LEADS_ACTIONS_TYPES.SET_LEADS_SUCCESSFULLY_DELETED, payload: successfullyDeleted })
 export const setLeadsSuccessFullyUpdated = (successfullyUpdated) => ({ type: LEADS_ACTIONS_TYPES.SET_LEADS_SUCCESSFULLY_UPDATED, payload: successfullyUpdated })
 export const setSearchFilters = (searchFilters) => ({ type: LEADS_ACTIONS_TYPES.SET_SEARCH_FILTERS, payload: searchFilters })
+export const setIsLoading = (isLoading) => ({ type: LEADS_ACTIONS_TYPES.SET_IS_LOADING, payload: isLoading })
 
