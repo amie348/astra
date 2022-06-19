@@ -16,6 +16,8 @@ import { useDispatch } from "react-redux"
 import { fetchLeadsStart, fetchLeadsSuccess, setLeadsRawData } from "../../store/leads/leads.action"
 import { DeleteLeadDialogue } from "../../components/lead-delete-dialogue/lead-delete-component";
 import { LeadFIlters } from "../../components/lead-filters/lead-filters-component";
+import { BASE_API_URL } from "../../config"
+
 
 const Leads = () => {
 
@@ -31,7 +33,7 @@ const Leads = () => {
         console.log(searchFilters);
         dispatch(fetchLeadsStart())
         // https://astra-crm.herokuapp.com/api/lead/get
-        axios.post('https://6ba4-182-187-71-78.in.ngrok.io/api/lead/get', {
+        axios.post(`${BASE_API_URL}/api/lead/get`, {
             pageNumber,
             offset,
             searchFilters
@@ -48,6 +50,7 @@ const Leads = () => {
 
 
     }, [pageNumber, offset, searchFilters])
+
 
 
     const handleChangeShowDeleteModal = () => {
