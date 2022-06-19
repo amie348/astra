@@ -89,16 +89,21 @@ export function DeleteLeadDialogue({ show, onHide }) {
               type="button"
               onClick={onHide}
               className="btn btn-light btn-elevate"
+              disabled={isLoading}
             >
               Cancel
             </button>
             <> </>
             <button
+              style={{ minWidth: '70px' }}
               type="button"
               onClick={deleteLead}
               className="btn btn-danger btn-elevate"
+              disabled={isLoading}
             >
-              Delete
+              {isLoading ? <div className="spinner-border spinner-border-sm text-light" role="status">
+                <span className="sr-only"></span>
+              </div> : 'Delete'}
             </button>
           </div>
         </Modal.Footer>

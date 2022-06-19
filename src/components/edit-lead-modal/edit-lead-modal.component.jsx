@@ -36,8 +36,8 @@ const defaultFormFields = {
     followUpDate: '',
     funnelStage: '',
     purchasesPrice: 10,
-    finance: false,
-    paidInFull: false,
+    finance: null,
+    paidInFull: null,
     futureRevenue: 10
 }
 
@@ -146,7 +146,7 @@ function Example() {
                         <Row className="mb-3">
                             <Form.Group as={Col} controlId="formGridFirstName">
                                 <Form.Label>First Name</Form.Label>
-                                <Form.Control name='firstName' type="text" placeholder="Enter First Name" onChange={(e) => {
+                                <Form.Control size='sm' name='firstName' type="text" placeholder="Enter First Name" onChange={(e) => {
                                     const { name, value } = e.target;
                                     setUpdatedValues({ ...updatedValues, [name]: value })
                                 }} value={updatedValues.firstName} />
@@ -154,7 +154,7 @@ function Example() {
 
                             <Form.Group as={Col} controlId="formGridLastName">
                                 <Form.Label>Last Name</Form.Label>
-                                <Form.Control name='lastName' type="text" placeholder="Enter Last Name" onChange={(e) => {
+                                <Form.Control size='sm' name='lastName' type="text" placeholder="Enter Last Name" onChange={(e) => {
                                     const { name, value } = e.target;
                                     setUpdatedValues({ ...updatedValues, [name]: value })
                                 }} value={updatedValues.lastName} />
@@ -162,7 +162,7 @@ function Example() {
 
                             <Form.Group as={Col} controlId="formGridEmail">
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control name='email' type="email" placeholder="Email" onChange={(e) => {
+                                <Form.Control size='sm' name='email' type="email" placeholder="Email" onChange={(e) => {
                                     const { name, value } = e.target;
                                     setUpdatedValues({ ...updatedValues, [name]: value })
                                 }} value={updatedValues.email} />
@@ -172,7 +172,7 @@ function Example() {
                         <Row className="mb-3">
                             <Form.Group as={Col} controlId="formGridPhone">
                                 <Form.Label>Phone</Form.Label>
-                                <Form.Control name='phone' type="phone" placeholder="Enter Phone" onChange={(e) => {
+                                <Form.Control size='sm' name='phone' type="phone" placeholder="Enter Phone" onChange={(e) => {
                                     const { name, value } = e.target;
                                     setUpdatedValues({ ...updatedValues, [name]: value })
                                 }} value={updatedValues.phone} />
@@ -194,7 +194,7 @@ function Example() {
                             </LocalizationProvider> */}
 
                                 <Form.Label>Last Contacted</Form.Label>
-                                <Form.Control
+                                <Form.Control size='sm'
                                     name='lastContacted'
                                     type="date"
                                     defaultValue="dd/mm/yyyy"
@@ -208,12 +208,12 @@ function Example() {
 
                             <Form.Group as={Col} controlId="formGridContactType">
                                 <Form.Label>Contact Type</Form.Label>
-                                {/* <Form.Control name='contactType' type="text" placeholder="Contact Type" onChange={(e) => {
+                                {/* <Form.Control size='sm' name='contactType' type="text" placeholder="Contact Type" onChange={(e) => {
                                     const { name, value } = e.target;
                                     setUpdatedValues({ ...updatedValues, [name]: value })
                                 }} value={updatedValues.contactType} /> */}
 
-                                <Form.Select aria-label="Default select example"
+                                <Form.Select size='sm' size='sm' aria-label="Default select example"
                                     name='contactType'
                                     placeholder=""
                                     onChange={(e) => {
@@ -235,7 +235,7 @@ function Example() {
                         <Row className="mb-3">
                             <Form.Group as={Col} controlId="formGridNoOfTimesContacted">
                                 <Form.Label>No. of times contacted</Form.Label>
-                                <Form.Control name='noOfTimesContacted' type="number" placeholder="" onChange={(e) => {
+                                <Form.Control size='sm' name='noOfTimesContacted' type="number" placeholder="" onChange={(e) => {
                                     const { name, value } = e.target;
                                     setUpdatedValues({ ...updatedValues, [name]: value })
                                 }} value={updatedValues.noOfTimesContacted} />
@@ -243,7 +243,7 @@ function Example() {
 
                             <Form.Group as={Col} controlId="formGridFollowUpDate">
                                 <Form.Label>Follow Up Date</Form.Label>
-                                <Form.Control
+                                <Form.Control size='sm'
                                     name='followUpDate'
                                     type="date"
                                     placeholder=""
@@ -260,11 +260,11 @@ function Example() {
 
                             <Form.Group as={Col} controlId="formGridFunnelStage">
                                 <Form.Label>Funnel Stage</Form.Label>
-                                {/* <Form.Control name='funnelStage' placeholder="" onChange={(e) => {
+                                {/* <Form.Control size='sm' name='funnelStage' placeholder="" onChange={(e) => {
                                     const { name, value } = e.target;
                                     setUpdatedValues({ ...updatedValues, [name]: value })
                                 }} value={updatedValues.funnelStage} /> */}
-                                <Form.Select aria-label="Default select example"
+                                <Form.Select size='sm' aria-label="Default select example"
                                     name='funnelStage'
                                     placeholder=""
                                     onChange={(e) => {
@@ -289,7 +289,7 @@ function Example() {
                         <Row className="mb-3">
                             <Form.Group as={Col} controlId="formGridPurchasesPrice">
                                 <Form.Label>Purchases Price</Form.Label>
-                                <Form.Control name='purchasesPrice' type="number" placeholder="Enter Purchases Price" onChange={(e) => {
+                                <Form.Control size='sm' name='purchasesPrice' type="number" placeholder="Enter Purchases Price" onChange={(e) => {
                                     const { name, value } = e.target;
                                     setUpdatedValues({ ...updatedValues, [name]: value })
                                 }} value={updatedValues.purchasesPrice} />
@@ -297,7 +297,7 @@ function Example() {
 
                             <Form.Group as={Col} controlId="formGridFinance">
                                 <Form.Label>Finance</Form.Label>
-                                <Form.Select aria-label="Default select example"
+                                <Form.Select size='sm' aria-label="Default select example"
                                     name='finance'
                                     placeholder=""
                                     onChange={(e) => {
@@ -314,7 +314,7 @@ function Example() {
 
                             <Form.Group as={Col} controlId="formGridPaidInFull">
                                 <Form.Label>Paid In Full</Form.Label>
-                                <Form.Select aria-label="Default select example"
+                                <Form.Select size='sm' aria-label="Default select example"
                                     name='paidInFull'
                                     placeholder=""
                                     onChange={(e) => {
@@ -332,7 +332,7 @@ function Example() {
 
                             <Form.Group as={Col} controlId="formGridFutureRevenue">
                                 <Form.Label>Future Revenue</Form.Label>
-                                <Form.Control name='futureRevenue' type="number" placeholder="Enter Future Revenue" onChange={(e) => {
+                                <Form.Control size='sm' name='futureRevenue' type="number" placeholder="Enter Future Revenue" onChange={(e) => {
                                     const { name, value } = e.target;
                                     setUpdatedValues({ ...updatedValues, [name]: value })
                                 }} value={updatedValues.futureRevenue} />
@@ -341,7 +341,7 @@ function Example() {
 
                         <Form.Group className="mb-3" controlId="formGridResponse">
                             <Form.Label>Response</Form.Label>
-                            <Form.Control name='response' type="text" placeholder="Enter Rsponse" onChange={(e) => {
+                            <Form.Control size='sm' name='response' type="text" placeholder="Enter Rsponse" onChange={(e) => {
                                 const { name, value } = e.target;
                                 setUpdatedValues({ ...updatedValues, [name]: value })
                             }} value={updatedValues.response} />
@@ -408,6 +408,7 @@ function Example() {
                 <Modal.Footer>
                     <div>
                         <button
+                            disabled={isLoading}
                             type="button"
                             onClick={() => {
                                 dispatch(setShowConfirmUpdateModal(false))
@@ -419,11 +420,15 @@ function Example() {
                         </button>
                         <> </>
                         <button
+                            style={{ minWidth: '70px' }}
                             type="button"
                             onClick={updateLead}
                             className="btn btn-danger btn-elevate"
+                            disabled={isLoading}
                         >
-                            Update
+                            {isLoading ? <div className="spinner-border spinner-border-sm text-light" role="status">
+                                <span className="sr-only"></span>
+                            </div> : 'Update'}
                         </button>
                     </div>
                 </Modal.Footer>

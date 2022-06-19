@@ -31,7 +31,8 @@ const Leads = () => {
         console.log(searchFilters);
         dispatch(fetchLeadsStart())
         // https://astra-crm.herokuapp.com/api/lead/get
-        axios.post('https://6ba4-182-187-71-78.in.ngrok.io/api/lead/get', {
+        // https://6ba4-182-187-71-78.in.ngrok.io/api/lead/get
+        axios.post('https://astra-crm.herokuapp.com/api/lead/get', {
             pageNumber,
             offset,
             searchFilters
