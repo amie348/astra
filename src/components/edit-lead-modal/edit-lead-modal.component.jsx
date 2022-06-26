@@ -21,7 +21,7 @@ import TextField from '@mui/material/TextField';
 import axios from 'axios';
 
 import { useDispatch } from 'react-redux';
-import { setShowEditModal, setShowConfirmUpdateModal, fetchLeadsStart, fetchLeadsSuccess, setLeadsRawData, setLeadsUpdateError, setLeadsDeleteError, setLeadsSuccessFullyUpdated, setLeadsSuccessFullyDeleted } from '../../store/leads/leads.action';
+import { setShowEditModal, setShowConfirmUpdateModal, fetchLeadsStart, fetchLeadsSuccess, setLeadsRawData, setLeadsUpdateError, setLeadsDeleteError, setLeadsSuccessFullyUpdated, setLeadsSuccessFullyDeleted, setClickedRow } from '../../store/leads/leads.action';
 
 import moment from 'moment';
 import { Tooltip } from '@mui/material';
@@ -131,7 +131,12 @@ function Example() {
             </Alert> : <></>}
             <Modal
                 show={showEditModal}
-                onHide={() => dispatch(setShowEditModal(false))}
+                onHide={() => {
+                    setUpdatedValues({})
+                    dispatch(setClickedRow({}))
+                    dispatch(setShowEditModal(false))
+                }
+                }
                 // dialogClassName="modal-100w" 
                 size='xl'
                 aria-labelledby="example-custom-modal-styling-title"

@@ -34,11 +34,14 @@ export const leadsReducer = (state = INITIAL_STATE, action) => {
                 offset: payload
             }
 
-        case LEADS_ACTIONS_TYPES.SET_CLICKED_ROW:
+        case LEADS_ACTIONS_TYPES.SET_CLICKED_ROW: {
+            console.log(`-----------------------------clicked row` , payload)
+        
             return {
                 ...state,
                 clickedRow: payload
             }
+        }
 
         case LEADS_ACTIONS_TYPES.SET_SHOW_EDIT_MODAL:
             return {
