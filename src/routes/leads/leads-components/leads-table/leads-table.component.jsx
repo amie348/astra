@@ -5,7 +5,7 @@ import './leads-table.styles.scss'
 import { useState } from 'react';
 
 import { useSelector } from 'react-redux';
-import { leadsSelector } from '../../store/leads/leads.selectors';
+import { leadsSelector } from '../../../../store/leads/leads.selectors';
 
 import { styled } from '@mui/material/styles';
 
@@ -35,7 +35,7 @@ import moment from "moment";
 
 
 import { useDispatch } from 'react-redux';
-import { setLeadsPageNumber, setLeadsOffset, setClickedRow, setShowEditModal } from '../../store/leads/leads.action';
+import { setLeadsPageNumber, setLeadsOffset, setClickedRow, setShowEditModal } from '../../../../store/leads/leads.action';
 import Example from '../edit-lead-modal/edit-lead-modal.component';
 
 // import Pagination from 'react-bootstrap/Pagination'

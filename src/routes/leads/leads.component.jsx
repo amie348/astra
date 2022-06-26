@@ -1,8 +1,6 @@
-import SideNavBar from "../../components/side-nav-bar/side-nav-bar.component"
 import './leads.styles.scss'
 
-import Header from "../../components/header/header.component"
-import ReactBootstrapTable from '../../components/leads-table/leads-table.component'
+import ReactBootstrapTable from './leads-components/leads-table/leads-table.component'
 
 import { useEffect, useState } from "react"
 import axios from "axios"

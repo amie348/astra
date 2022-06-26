@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 import './edit-lead-modal.styles.scss'
 
 import { useSelector } from 'react-redux'
-import { leadsSelector } from '../../store/leads/leads.selectors';
-import { currentUserSelector } from '../../store/user/user.selectors';
-import { BASE_API_URL } from "../../assets/config";
+import { leadsSelector } from '../../../../store/leads/leads.selectors';
+import { currentUserSelector } from '../../../../store/user/user.selectors';
+import { BASE_API_URL } from "../../../../assets/config";
 
 
 import Alert from '@mui/material/Alert';
@@ -21,7 +21,7 @@ import TextField from '@mui/material/TextField';
 import axios from 'axios';
 
 import { useDispatch } from 'react-redux';
-import { setShowEditModal, setShowConfirmUpdateModal, fetchLeadsStart, fetchLeadsSuccess, setLeadsRawData, setLeadsUpdateError, setLeadsDeleteError, setLeadsSuccessFullyUpdated, setLeadsSuccessFullyDeleted, setClickedRow } from '../../store/leads/leads.action';
+import { setShowEditModal, setShowConfirmUpdateModal, fetchLeadsStart, fetchLeadsSuccess, setLeadsRawData, setLeadsUpdateError, setLeadsDeleteError, setLeadsSuccessFullyUpdated, setLeadsSuccessFullyDeleted, setClickedRow } from '../../../../store/leads/leads.action';
 
 import moment from 'moment';
 import { Tooltip } from '@mui/material';
