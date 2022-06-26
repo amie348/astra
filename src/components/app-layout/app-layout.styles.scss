@@ -1,0 +1,29 @@
+.layout-container {
+    overflow-y: scroll;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(242, 242, 242, 0.448);
+
+    .layout-body {
+        padding-left: 40px;
+        height: 100%;
+        width: 100%;
+
+        .layout-content {
+            padding: 30px 30px 30px 55px;
+            margin-top: 60px
+        }
+    }
+
+    .layout-body-compressed {
+        padding-left: 200px;
+        height: 100%;
+
+        .layout-content {
+            padding: 30px;
+        }
+    }
+
+
+}

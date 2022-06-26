@@ -6,9 +6,12 @@
     align-items: center;
     justify-content: space-between;
 
-    padding: 0px 35px;
+    padding: 0px 35px 0px 100px;
 
     background-color: white;
+
+    position: fixed;
+    top: 0;
 
     .content {
         width: 100%;
@@ -26,4 +29,8 @@
         color: red;
         transition: all 0.2s;
     }
+}
+
+.header-container-compressed {
+    padding: 0px 35px 0px 240px;
 }

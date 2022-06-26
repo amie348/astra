@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { currentUserSelector } from '../../store/user/user.selectors'
 import { isSideNavBarOpenSelector } from '../../store/dashboard/dashboard.selector'
 
-import { Navigate } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
 import SideNavBar from '../../components/side-nav-bar/side-nav-bar.component'
 
@@ -14,25 +14,11 @@ const Dashboard = () => {
     const { accessToken } = useSelector(currentUserSelector)
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
 
-    // console.log(accessToken);
-
     return (
-        <div className='dashboard-container'>
-            <SideNavBar />
-            <div className={`${isSideNavBarOpen ? 'dashboard-body dashboard-body-compressed' : 'dashboard-body'}`} >
-                <Header />
-                <div className="dashboard-content">
+        <div className='layout-container'>
+            <div className={`${isSideNavBarOpen ? 'layout-body layout-body-compressed' : 'layout-body'}`} >
+                <div className="layout-content">
                     <h1>DASHBOARD</h1>
-
-                    {
-                        !accessToken ? <Navigate to='/' /> :
-                            <div>
-                                {/* <h2>{user.name}</h2>
-                                <p>{user.email}</p> */}
-                            </div>
-                    }
-
-                    {/* <ReactBootstrapTable /> */}
                 </div>
             </div>
         </div>

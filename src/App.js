@@ -9,6 +9,8 @@ import Leads from './routes/leads/leads.component';
 import { useSelector } from 'react-redux'
 import { currentUserSelector } from '../src/store/user/user.selectors'
 
+import AppLayout from './components/app-layout/app-layout.component'
+
 function App() {
   const { accessToken } = useSelector(currentUserSelector)
   const navigate = useNavigate()
@@ -18,8 +20,10 @@ function App() {
       <Route path='/' element={<Navigate to={`${accessToken ? '/dashboard' : '/login'}`} />} />
       <Route path='login' element={<Login />} />
 
-      <Route path='dashboard' element={<Dashboard />} />
-      <Route path='leads' element={<Leads />} />
+      <Route element={<AppLayout />}>
+        <Route path='dashboard' element={<Dashboard />} />
+        <Route path='leads' element={<Leads />} />
+      </Route>
     </Routes>
   );
 }

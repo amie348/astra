@@ -18,7 +18,6 @@ import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton from '@mui/material/IconButton';
-import ActionItem from '../action-item/action-item.component';
 import { Tooltip } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -150,131 +149,131 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
         }, {
             dataField: 'funnelStage',
             text: 'Funnel Stage',
-            
+
             style: {
                 'overflow-x': 'scroll'
             },
             classes: 'hide-scroll-bar',
             formatter: (cell) => (
-                cell === "DEAD" ? 
-                
-                (<span style={{
-                    textAlign: "center",
-                    cursor: "pointer",
-                    padding: "4px 8px",
-                    color: "#fff",
-                    backgroundColor: "#dc3545",
-                    borderRadius: "6px",
-                }} >
-                {cell} 
-                </span>
-                )
-                : cell === "PURCHASED" ? 
-                
-                (<span style={{
-                    textAlign: "center",
-                    cursor: "pointer",
-                    padding: "4px 8px",
-                    color: "#fff",
-                    backgroundColor: "#0001E6",
-                    borderRadius: "6px",
-                }} >
-                {cell} 
-                </span>
-                )
-                : cell === "NEW LEAD" ? 
-                
-                (<span style={{
-                    textAlign: "center",
-                    cursor: "pointer",
-                    padding: "4px 8px",
-                    color: "#fff",
-                    backgroundColor: "#D10E73",
-                    borderRadius: "6px",
-                }} >
-                {cell} 
-                </span>
-                )
-                :cell === "FOLLOW UP" ? 
-                
-                (<span style={{
-                    textAlign: "center",
-                    cursor: "pointer",
-                    padding: "4px 8px",
-                    color: "#fff",
-                    backgroundColor: "#F2C80C",
-                    borderRadius: "6px",
-                }} >
-                {cell} 
-                </span>
-                )
-                : cell === "CONSULTATION BOOKED" ? 
-                
-                (<span style={{
-                    textAlign: "center",
-                    cursor: "pointer",
-                    padding: "4px 8px",
-                    color: "#fff",
-                    backgroundColor: "#0BDE89",
-                    borderRadius: "6px",
-                }} >
-                {cell} 
-                </span>
-                )
-                :
-                cell === "CONSULTATION COMPLETE" ? 
-                
-                (<span style={{
-                    textAlign: "center",
-                    cursor: "pointer",
-                    padding: "4px 8px",
-                    color: "#fff",
-                    backgroundColor: "#0ACF0E",
-                    borderRadius: "6px",
-                }} >
-                {cell} 
-                </span>
-                )
-                :
-                cell === "OBJECTION" ? 
-                
-                (<span style={{
-                    textAlign: "center",
-                    cursor: "pointer",
-                    padding: "4px 8px",
-                    color: "#fff",
-                    backgroundColor: "#B80BDE",
-                    borderRadius: "6px",
-                }} >
-                {cell} 
-                </span>
-                )
-                :
-                cell === "WAITING FOR" ? 
-                
-                (<span style={{
-                    textAlign: "center",
-                    cursor: "pointer",
-                    padding: "4px 8px",
-                    color: "#fff",
-                    backgroundColor: "#777D60",
-                    borderRadius: "6px",
-                }} >
-                {cell} 
-                </span>
-                )
-                :
-                (<span style={{
-                    textAlign: "center",
-                    cursor: "pointer",
-                    padding: "4px 8px",
-                    color: "#fff",
-                    backgroundColor: "#dc3545",
-                    borderRadius: "6px",
-                }} >
-                {"-"} 
-                </span>
-                )
+                cell === "DEAD" ?
+
+                    (<span style={{
+                        textAlign: "center",
+                        cursor: "pointer",
+                        padding: "4px 8px",
+                        color: "#fff",
+                        backgroundColor: "#dc3545",
+                        borderRadius: "6px",
+                    }} >
+                        {cell}
+                    </span>
+                    )
+                    : cell === "PURCHASED" ?
+
+                        (<span style={{
+                            textAlign: "center",
+                            cursor: "pointer",
+                            padding: "4px 8px",
+                            color: "#fff",
+                            backgroundColor: "#0001E6",
+                            borderRadius: "6px",
+                        }} >
+                            {cell}
+                        </span>
+                        )
+                        : cell === "NEW LEAD" ?
+
+                            (<span style={{
+                                textAlign: "center",
+                                cursor: "pointer",
+                                padding: "4px 8px",
+                                color: "#fff",
+                                backgroundColor: "#D10E73",
+                                borderRadius: "6px",
+                            }} >
+                                {cell}
+                            </span>
+                            )
+                            : cell === "FOLLOW UP" ?
+
+                                (<span style={{
+                                    textAlign: "center",
+                                    cursor: "pointer",
+                                    padding: "4px 8px",
+                                    color: "#fff",
+                                    backgroundColor: "#F2C80C",
+                                    borderRadius: "6px",
+                                }} >
+                                    {cell}
+                                </span>
+                                )
+                                : cell === "CONSULTATION BOOKED" ?
+
+                                    (<span style={{
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                        padding: "4px 8px",
+                                        color: "#fff",
+                                        backgroundColor: "#0BDE89",
+                                        borderRadius: "6px",
+                                    }} >
+                                        {cell}
+                                    </span>
+                                    )
+                                    :
+                                    cell === "CONSULTATION COMPLETE" ?
+
+                                        (<span style={{
+                                            textAlign: "center",
+                                            cursor: "pointer",
+                                            padding: "4px 8px",
+                                            color: "#fff",
+                                            backgroundColor: "#0ACF0E",
+                                            borderRadius: "6px",
+                                        }} >
+                                            {cell}
+                                        </span>
+                                        )
+                                        :
+                                        cell === "OBJECTION" ?
+
+                                            (<span style={{
+                                                textAlign: "center",
+                                                cursor: "pointer",
+                                                padding: "4px 8px",
+                                                color: "#fff",
+                                                backgroundColor: "#B80BDE",
+                                                borderRadius: "6px",
+                                            }} >
+                                                {cell}
+                                            </span>
+                                            )
+                                            :
+                                            cell === "WAITING FOR" ?
+
+                                                (<span style={{
+                                                    textAlign: "center",
+                                                    cursor: "pointer",
+                                                    padding: "4px 8px",
+                                                    color: "#fff",
+                                                    backgroundColor: "#777D60",
+                                                    borderRadius: "6px",
+                                                }} >
+                                                    {cell}
+                                                </span>
+                                                )
+                                                :
+                                                (<span style={{
+                                                    textAlign: "center",
+                                                    cursor: "pointer",
+                                                    padding: "4px 8px",
+                                                    color: "#fff",
+                                                    backgroundColor: "#dc3545",
+                                                    borderRadius: "6px",
+                                                }} >
+                                                    {"-"}
+                                                </span>
+                                                )
             ),
             headerStyle: (colum, colIndex) => {
                 return { width: '10%' };
@@ -359,72 +358,72 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
 
                     <CardContent className={`${isLoading ? 'card-container-spinner' : 'card-container'}`}>
 
-                        {isLoading ? 
-                        <div className="spinner-border text-danger mt-3 spinner" role="status" style={{}}>
-                            <span className="sr-only"></span>
-                        </div> : leadsData.length > 0 ?
-                        
-                        <>
-                            <BootstrapTable
-                                wrapperClasses="table-responsive"
-                                bordered={true}
-                                classes="table table-head-custom table-vertical-center overflow-hidden"
-                                bootstrap4
-                                remote
-                                keyField='_id'
-                                data={leadsData}
-                                columns={columns} />
+                        {isLoading ?
+                            <div className="spinner-border text-danger mt-3 spinner" role="status" style={{}}>
+                                <span className="sr-only"></span>
+                            </div> : leadsData.length > 0 ?
 
-                            <Stack spacing={2}>
+                                <>
+                                    <BootstrapTable
+                                        wrapperClasses="table-responsive"
+                                        bordered={true}
+                                        classes="table table-head-custom table-vertical-center overflow-hidden"
+                                        bootstrap4
+                                        remote
+                                        keyField='_id'
+                                        data={leadsData}
+                                        columns={columns} />
 
-                                <div style={{ display: "flex", justifyContent: "space-between" }} >
+                                    <Stack spacing={2}>
 
-
-                                    {/* show pagination select field here */}
-
-                                    <Box sx={{ minWidth: 30 }} >
-                                        <FormControl fullWidth sx={{ color: 'red' }} color='error' size='small' >
-                                            <InputLabel id="size" sx={{ color: '#dc3545' }}>Size</InputLabel>
-                                            <Select
-                                                className='per-page-select'
-                                                labelId="size"
-                                                id="paginationSize"
-                                                value={offset}
-                                                label="Size"
-                                                onChange={handlePaginationPageSizeChange}
-                                            >
-                                                <MenuItem value={10}>10</MenuItem>
-                                                <MenuItem value={25}>25</MenuItem>
-                                                <MenuItem value={50}>50</MenuItem>
-                                                <MenuItem value={100}>100</MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Box>
+                                        <div style={{ display: "flex", justifyContent: "space-between" }} >
 
 
-                                    <ThemeProvider theme={paginationTheme}>
-                                        <Pagination
-                                            count={leadsRawData.totalPages}
-                                            shape="rounded"
-                                            color='primary'
-                                            size='small'
-                                            page={pageNumber}
-                                            onChange={handlePaginationChange}
-                                            boundaryCount={5}
-                                        />
-                                    </ThemeProvider>
+                                            {/* show pagination select field here */}
+
+                                            <Box sx={{ minWidth: 30 }} >
+                                                <FormControl fullWidth sx={{ color: 'red' }} color='error' size='small' >
+                                                    <InputLabel id="size" sx={{ color: '#dc3545' }}>Size</InputLabel>
+                                                    <Select
+                                                        className='per-page-select'
+                                                        labelId="size"
+                                                        id="paginationSize"
+                                                        value={offset}
+                                                        label="Size"
+                                                        onChange={handlePaginationPageSizeChange}
+                                                    >
+                                                        <MenuItem value={10}>10</MenuItem>
+                                                        <MenuItem value={25}>25</MenuItem>
+                                                        <MenuItem value={50}>50</MenuItem>
+                                                        <MenuItem value={100}>100</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                            </Box>
 
 
+                                            <ThemeProvider theme={paginationTheme}>
+                                                <Pagination
+                                                    count={leadsRawData.totalPages}
+                                                    shape="rounded"
+                                                    color='primary'
+                                                    size='small'
+                                                    page={pageNumber}
+                                                    onChange={handlePaginationChange}
+                                                    boundaryCount={5}
+                                                />
+                                            </ThemeProvider>
+
+
+                                        </div>
+
+                                    </Stack>
+                                </>
+                                :
+                                <div style={{ display: "flex", justifyContent: "center" }}>
+                                    <h6>
+                                        <strong> No Records Found </strong>
+                                    </h6>
                                 </div>
-
-                            </Stack>
-                        </>
-                        :
-                        <div style={{display: "flex", justifyContent: "center"}}>
-                            <h6>
-                                <strong> No Records Found </strong>
-                            </h6>
-                        </div>
                         }
 
                     </CardContent>
