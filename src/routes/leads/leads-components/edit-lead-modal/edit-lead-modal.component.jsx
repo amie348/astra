@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 import { leadsSelector } from '../../../../store/leads/leads.selectors';
 import { currentUserSelector } from '../../../../store/user/user.selectors';
 import { BASE_API_URL } from "../../../../assets/config";
-
+import ErrorHandling from '../../../../components/errorHandler';
 
 import Alert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
@@ -87,7 +87,8 @@ function Example() {
         }
         ).then((response) => {
             setIsLoading(false)
-            dispatch(setLeadsSuccessFullyUpdated(true))
+            ErrorHandling('SuccessLeadUpdated')
+            // dispatch(setLeadsSuccessFullyUpdated(true))
             dispatch(setShowConfirmUpdateModal(false))
             dispatch(setShowEditModal(false))
 
@@ -109,7 +110,8 @@ function Example() {
         }).catch(error => {
             setIsLoading(false)
             // setIsError(true)
-            dispatch(setLeadsUpdateError(true))
+            // dispatch(setLeadsUpdateError(true))
+            ErrorHandling('ErrorFailedToUpdateLead')
             dispatch(setShowConfirmUpdateModal(false))
             dispatch(setShowEditModal(false))
         })
@@ -117,7 +119,7 @@ function Example() {
 
     return (
         <>
-            {successfullyUpdated ? <Alert onClose={() => { dispatch(setLeadsSuccessFullyUpdated(false)) }} sx={{ marginBottom: '10px' }} variant="filled" severity="success" >
+            {/* {successfullyUpdated ? <Alert onClose={() => { dispatch(setLeadsSuccessFullyUpdated(false)) }} sx={{ marginBottom: '10px' }} variant="filled" severity="success" >
                 Success - Lead Updated SuccessFully!
             </Alert > : <></>}
 
@@ -132,7 +134,7 @@ function Example() {
 
             {updateError ? <Alert onClose={() => { dispatch(setLeadsUpdateError(false)) }} sx={{ marginBottom: '10px' }} variant="filled" severity="error">
                 Error - Couldn't Update the lead try again!
-            </Alert> : <></>}
+            </Alert> : <></>} */}
             <Modal
                 show={showEditModal}
                 onHide={() => {

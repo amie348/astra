@@ -6,6 +6,8 @@ import axios from "axios";
 import { leadsSelector } from "../../../../store/leads/leads.selectors";
 import { currentUserSelector } from "../../../../store/user/user.selectors"
 
+import ErrorHandling from "../../../../components/errorHandler";
+
 import { useDispatch } from "react-redux";
 import { fetchLeadsStart, fetchLeadsSuccess, setLeadsDeleteError, setLeadsSuccessFullyDeleted } from "../../../../store/leads/leads.action";
 import Alert from '@mui/material/Alert';
@@ -35,7 +37,8 @@ export function DeleteLeadDialogue({ show, onHide }) {
       },
     }
     ).then((response) => {
-      dispatch(setLeadsSuccessFullyDeleted(true))
+      // dispatch(setLeadsSuccessFullyDeleted(true))
+      ErrorHandling('SuccessLeadDeleted')
       setIsLoading(false)
       console.log('delete:', response);
       // dispatch(fetchLeadsSuccess(response.data.leads))
@@ -56,7 +59,8 @@ export function DeleteLeadDialogue({ show, onHide }) {
         dispatch(fetchLeadsSuccess(response.data.leads))
       })
     }).catch(error => {
-      dispatch(setLeadsDeleteError(true))
+      // dispatch(setLeadsDeleteError(true))
+      ErrorHandling('ErrorFailedToDeleteLead')
       onHide()
       setIsLoading(false)
       console.log(error.response)
