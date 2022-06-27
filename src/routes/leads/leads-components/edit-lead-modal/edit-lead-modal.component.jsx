@@ -50,12 +50,12 @@ function Example() {
     const dispatch = useDispatch()
     const { showEditModal, clickedRow, showConfirmUpdateModal, pageNumber, offset, deleteError, updateError, successfullyDeleted, successfullyUpdated } = useSelector(leadsSelector)
     const { accessToken } = useSelector(currentUserSelector)
-    const { _id, createdAt, email, firstName, lastName, phone, updatedAt, lastContacted, contactType, response, followUpDate, noOfTimesContacted, funnelStage } = clickedRow
+    const { _id, createdAt, email, firstName, lastName, phone, updatedAt, lastContacted, contactType, response, followUpDate, noOfTimesContacted, funnelStage, finance, paidInFull, futureRevenue, purchasesPrice } = clickedRow
 
     const [updatedValues, setUpdatedValues] = useState(defaultFormFields)
 
     useEffect(() => {
-
+        console.log(clickedRow);
         setUpdatedValues({
             ...updatedValues,
             lastContacted: lastContacted ? moment(lastContacted).format(moment.HTML5_FMT.DATE) : null,
@@ -68,9 +68,13 @@ function Example() {
             noOfTimesContacted,
             response,
             funnelStage,
+            finance,
+            paidInFull,
+            futureRevenue,
+            purchasesPrice
         })
         // setFollowUp(moment(followUpDate).format(moment.HTML5_FMT.DATE))
-        setUpdatedAtDate(moment(updatedAt).format(moment.HTML5_FMT.DATE))
+        // setUpdatedAtDate(moment(updatedAt).format(moment.HTML5_FMT.DATE))
 
     }, [lastContacted, followUpDate, updatedAt, fetchAgain])
 

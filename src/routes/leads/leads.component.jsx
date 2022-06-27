@@ -12,8 +12,8 @@ import { leadsSelector } from "../../store/leads/leads.selectors"
 
 import { useDispatch } from "react-redux"
 import { fetchLeadsStart, fetchLeadsSuccess, setLeadsRawData, setIsLoading } from "../../store/leads/leads.action"
-import { DeleteLeadDialogue } from "../../components/lead-delete-dialogue/lead-delete-component";
-import { LeadFIlters } from "../../components/lead-filters/lead-filters-component";
+import { DeleteLeadDialogue } from "./leads-components/lead-delete-dialogue/lead-delete-component";
+import { LeadFIlters } from "./leads-components/lead-filters/lead-filters-component";
 import { BASE_API_URL } from "../../assets/config"
 import ErrorHandling from "../../components/errorHandler";
 

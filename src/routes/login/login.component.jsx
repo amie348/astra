@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ImageSideBar from './login-components/image-side-bar/imageSideBar.component';
-import SignInForm from '../../components/sign-in-form/sign-in-form.component';
+import SignInForm from './login-components/sign-in-form/sign-in-form.component';
 
 import logo from '../../assets/logo/astra-logo-transparent.png'
 

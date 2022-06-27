@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useSelector } from 'react-redux';
-import { leadsSelector } from '../../store/leads/leads.selectors';
+import { leadsSelector } from '../../../../store/leads/leads.selectors';
 
 import { styled } from '@mui/material/styles';
 
@@ -14,8 +14,8 @@ import IconButton from '@mui/material/IconButton';
 import { Button, Form, Col, Row } from 'react-bootstrap'
 import { Tooltip } from '@mui/material';
 
-import { setSearchFilters, setIsLoading } from '../../store/leads/leads.action';
-import { currentUserSelector } from '../../store/user/user.selectors';
+import { setSearchFilters, setIsLoading } from '../../../../store/leads/leads.action';
+import { currentUserSelector } from '../../../../store/user/user.selectors';
 
 import axios from 'axios';
 import { useDispatch } from 'react-redux';

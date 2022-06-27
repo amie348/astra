@@ -7,10 +7,10 @@ import axios from 'axios'
 import { useNavigate } from 'react-router'
 import { useDispatch } from "react-redux";
 
-import FormInput from "../form-input/form-input.component";
+import FormInput from "../../../../components/form-input/form-input.component";
 
 import './sign-in-form.styles.scss'
-import { setCurrentUser } from "../../store/user/user.action";
+import { setCurrentUser } from "../../../../store/user/user.action";
 
 const defaultFormFields = {
     email: '',

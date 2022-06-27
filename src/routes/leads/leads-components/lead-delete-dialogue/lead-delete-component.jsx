@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { leadsSelector } from "../../store/leads/leads.selectors";
-import { currentUserSelector } from "../../store/user/user.selectors"
+import { leadsSelector } from "../../../../store/leads/leads.selectors";
+import { currentUserSelector } from "../../../../store/user/user.selectors"
 
 import { useDispatch } from "react-redux";
-import { fetchLeadsStart, fetchLeadsSuccess, setLeadsDeleteError, setLeadsSuccessFullyDeleted } from "../../store/leads/leads.action";
+import { fetchLeadsStart, fetchLeadsSuccess, setLeadsDeleteError, setLeadsSuccessFullyDeleted } from "../../../../store/leads/leads.action";
 import Alert from '@mui/material/Alert';
 
 
