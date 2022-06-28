@@ -58,6 +58,54 @@ export default function ErrorHandling(error) {
       buttonsStyling: false,
     });
   }
+  else if (error == 'SuccessUserUpdated') {
+    Swal.fire({
+      icon: "success",
+      title: "Success!",
+      text: "User Updated SuccessFully!",
+      customClass: {
+        confirmButton: "btn btn-outline-danger btn-lg",
+        icon: "text-danger border-danger"
+      },
+      buttonsStyling: false,
+    });
+  }
+  else if (error == 'ErrorFailedToUpdateUser') {
+    Swal.fire({
+      icon: "error",
+      title: "Error!",
+      text: "Couldn't Update the user try again!",
+      customClass: {
+        confirmButton: "btn btn-outline-danger btn-lg",
+        icon: "text-danger border-danger"
+      },
+      buttonsStyling: false,
+    });
+  }
+  else if (error == 'SuccessUserDeleted') {
+    Swal.fire({
+      icon: "success",
+      title: "Success!",
+      text: "User Deleted SuccessFully!",
+      customClass: {
+        confirmButton: "btn btn-outline-danger btn-lg",
+        icon: "text-danger border-danger"
+      },
+      buttonsStyling: false,
+    });
+  }
+  else if (error == 'ErrorFailedToDeleteUser') {
+    Swal.fire({
+      icon: "error",
+      title: "Error!",
+      text: "Couldn't Delete the user try again!",
+      customClass: {
+        confirmButton: "btn btn-outline-danger btn-lg",
+        icon: "text-danger border-danger"
+      },
+      buttonsStyling: false,
+    });
+  }
   else if (response != 401) {
     Swal.fire({
       icon: "error",

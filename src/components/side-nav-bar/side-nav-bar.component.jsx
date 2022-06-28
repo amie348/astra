@@ -5,6 +5,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
+import PeopleIcon from '@mui/icons-material/People';
 
 import { isSideNavBarOpenSelector } from '../../store/dashboard/dashboard.selector';
 import { setIsSideNavBarOpen } from '../../store/dashboard/dashboard.action';
@@ -31,6 +32,11 @@ const SideNavBar = () => {
                         <NavLink className="item" activeClassName='active dg-danger' to='/leads'>
                             <div className="item-icon"> <LeaderboardIcon /> </div>
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Leads</div>
+                        </NavLink>
+
+                        <NavLink className="item" activeClassName='active dg-danger' to='/users'>
+                            <div className="item-icon"> <PeopleIcon /> </div>
+                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Users</div>
                         </NavLink>
                     </div>
                 </div>
