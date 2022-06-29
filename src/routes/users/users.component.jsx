@@ -18,6 +18,7 @@ import ErrorHandling from '../../components/errorHandler'
 
 import { BASE_API_URL } from "../../assets/config"
 import { fetchUsersFailed, fetchUsersStart, fetchUsersSuccess, setUsersRawData } from '../../store/users/users.action'
+import { UsersFilters } from './users-component/users-filters/users-filters.component'
 
 const Users = () => {
 
@@ -71,6 +72,11 @@ const Users = () => {
                 <div className="layout-content">
                     <DeleteUserDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal} />
                     <EditUserModal setShowEditModal={setShowEditModal} show={showEditModal} onHide={handleChangeShowEditModal} />
+
+                    <div style={{ marginBottom: "30px" }}>
+                        <UsersFilters />
+                    </div>
+
                     <UsersTable setShowEditModal={setShowEditModal} setShowDeleteModal={setShowDeleteModal} />
                 </div>
             </div>

@@ -122,6 +122,17 @@ function UsersTable({ setShowEditModal, setShowDeleteModal }) {
             },
             classes: 'hide-scroll-bar'
         }, {
+            dataField: 'phone',
+            text: 'Phone',
+
+            style: {
+                'overflow-x': 'scroll'
+            },
+            classes: 'hide-scroll-bar',
+            headerStyle: (colum, colIndex) => {
+                return { width: '10%' };
+            }
+        }, {
             dataField: 'companyName',
             text: 'Company Name',
             style: {
@@ -132,26 +143,50 @@ function UsersTable({ setShowEditModal, setShowDeleteModal }) {
                 return { width: '10%' };
             },
         }, {
-            dataField: 'notionUrl',
-            text: 'Notion Url',
-
+            dataField: 'active',
+            text: 'Active Status',
             style: {
-                'overflow-x': 'scroll'
-            },
-            classes: 'hide-scroll-bar',
-            headerStyle: (colum, colIndex) => {
-                return { width: '10%' };
-            }
-        }, {
-            dataField: 'zapierWebhook',
-            text: 'Zapier Web Hook',
-            style: {
-                'overflow-x': 'scroll'
+                'overflow-x': 'scroll',
+                'textAlign': 'center'
             },
             classes: 'hide-scroll-bar',
             headerStyle: (colum, colIndex) => {
                 return { width: '10%', textAlign: 'center' };
-            }
+            },
+            formatter: (cell) => (
+                cell === true ? (<span style={{
+                    textAlign: "center",
+                    cursor: "pointer",
+                    padding: "4px 8px",
+                    color: "#fff",
+                    backgroundColor: "#dc3545",
+                    borderRadius: "6px",
+                }} >
+                    {'ACTIVE'}
+                </span>)
+                    : cell === false ?
+
+                        (<span style={{
+                            textAlign: "center",
+                            cursor: "pointer",
+                            padding: "4px 8px",
+                            color: "#fff",
+                            backgroundColor: "#dc3545",
+                            borderRadius: "6px",
+                        }} >
+                            {'DEACTIVE'}
+                        </span>
+                        ) : (<span style={{
+                            textAlign: "center",
+                            cursor: "pointer",
+                            padding: "4px 8px",
+                            color: "#fff",
+                            backgroundColor: "#dc3545",
+                            borderRadius: "6px",
+                        }} >
+                            {"-"}
+                        </span>
+                        ))
         }, {
             dataField: 'actions',
             text: 'Actions',
@@ -181,7 +216,6 @@ function UsersTable({ setShowEditModal, setShowDeleteModal }) {
 
     return (
         <div className="table-container">
-            {/* <Example /> */}
             <Card sx={{ maxWidth: "100%" }} >
                 <CardHeader
                     action={

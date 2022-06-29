@@ -88,7 +88,7 @@ function EditUserModal({ show, onHide, setShowEditModal }) {
                 }
                 }
                 // dialogClassName="modal-100w" 
-                size='xl'
+                size='md'
                 aria-labelledby="example-custom-modal-styling-title"
             >
                 <Modal.Header closeButton>
@@ -113,8 +113,8 @@ function EditUserModal({ show, onHide, setShowEditModal }) {
                                     value={updatedValues}
                                 >
                                     <option value="">Select</option>
-                                    <option value="true">Active</option>
-                                    <option value="false">Non-Active</option>
+                                    <option value="true">Activate</option>
+                                    <option value="false">Deactivate</option>
                                 </Form.Select>
                             </Form.Group>
                         </Row>
