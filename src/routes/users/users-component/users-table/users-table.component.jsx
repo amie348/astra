@@ -8,6 +8,10 @@ import { usersSelector } from '../../../../store/users/users.selectors';
 
 import { styled } from '@mui/material/styles';
 
+import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap'
+
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -76,6 +80,7 @@ const paginationTheme = createTheme({
 
 function UsersTable({ setShowEditModal, setShowDeleteModal }) {
 
+    const navigate = useNavigate()
     const classes = useStyles()
     const { usersData, isUsersLoading, usersRawData, usersPageNumber, usersOffset } = useSelector(usersSelector)
     const [expanded, setExpanded] = useState(true);
@@ -243,6 +248,10 @@ function UsersTable({ setShowEditModal, setShowDeleteModal }) {
                             </div> : usersData.length > 0 ?
 
                                 <>
+                                    <Button variant="danger" type="button" style={{ minWidth: '70px', marginBottom: '30px' }} onClick={() => {
+                                        navigate('/create-user')
+                                    }}>Create New User</Button>
+
                                     <BootstrapTable
                                         wrapperClasses="table-responsive"
                                         bordered={true}
@@ -299,6 +308,10 @@ function UsersTable({ setShowEditModal, setShowDeleteModal }) {
                                 </>
                                 :
                                 <div style={{ display: "flex", justifyContent: "center" }}>
+                                    <Button variant="danger" type="button" style={{ minWidth: '70px', marginBottom: '30px' }} onClick={() => {
+                                        navigate('/create-user')
+                                    }}>Create New User</Button>
+
                                     <h6>
                                         <strong> No Records Found </strong>
                                     </h6>

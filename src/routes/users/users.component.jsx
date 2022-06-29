@@ -1,6 +1,7 @@
 import './users.styles.scss'
 
 import { useState, useEffect } from 'react'
+import { Navigate } from 'react-router-dom'
 
 import axios from 'axios'
 
@@ -19,6 +20,7 @@ import ErrorHandling from '../../components/errorHandler'
 import { BASE_API_URL } from "../../assets/config"
 import { fetchUsersFailed, fetchUsersStart, fetchUsersSuccess, setUsersRawData } from '../../store/users/users.action'
 import { UsersFilters } from './users-component/users-filters/users-filters.component'
+import { Button } from 'react-bootstrap'
 
 const Users = () => {
 
@@ -70,6 +72,7 @@ const Users = () => {
         <div className="layout-container">
             <div className={`${isSideNavBarOpen ? 'layout-body layout-body-compressed' : 'layout-body'}`}>
                 <div className="layout-content">
+
                     <DeleteUserDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal} />
                     <EditUserModal setShowEditModal={setShowEditModal} show={showEditModal} onHide={handleChangeShowEditModal} />
 

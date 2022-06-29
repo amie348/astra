@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useSelector } from 'react-redux';
 import { usersSelector } from '../../../../store/users/users.selectors';
@@ -12,12 +12,10 @@ import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import IconButton from '@mui/material/IconButton';
 import { Button, Form, Col, Row } from 'react-bootstrap'
-import { Tooltip } from '@mui/material';
 
 import { setUsersSearchFilters, setUsersIsLoading } from '../../../../store/users/users.action';
 import { currentUserSelector } from '../../../../store/user/user.selectors';
 
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 
 const defaultFormFields = {

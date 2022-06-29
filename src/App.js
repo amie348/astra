@@ -11,6 +11,7 @@ import { currentUserSelector } from '../src/store/user/user.selectors'
 
 import AppLayout from './components/app-layout/app-layout.component'
 import Users from './routes/users/users.component';
+import CreateUsersForm from './routes/users/users-component/create-users-form/create-users-form.component';
 
 function App() {
   const { accessToken } = useSelector(currentUserSelector)
@@ -25,6 +26,7 @@ function App() {
         <Route path='dashboard' element={<Dashboard />} />
         <Route path='leads' element={<Leads />} />
         <Route path='users' element={<Users />} />
+        <Route path='create-user' element={<CreateUsersForm />} />
       </Route>
     </Routes>
   );
