@@ -307,12 +307,12 @@ function UsersTable({ setShowEditModal, setShowDeleteModal }) {
                                     </Stack>
                                 </>
                                 :
-                                <div style={{ display: "flex", justifyContent: "center" }}>
+                                <div>
                                     <Button variant="danger" type="button" style={{ minWidth: '70px', marginBottom: '30px' }} onClick={() => {
                                         navigate('/create-user')
                                     }}>Create New User</Button>
 
-                                    <h6>
+                                    <h6 style={{ textAlign: 'center' }}>
                                         <strong> No Records Found </strong>
                                     </h6>
                                 </div>

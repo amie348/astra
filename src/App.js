@@ -14,7 +14,8 @@ import Users from './routes/users/users.component';
 import CreateUsersForm from './routes/users/users-component/create-users-form/create-users-form.component';
 
 function App() {
-  const { accessToken } = useSelector(currentUserSelector)
+  const { user, accessToken } = useSelector(currentUserSelector)
+  const { role } = user
   const navigate = useNavigate()
 
   return (
@@ -25,7 +26,7 @@ function App() {
       <Route element={<AppLayout />}>
         <Route path='dashboard' element={<Dashboard />} />
         <Route path='leads' element={<Leads />} />
-        <Route path='users' element={<Users />} />
+        <Route path='users' element={role == 'SUPERADMIN' ? <Users /> : <Navigate to={'/dashboard'} />} />
         <Route path='create-user' element={<CreateUsersForm />} />
       </Route>
     </Routes>

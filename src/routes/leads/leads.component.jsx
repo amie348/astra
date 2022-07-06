@@ -20,7 +20,7 @@ import ErrorHandling from "../../components/errorHandler";
 const Leads = () => {
 
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
-    const { accessToken } = useSelector(currentUserSelector)
+    const { accessToken, user } = useSelector(currentUserSelector)
 
     const dispatch = useDispatch()
 
@@ -41,6 +41,7 @@ const Leads = () => {
         }
         ).then((response) => {
             console.log(response);
+            console.log(user);
             dispatch(setIsLoading(false))
             dispatch(setLeadsRawData(response.data))
             dispatch(fetchLeadsSuccess(response.data.leads))

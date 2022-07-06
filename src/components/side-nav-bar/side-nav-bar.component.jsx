@@ -8,6 +8,7 @@ import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import PeopleIcon from '@mui/icons-material/People';
 
 import { isSideNavBarOpenSelector } from '../../store/dashboard/dashboard.selector';
+import { currentUserSelector } from '../../store/user/user.selectors';
 import { setIsSideNavBarOpen } from '../../store/dashboard/dashboard.action';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -17,6 +18,9 @@ import { NavLink } from 'react-router-dom';
 const SideNavBar = () => {
     const dispatch = useDispatch()
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
+    const { user } = useSelector(currentUserSelector)
+
+    const { role } = user
     return (
         <>
             <div className={`${isSideNavBarOpen ? 'sideNavBar-container' : 'closeSideNavBar'} `}>
@@ -34,10 +38,15 @@ const SideNavBar = () => {
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Leads</div>
                         </NavLink>
 
-                        <NavLink className="item" activeClassName='active dg-danger' to='/users'>
-                            <div className="item-icon"> <PeopleIcon /> </div>
-                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Users</div>
-                        </NavLink>
+                        {
+                            role == 'SUPERADMIN' ?
+                                <NavLink className="item" activeClassName='active dg-danger' to='/users'>
+                                    <div className="item-icon"> <PeopleIcon /> </div>
+                                    <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Users</div>
+                                </NavLink> :
+
+                                ''
+                        }
                     </div>
                 </div>
 
