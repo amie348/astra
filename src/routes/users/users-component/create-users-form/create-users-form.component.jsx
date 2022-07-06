@@ -1,6 +1,7 @@
 import { Button, Form, Col, Row } from 'react-bootstrap'
 import { useState } from 'react'
 
+import profileAvatar from '../../../../assets/images/profileAvatar.png'
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
@@ -12,6 +13,8 @@ import { useSelector } from 'react-redux'
 import { isSideNavBarOpenSelector } from '../../../../store/dashboard/dashboard.selector'
 
 const CreateUsersForm = () => {
+    const [base64code, setBase64Code] = useState('')
+    const [profileImage, setProfileImage] = useState('')
     const [formValues, setFormValues] = useState({
         name: '',
         email: '',
@@ -23,11 +26,11 @@ const CreateUsersForm = () => {
 
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
 
-    let base64code = ''
     const profilePictureOnChange = (e) => {
         const files = e.target.files
         const file = files[0]
-        getbase64(file)
+        setProfileImage(file)
+        // getbase64(file)
     }
 
     const getbase64 = (file) => {
@@ -35,7 +38,7 @@ const CreateUsersForm = () => {
             let reader = new FileReader()
             reader.readAsDataURL(file)
             reader.onload = () => {
-                base64code = reader.result
+                setBase64Code(reader.result)
                 console.log(base64code);
             }
         }
@@ -59,6 +62,9 @@ const CreateUsersForm = () => {
                                 <CardContent >
 
                                     <Form>
+                                        <Row className='mb-3'>
+                                            {profileImage ? <img src={URL.createObjectURL(profileImage)} alt="" style={{ width: '150px', height: '150px', border: '2px solid gray', borderRadius: '80px', objectFit: 'cover', padding: '2px', margin: 'auto' }} /> : <img src={profileAvatar} style={{ width: '150px', height: '1   50px', border: 'none', borderRadius: '80px', objectFit: 'contain', padding: '0px', margin: 'auto' }} />}
+                                        </Row>
                                         <Row className='mb-3'>
                                             <Form.Group controlId="formGridFile">
                                                 <Form.Label>Upload Profile Picture</Form.Label>
