@@ -78,7 +78,7 @@ const Dashboard = () => {
         ).then((response) => {
             console.log(response);
             for (let i = 0; i < 12; i++) {
-                monthsFullNames.push(moment().subtract(i, 'months').format('MMMM'))
+                monthsFullNames.push(moment().subtract(i, 'months').format('MMM'))
             }
 
             setLabels(monthsFullNames)
@@ -110,14 +110,14 @@ const Dashboard = () => {
                 data: leadsGenerated?.map((lead) => {
                     return lead.leadsGenerated
                 }),
-                backgroundColor: 'rgba(25, 135, 84, 0.9)',
+                backgroundColor: 'rgba(223, 55, 72 )',
             },
             {
                 label: 'Leads Closed',
                 data: leadsClosed?.map((lead) => {
                     return lead.leadsClosed
                 }),
-                backgroundColor: 'rgba(53, 162, 235, 0.9)',
+                backgroundColor: 'rgba(242, 200, 12)',
             },
         ],
     };
