@@ -16,6 +16,24 @@ export const dashboardReducer = (state = INITIAL_STATE, action) => {
                 isProfileDropDownOpen: payload
             }
 
+        case DASHBOARD_ACTIONS_TYPES.FETCH_DASHBOARD_STATS_START:
+            return {
+                ...state,
+                isDashboardStatsLoading: true
+            }
+        case DASHBOARD_ACTIONS_TYPES.FETCH_DASHBOARD_STATS_SUCCESS:
+            return {
+                ...state,
+                dashboardStats: payload,
+                isDashboardStatsLoading: false
+            }
+        case DASHBOARD_ACTIONS_TYPES.FETCH_DASHBOARD_STATS_FAILED:
+            return {
+                ...state,
+                isDashboardStatsLoading: false,
+                error: payload
+            }
+
         default:
             return state
     }
@@ -23,5 +41,7 @@ export const dashboardReducer = (state = INITIAL_STATE, action) => {
 
 const INITIAL_STATE = {
     isSideNavBarOpen: true,
-    isProfileDropDownOpen: false
+    isProfileDropDownOpen: false,
+    dashboardStats: {},
+    isDashboardStatsLoading: false
 }

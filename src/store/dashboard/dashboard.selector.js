@@ -14,3 +14,17 @@ export const isProfileDropDownOpenSelector = createSelector(
         isProfileDropDownOpenSlice.isProfileDropDownOpen
     )
 )
+
+export const isDashboardStatsLoadingSelector = createSelector(
+    [dashboardReducerSelector],
+    (isDashboardStatsLoadingSlice) => (
+        isDashboardStatsLoadingSlice.isDashboardStatsLoading
+    )
+)
+
+export const dashboardStatsSelector = createSelector(
+    [dashboardReducerSelector],
+    (dashboardStatsSlice) => (
+        dashboardStatsSlice.dashboardStats
+    )
+)

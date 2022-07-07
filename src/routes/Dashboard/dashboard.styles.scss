@@ -1,3 +1,11 @@
+.dashboard-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 490px;
+    width: 100%;
+}
+
 .dashboard-item {
     border: 1px solid lightgrey;
     border-radius: 25px;
@@ -21,11 +29,11 @@
 }
 
 .d-item-l {
-    width: 40%;
+    width: 49%;
 }
 
 .d-item-xl {
-    width: 58%;
+    width: 49%;
 
     .lead-data {
 
@@ -45,13 +53,9 @@
             color: black;
         }
 
-        .lead-time {
-            margin-left: 30px
-        }
+        .lead-time {}
 
-        .lead-status {
-            margin-left: -30px;
-        }
+        .lead-status {}
 
         .lead-actions {}
     }
