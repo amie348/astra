@@ -1,0 +1,58 @@
+.dashboard-item {
+    border: 1px solid lightgrey;
+    border-radius: 25px;
+
+    .item-text {
+        font-size: 11px;
+        color: gray;
+        height: 60px;
+
+    }
+
+    .progress-bar {
+        background-color: #dc3545;
+        // background-color: #df374854;
+        border-radius: 3px;
+    }
+}
+
+.d-item-s {
+    width: 32%;
+}
+
+.d-item-l {
+    width: 40%;
+}
+
+.d-item-xl {
+    width: 58%;
+
+    .lead-data {
+
+        font-size: 10px;
+        color: gray;
+
+        .lead-img {
+            border: none;
+            border-radius: 20px;
+            width: 27px;
+            height: 27px;
+            margin-right: 12px;
+        }
+
+        .lead-name {
+            font-weight: 700;
+            color: black;
+        }
+
+        .lead-time {
+            margin-left: 30px
+        }
+
+        .lead-status {
+            margin-left: -30px;
+        }
+
+        .lead-actions {}
+    }
+}
