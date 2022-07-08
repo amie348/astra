@@ -11,14 +11,14 @@ import FormInput from "../../../../components/form-input/form-input.component";
 
 import './sign-in-form.styles.scss'
 import { setCurrentUser } from "../../../../store/user/user.action";
+import { BASE_API_URL } from "../../../../assets/config";
+
 
 const defaultFormFields = {
     email: '',
     password: '',
 }
 
-
-const baseUrl = 'https://astra-crm.herokuapp.com/api/user/signin'
 
 const SignInForm = () => {
     const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const SignInForm = () => {
 
     const handleSubmit = ({ email, password }) => {
         setSigningIn(true)
-        axios.post(baseUrl, {
+        axios.post(`${BASE_API_URL}/api/user/signin`, {
             email,
             password
         }, {

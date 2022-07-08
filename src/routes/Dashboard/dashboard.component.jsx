@@ -11,7 +11,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 import AppsIcon from '@mui/icons-material/Apps';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-import { Bar } from 'react-chartjs-2';
+import { Bar, Line  } from 'react-chartjs-2';
 import moment from 'moment'
 import { Tooltip as MuiToolTip } from '@mui/material';
 
