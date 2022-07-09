@@ -12,6 +12,8 @@ import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap'
 
+import VisibilityIcon from '@mui/icons-material/Visibility';
+
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -99,6 +101,11 @@ function UsersTable({ setShowEditModal, setShowDeleteModal }) {
     const editItem = (row) => {
         disptch(setUsersClickedRow(row))
         setShowEditModal(true)
+    }
+
+    const viewItem = (row) => {
+        // console.log('view', row);
+        navigate(`/update-users/${row._id}`)
     }
 
     const handlePaginationChange = (event, value) => {
@@ -208,9 +215,15 @@ function UsersTable({ setShowEditModal, setShowDeleteModal }) {
                             </span>
                         </Tooltip>
 
-                        <Tooltip title="Edit/View User">
+                        <Tooltip title="Edit User">
                             <span onClick={() => { editItem(row) }} >
                                 <EditIcon fontSize='small' className={classes.root} />
+                            </span>
+                        </Tooltip>
+
+                        <Tooltip title="View User">
+                            <span onClick={() => { viewItem(row) }} >
+                                <VisibilityIcon fontSize='small' className={classes.root} />
                             </span>
                         </Tooltip>
 

@@ -1,5 +1,5 @@
 import { Button, Form, Col, Row } from 'react-bootstrap'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRef } from 'react';
 
 import profileAvatar from '../../../../assets/images/profileAvatar.png'
@@ -24,10 +24,16 @@ import { currentUserSelector } from '../../../../store/user/user.selectors';
 
 import { useSelector } from 'react-redux'
 import { isSideNavBarOpenSelector } from '../../../../store/dashboard/dashboard.selector'
+import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const CreateUsersForm = () => {
+    const navigate = useNavigate()
     const [isValidName, setIsValidName] = useState('')
     const [showNameSpinner, setShowNameSpinner] = useState(false)
+
+    const [isUpdate, setIsUpdate] = useState('')
+    const [id, setId] = useState('')
 
     const [isValidEmail, setIsValidEmail] = useState('')
     const [showEmailSpinner, setShowEmailSpinner] = useState(false)
@@ -47,11 +53,35 @@ const CreateUsersForm = () => {
     })
 
     const { name, email, phone, companyName, zapierWebhook } = formValues
+    const [isLoading, setIsLoading] = useState(false)
 
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
     const { accessToken } = useSelector(currentUserSelector)
 
     const inputFile = useRef(null)
+
+    useEffect(() => {
+        const id = window.location.href.split('/')[4]
+
+        if (id) {
+            setIsUpdate(true)
+            axios.get(`${BASE_API_URL}/api/user/${id}`, {
+                headers: {
+                    authorization: `${accessToken}`
+                },
+            }
+            ).then((response) => {
+                console.log(response.data.data);
+                const { name, email, companyName, dp, phone, zapierWebhook, notionUrl } = response.data.data
+                setFormValues({ ...formValues, name, email, companyName, dp })
+                setId(id)
+            }).catch(error => {
+
+                ErrorHandling(error)
+
+            })
+        }
+    }, [])
 
     const profilePictureOnChange = (e) => {
         const files = e.target.files
@@ -83,20 +113,22 @@ const CreateUsersForm = () => {
 
     const checkAvailability = (e) => {
         const { name, value } = e.target
-        if (value != '') {
-            if (name == 'name') {
-                setIsValidName('')
-                setShowNameSpinner(true)
+        if (!isUpdate) {
+            if (value != '') {
+                if (name == 'name') {
+                    setIsValidName('')
+                    setShowNameSpinner(true)
+                }
+                else if (name == 'email') {
+                    setIsValidEmail('')
+                    setShowEmailSpinner(true)
+                }
+                else if (name == 'companyName') {
+                    setIsValidCompanyName('')
+                    setShowCompanyNameSpinner(true)
+                }
+                checkUniqueEntry(name, value)
             }
-            else if (name == 'email') {
-                setIsValidEmail('')
-                setShowEmailSpinner(true)
-            }
-            else if (name == 'companyName') {
-                setIsValidCompanyName('')
-                setShowCompanyNameSpinner(true)
-            }
-            checkUniqueEntry(name, value)
         }
     }
 
@@ -129,7 +161,9 @@ const CreateUsersForm = () => {
 
 
     const createUser = () => {
+
         if (name != '' & email != '' & phone != '' & companyName != '' & zapierWebhook != '') {
+            setIsLoading(true)
             console.log(formValues);
             axios.post(`${BASE_API_URL}/api/user/add`, formValues, {
                 headers: {
@@ -137,6 +171,7 @@ const CreateUsersForm = () => {
                 },
             }
             ).then((response) => {
+                setIsLoading(false)
                 console.log(response);
                 ErrorHandling('newUserCreatedSuccessfully')
                 setFormValues({
@@ -149,12 +184,30 @@ const CreateUsersForm = () => {
                     zapierWebhook: '',
                 })
             }).catch(error => {
+                setIsLoading(false)
                 ErrorHandling(error)
             })
         }
         else {
             ErrorHandling('fillAllNewUserFields')
         }
+    }
+
+    const updateUser = () => {
+        setIsLoading(true)
+        axios.patch(`${BASE_API_URL}/api/user/update/${id}`, formValues, {
+            headers: {
+                authorization: `${accessToken}`
+            },
+        }
+        ).then((response) => {
+            setIsLoading(false)
+            console.log(response);
+            navigate('/users')
+        }).catch(error => {
+            setIsLoading(false)
+            ErrorHandling(error)
+        })
     }
 
     return (
@@ -165,7 +218,7 @@ const CreateUsersForm = () => {
 
                         <Card sx={{ maxWidth: "100%" }} >
                             <CardHeader
-                                title="Add Users"
+                                title={`${isUpdate ? 'Update User' : 'Add User'}`}
                             >
 
                             </CardHeader>
@@ -176,10 +229,18 @@ const CreateUsersForm = () => {
 
                                     <Form style={{ width: '500px' }}>
                                         <Row className='mb-4' >
-                                            {profileImage ?
-                                                <img src={URL.createObjectURL(profileImage)} alt="" style={{ width: '150px', height: '150px', border: '2px solid gray', borderRadius: '80px', objectFit: 'cover', padding: '2px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />
+                                            {isUpdate ? formValues.dp ?
+
+                                                <img src={`${formValues.dp}`} alt="" style={{ width: '150px', height: '150px', border: '2px solid gray', borderRadius: '80px', objectFit: 'cover', padding: '2px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />
+
                                                 :
-                                                <img src={profileAvatar} style={{ width: '150px', height: '1   50px', border: 'none', borderRadius: '80px', objectFit: 'contain', padding: '0px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />}
+
+                                                <img src={profileAvatar} style={{ width: '150px', height: '1   50px', border: 'none', borderRadius: '80px', objectFit: 'contain', padding: '0px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' /> :
+
+                                                profileImage ?
+                                                    <img src={`${URL.createObjectURL(profileImage)}`} alt="" style={{ width: '150px', height: '150px', border: '2px solid gray', borderRadius: '80px', objectFit: 'cover', padding: '2px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />
+                                                    :
+                                                    <img src={profileAvatar} style={{ width: '150px', height: '1   50px', border: 'none', borderRadius: '80px', objectFit: 'contain', padding: '0px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />}
 
                                             <input type='file' id='file' ref={inputFile} onChange={profilePictureOnChange} style={{ display: 'none' }} />
 
@@ -293,11 +354,11 @@ const CreateUsersForm = () => {
                                             disabled={!(name != '' && email != '' && phone != '' && companyName != '' && zapierWebhook != '')}
                                             style={{ minWidth: '70px' }}
                                             onClick={() => {
-                                                createUser()
+                                                isUpdate ? updateUser() : createUser()
                                             }}>
-                                            {false ? <div className="spinner-border spinner-border-sm text-light" role="status">
+                                            {isLoading ? <div className="spinner-border spinner-border-sm text-light" role="status">
                                                 <span className="sr-only"></span>
-                                            </div> : 'Create User'}
+                                            </div> : isUpdate ? 'Update User' : 'Create User'}
                                         </Button>
                                     </Form>
 
