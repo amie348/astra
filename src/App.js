@@ -15,6 +15,7 @@ import CreateUsersForm from '../src/routes/users/users-component/create-users-fo
 import AppLayout from './components/app-layout/app-layout.component'
 import Users from './routes/users/users.component';
 import Notes from './routes/notes/notes.component';
+import UserProfile from './routes/users/users-component/user-profile/user-profile.component';
 
 function App() {
   const { user, accessToken } = useSelector(currentUserSelector)
@@ -33,6 +34,7 @@ function App() {
         <Route path='users' element={role == 'SUPERADMIN' ? <Users /> : <Navigate to={'/dashboard'} />} />
         <Route path='create-user' element={<CreateUsersForm />} />
         <Route path='notes' element={<Notes />} />
+        <Route path='user-profile' element={<UserProfile />} />
       </Route>
     </Routes>
   );

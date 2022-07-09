@@ -18,14 +18,22 @@ import { BASE_API_URL } from '../../../../assets/config';
 
 import ErrorHandling from '../../../../components/errorHandler';
 
-import './create-user-form.styles.scss'
+import './user-profile.styles.scss'
 
 import { currentUserSelector } from '../../../../store/user/user.selectors';
 
 import { useSelector } from 'react-redux'
 import { isSideNavBarOpenSelector } from '../../../../store/dashboard/dashboard.selector'
+import { useEffect } from 'react';
 
-const CreateUsersForm = () => {
+const UserProfile = () => {
+    useEffect(() => {
+        let image = new Image();
+        image.src = user.dp;
+        // setFormValues({...formValues, dp:image.src})
+        // console.log(image.src);
+        // setProfileImage()
+    }, [])
     const [isValidName, setIsValidName] = useState('')
     const [showNameSpinner, setShowNameSpinner] = useState(false)
 
@@ -35,16 +43,10 @@ const CreateUsersForm = () => {
     const [isValidCompanyName, setIsValidCompanyName] = useState('')
     const [showCompanyNameSpinner, setShowCompanyNameSpinner] = useState(false)
 
+    const { user } = useSelector(currentUserSelector)
+
     const [profileImage, setProfileImage] = useState('')
-    const [formValues, setFormValues] = useState({
-        dp: '',
-        name: '',
-        email: '',
-        phone: '',
-        companyName: '',
-        notionUrl: '',
-        zapierWebhook: '',
-    })
+    const [formValues, setFormValues] = useState(user)
 
     const { name, email, phone, companyName, zapierWebhook } = formValues
 
@@ -74,8 +76,6 @@ const CreateUsersForm = () => {
 
                     setFormValues({ ...formValues, dp: reader.result })
                     console.log(formValues);
-                    // setBase64Code(reader.result)
-                    // console.log(base64code);
                 }
             }
         }
@@ -127,36 +127,6 @@ const CreateUsersForm = () => {
         })
     }
 
-
-    const createUser = () => {
-        if (name != '' & email != '' & phone != '' & companyName != '' & zapierWebhook != '') {
-            console.log(formValues);
-            axios.post(`${BASE_API_URL}/api/user/add`, formValues, {
-                headers: {
-                    authorization: `${accessToken}`
-                },
-            }
-            ).then((response) => {
-                console.log(response);
-                ErrorHandling('newUserCreatedSuccessfully')
-                setFormValues({
-                    dp: '',
-                    name: '',
-                    email: '',
-                    phone: '',
-                    companyName: '',
-                    notionUrl: '',
-                    zapierWebhook: '',
-                })
-            }).catch(error => {
-                ErrorHandling(error)
-            })
-        }
-        else {
-            ErrorHandling('fillAllNewUserFields')
-        }
-    }
-
     return (
         <>
             <div className="layout-container">
@@ -165,7 +135,7 @@ const CreateUsersForm = () => {
 
                         <Card sx={{ maxWidth: "100%" }} >
                             <CardHeader
-                                title="Add Users"
+                                title="User Profile"
                             >
 
                             </CardHeader>
@@ -176,8 +146,8 @@ const CreateUsersForm = () => {
 
                                     <Form style={{ width: '500px' }}>
                                         <Row className='mb-4' >
-                                            {profileImage ?
-                                                <img src={URL.createObjectURL(profileImage)} alt="" style={{ width: '150px', height: '150px', border: '2px solid gray', borderRadius: '80px', objectFit: 'cover', padding: '2px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />
+                                            {formValues.dp ?
+                                                <img src={formValues.dp} alt="" style={{ width: '150px', height: '150px', border: '2px solid gray', borderRadius: '80px', objectFit: 'cover', padding: '2px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />
                                                 :
                                                 <img src={profileAvatar} style={{ width: '150px', height: '1   50px', border: 'none', borderRadius: '80px', objectFit: 'contain', padding: '0px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />}
 
@@ -188,7 +158,7 @@ const CreateUsersForm = () => {
 
                                         <Row className="mb-3">
                                             <Form.Group as={Col} className='input-field-container' controlId="formGridName">
-                                                <span className='cu-input-label' >Name<span style={{ color: 'red' }}> *</span></span>
+                                                <span className='cu-input-label' >Name</span>
 
                                                 {showNameSpinner ? <div class="spinner-border spinner-border-sm text-danger" role="status">
                                                     <span class="sr-only"></span>
@@ -209,7 +179,7 @@ const CreateUsersForm = () => {
 
                                         <Row className="mb-3">
                                             <Form.Group as={Col} className='input-field-container' controlId="formGridEmail">
-                                                <span className='cu-input-label'>Email<span style={{ color: 'red' }}> *</span></span>
+                                                <span className='cu-input-label'>Email</span>
 
                                                 {showEmailSpinner ? <div class="spinner-border spinner-border-sm text-danger" role="status">
                                                     <span class="sr-only"></span>
@@ -230,7 +200,7 @@ const CreateUsersForm = () => {
 
                                         <Row className="mb-3">
                                             <Form.Group as={Col} className='input-field-container' controlId="formGridPhone">
-                                                <span>Phone<span style={{ color: 'red' }}> *</span></span>
+                                                <span>Phone</span>
                                                 <Form.Control className='cu-input-field' size='md' name='phone' type="text" placeholder="Enter Phone No" onChange={(e) => {
                                                     const { name, value } = e.target;
                                                     setFormValues({ ...formValues, [name]: value })
@@ -240,7 +210,7 @@ const CreateUsersForm = () => {
 
                                         <Row className="mb-3">
                                             <Form.Group as={Col} className='input-field-container' controlId="formGridCompanyName">
-                                                <span className='cu-input-label'>Company Name<span style={{ color: 'red' }}> *</span></span>
+                                                <span className='cu-input-label'>Company Name</span>
 
                                                 {showCompanyNameSpinner ? <div class="spinner-border spinner-border-sm text-danger" role="status">
                                                     <span class="sr-only"></span>
@@ -276,7 +246,7 @@ const CreateUsersForm = () => {
 
                                         <Row className="mb-3">
                                             <Form.Group as={Col} className='input-field-container' controlId="formGridZapierWebHook">
-                                                <span>Zapier Web Hook<span style={{ color: 'red' }}> *</span></span>
+                                                <span>Zapier Web Hook</span>
                                                 <Form.Control className='cu-input-field' size='md'
                                                     name='zapierWebhook'
                                                     type="text"
@@ -289,7 +259,7 @@ const CreateUsersForm = () => {
                                             </Form.Group>
                                         </Row>
 
-                                        <Button variant="danger" type="button"
+                                        {/* <Button variant="danger" type="button"
                                             disabled={!(name != '' && email != '' && phone != '' && companyName != '' && zapierWebhook != '')}
                                             style={{ minWidth: '70px' }}
                                             onClick={() => {
@@ -298,7 +268,7 @@ const CreateUsersForm = () => {
                                             {false ? <div className="spinner-border spinner-border-sm text-light" role="status">
                                                 <span className="sr-only"></span>
                                             </div> : 'Create User'}
-                                        </Button>
+                                        </Button> */}
                                     </Form>
 
                                 </CardContent>
@@ -313,4 +283,4 @@ const CreateUsersForm = () => {
     )
 }
 
-export default CreateUsersForm
+export default UserProfile

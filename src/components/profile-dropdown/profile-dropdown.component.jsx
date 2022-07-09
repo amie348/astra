@@ -91,7 +91,7 @@ const ProfileDropDown = () => {
                     <p className='dropdown-user-role'>({role})</p>
                 </div>
                 <Divider />
-                <MenuItem sx={{ margin: '10px 0px' }}>
+                <MenuItem sx={{ margin: '10px 0px' }} onClick={() => { navigate('/user-profile') }}>
                     <Avatar /> My Profile
                 </MenuItem>
                 <hr style={{ marginTop: '0px', marginBottom: '8px' }} />
