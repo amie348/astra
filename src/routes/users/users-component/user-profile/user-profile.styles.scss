@@ -1,0 +1,36 @@
+.input-field-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .cu-input-field {
+        max-width: 320px;
+    }
+
+    .cu-input-label {
+        width: 160px;
+    }
+
+}
+
+.profilePicture:hover {
+    cursor: pointer;
+}
+
+.field-subtext-success {
+    font-size: 10px;
+    margin-left: 185px;
+    margin-top: 2px;
+    color: green;
+}
+
+.field-subtext-error {
+    font-size: 10px;
+    margin-left: 185px;
+    margin-top: 2px;
+    color: red;
+}
+
+.field-subtext-adjust {
+    margin-left: 165px;
+}

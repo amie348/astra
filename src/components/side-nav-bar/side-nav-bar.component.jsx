@@ -38,6 +38,11 @@ const SideNavBar = () => {
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Leads</div>
                         </NavLink>
 
+                        <NavLink className="item" activeClassName='active dg-danger' to='/notes'>
+                            <div className="item-icon"> <LeaderboardIcon /> </div>
+                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Notes</div>
+                        </NavLink>
+
                         {
                             role == 'SUPERADMIN' ?
                                 <NavLink className="item" activeClassName='active dg-danger' to='/users'>
