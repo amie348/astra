@@ -9,9 +9,10 @@ import Leads from './routes/leads/leads.component';
 import { useSelector } from 'react-redux'
 import { currentUserSelector } from '../src/store/user/user.selectors'
 
+import CreateUsersForm from '../src/routes/users/users-component/create-users-form/create-users-form.component'
+
 import AppLayout from './components/app-layout/app-layout.component'
 import Users from './routes/users/users.component';
-import CreateUsersForm from './routes/users/users-component/create-users-form/create-users-form.component';
 
 function App() {
   const { user, accessToken } = useSelector(currentUserSelector)
@@ -21,6 +22,7 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<Navigate to={`${accessToken ? '/dashboard' : '/login'}`} />} />
+      {/* <Route path='/' element={<CreateUsersForm />} /> */}
       <Route path='login' element={<Login />} />
 
       <Route element={<AppLayout />}>

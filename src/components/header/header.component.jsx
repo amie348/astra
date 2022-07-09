@@ -26,12 +26,12 @@ const Header = () => {
                         {companyName}
                     </strong> </span>
                 <span className='userName'>
-                    <span onClick={() => { dispatch(setIsProfileDropDownOpen(!isProfileDropDownOpen)) }}> <AccountCircleIcon /> </span>
+                    {/* <span onClick={() => { dispatch(setIsProfileDropDownOpen(!isProfileDropDownOpen)) }}> <AccountCircleIcon /> </span> */}
                     {name}
                 </span>
             </div>
 
-            {isProfileDropDownOpen && <ProfileDropDown />}
+            {<ProfileDropDown />}
         </div>
     )
 }

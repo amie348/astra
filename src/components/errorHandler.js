@@ -22,6 +22,42 @@ export default function ErrorHandling(error) {
       buttonsStyling: false,
     });
   }
+  else if (error == 'imgSizeExceded') {
+    Swal.fire({
+      icon: "error",
+      title: "Error!",
+      text: 'Image Size cannot exceed 3 MB',
+      customClass: {
+        confirmButton: "btn btn-outline-danger btn-lg",
+        icon: "text-danger border-danger"
+      },
+      buttonsStyling: false,
+    });
+  }
+  else if (error == 'fillAllNewUserFields') {
+    Swal.fire({
+      icon: "error",
+      title: "Error!",
+      text: 'Fill All Required Fields!',
+      customClass: {
+        confirmButton: "btn btn-outline-danger btn-lg",
+        icon: "text-danger border-danger"
+      },
+      buttonsStyling: false,
+    });
+  }
+  else if (error == 'newUserCreatedSuccessfully') {
+    Swal.fire({
+      icon: "success",
+      title: "Success!",
+      text: 'User Created Successfully!',
+      customClass: {
+        confirmButton: "btn btn-outline-danger btn-lg",
+        icon: "text-danger border-danger"
+      },
+      buttonsStyling: false,
+    });
+  }
   else if (error == 'ErrorFailedToUpdateLead') {
     Swal.fire({
       icon: "error",

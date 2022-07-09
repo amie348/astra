@@ -9,13 +9,23 @@ import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import IconButton from '@mui/material/IconButton';
 
+import axios from 'axios';
+import { BASE_API_URL } from '../../../../assets/config';
+
+import ErrorHandling from '../../../../components/errorHandler';
+
+import './create-user-form.styles.scss'
+
+import { currentUserSelector } from '../../../../store/user/user.selectors';
+
 import { useSelector } from 'react-redux'
 import { isSideNavBarOpenSelector } from '../../../../store/dashboard/dashboard.selector'
 
 const CreateUsersForm = () => {
-    const [base64code, setBase64Code] = useState('')
+    // const [base64code, setBase64Code] = useState('')
     const [profileImage, setProfileImage] = useState('')
     const [formValues, setFormValues] = useState({
+        base64code: '',
         name: '',
         email: '',
         phone: '',
@@ -24,23 +34,56 @@ const CreateUsersForm = () => {
         zapierWebhook: '',
     })
 
+    const { name, email, phone, companyName } = formValues
+
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
+    const { accessToken } = useSelector(currentUserSelector)
 
     const profilePictureOnChange = (e) => {
         const files = e.target.files
         const file = files[0]
         setProfileImage(file)
-        // getbase64(file)
+        getbase64(file)
     }
 
     const getbase64 = (file) => {
         if (file) {
-            let reader = new FileReader()
-            reader.readAsDataURL(file)
-            reader.onload = () => {
-                setBase64Code(reader.result)
-                console.log(base64code);
+            const size = file.size / 1024 / 1024;
+            if (size > 2) {
+                ErrorHandling('imgSizeExceded');
+                setProfileImage('')
+            } else {
+                let reader = new FileReader()
+                reader.readAsDataURL(file)
+                reader.onload = () => {
+                    console.log(reader.result);
+
+                    setFormValues({ ...formValues, base64code: reader.result })
+                    console.log(formValues);
+                    // setBase64Code(reader.result)
+                    // console.log(base64code);
+                }
             }
+        }
+    }
+
+    const createUser = () => {
+        if (name != '' & email != '' & phone != '' & companyName != '') {
+            console.log(formValues);
+            axios.post(`${BASE_API_URL}/api/user/add`, formValues, {
+                headers: {
+                    authorization: `${accessToken}`
+                },
+            }
+            ).then((response) => {
+                console.log(response);
+                ErrorHandling('newUserCreatedSuccessfully')
+            }).catch(error => {
+                ErrorHandling(error)
+            })
+        }
+        else {
+            ErrorHandling('fillAllNewUserFields')
         }
     }
 
@@ -52,16 +95,16 @@ const CreateUsersForm = () => {
 
                         <Card sx={{ maxWidth: "100%" }} >
                             <CardHeader
-                                title="Create New User"
+                                title="Add Users"
                             >
 
                             </CardHeader>
 
                             <Collapse in={true} unmountOnExit>
+                                <hr style={{ margin: '0px' }} />
+                                <CardContent sx={{ display: 'flex', justifyContent: 'center' }} >
 
-                                <CardContent >
-
-                                    <Form>
+                                    <Form style={{ width: '500px' }}>
                                         <Row className='mb-3'>
                                             {profileImage ? <img src={URL.createObjectURL(profileImage)} alt="" style={{ width: '150px', height: '150px', border: '2px solid gray', borderRadius: '80px', objectFit: 'cover', padding: '2px', margin: 'auto' }} /> : <img src={profileAvatar} style={{ width: '150px', height: '1   50px', border: 'none', borderRadius: '80px', objectFit: 'contain', padding: '0px', margin: 'auto' }} />}
                                         </Row>
@@ -74,9 +117,10 @@ const CreateUsersForm = () => {
 
                                         {/* <h2 style={{ marginBottom: '30px', fontWeight: '700' }}>Create New User</h2> */}
                                         <Row className="mb-3">
-                                            <Form.Group as={Col} controlId="formGridName">
-                                                <Form.Label>Name</Form.Label>
-                                                <Form.Control size='md' name='name' type="text" placeholder="Name" onChange={(e) => {
+                                            <Form.Group as={Col} className='input-field-container' controlId="formGridName">
+                                                <span>Name<span style={{ color: 'red' }}> *</span></span>
+
+                                                <Form.Control className='cu-input-field' size='md' name='name' type="text" placeholder="Name" onChange={(e) => {
                                                     const { name, value } = e.target;
                                                     setFormValues({ ...formValues, [name]: value })
                                                 }} value={formValues.name} />
@@ -84,9 +128,9 @@ const CreateUsersForm = () => {
                                         </Row>
 
                                         <Row className="mb-3">
-                                            <Form.Group as={Col} controlId="formGridEmail">
-                                                <Form.Label>Email</Form.Label>
-                                                <Form.Control size='md' name='email' type="email" placeholder="Email" onChange={(e) => {
+                                            <Form.Group as={Col} className='input-field-container' controlId="formGridEmail">
+                                                <span>Email<span style={{ color: 'red' }}> *</span></span>
+                                                <Form.Control className='cu-input-field' size='md' name='email' type="email" placeholder="Email" onChange={(e) => {
                                                     const { name, value } = e.target;
                                                     setFormValues({ ...formValues, [name]: value })
                                                 }} value={formValues.email} />
@@ -94,9 +138,9 @@ const CreateUsersForm = () => {
                                         </Row>
 
                                         <Row className="mb-3">
-                                            <Form.Group as={Col} controlId="formGridPhone">
-                                                <Form.Label>Phone</Form.Label>
-                                                <Form.Control size='md' name='phone' type="text" placeholder="Enter Phone No" onChange={(e) => {
+                                            <Form.Group as={Col} className='input-field-container' controlId="formGridPhone">
+                                                <span>Phone<span style={{ color: 'red' }}> *</span></span>
+                                                <Form.Control className='cu-input-field' size='md' name='phone' type="text" placeholder="Enter Phone No" onChange={(e) => {
                                                     const { name, value } = e.target;
                                                     setFormValues({ ...formValues, [name]: value })
                                                 }} value={formValues.phone} />
@@ -104,9 +148,9 @@ const CreateUsersForm = () => {
                                         </Row>
 
                                         <Row className="mb-3">
-                                            <Form.Group as={Col} controlId="formGridCompanyName">
-                                                <Form.Label>Company Name</Form.Label>
-                                                <Form.Control size='md' name='companyName' type="text" placeholder="Enter Company Name" onChange={(e) => {
+                                            <Form.Group as={Col} className='input-field-container' controlId="formGridCompanyName">
+                                                <span>Company Name<span style={{ color: 'red' }}> *</span></span>
+                                                <Form.Control className='cu-input-field' size='md' name='companyName' type="text" placeholder="Enter Company Name" onChange={(e) => {
                                                     const { name, value } = e.target;
                                                     setFormValues({ ...formValues, [name]: value })
                                                 }} value={formValues.companyName} />
@@ -114,9 +158,9 @@ const CreateUsersForm = () => {
                                         </Row>
 
                                         <Row className="mb-3">
-                                            <Form.Group as={Col} controlId="formGridNotionUrl">
-                                                <Form.Label>Notion Url</Form.Label>
-                                                <Form.Control size='md'
+                                            <Form.Group as={Col} className='input-field-container' controlId="formGridNotionUrl">
+                                                <span>Notion Url</span>
+                                                <Form.Control className='cu-input-field' size='md'
                                                     name='notionUrl'
                                                     type="text"
                                                     placeholder="Enter Notion URL"
@@ -129,9 +173,9 @@ const CreateUsersForm = () => {
                                         </Row>
 
                                         <Row className="mb-3">
-                                            <Form.Group as={Col} controlId="formGridZapierWebHook">
-                                                <Form.Label>Zapier Web Hook</Form.Label>
-                                                <Form.Control size='md'
+                                            <Form.Group as={Col} className='input-field-container' controlId="formGridZapierWebHook">
+                                                <span>Zapier Web Hook</span>
+                                                <Form.Control className='cu-input-field' size='md'
                                                     name='zapierWebhook'
                                                     type="text"
                                                     placeholder="Enter Zapier Web Hook"
@@ -144,7 +188,7 @@ const CreateUsersForm = () => {
                                         </Row>
 
                                         <Button variant="danger" type="button" disabled={false} style={{ minWidth: '70px' }} onClick={() => {
-                                            // searchUsers()
+                                            createUser()
                                         }}>
                                             {false ? <div className="spinner-border spinner-border-sm text-light" role="status">
                                                 <span className="sr-only"></span>

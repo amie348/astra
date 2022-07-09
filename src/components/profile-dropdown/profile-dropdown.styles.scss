@@ -20,3 +20,28 @@
 
   button:hover {}
 }
+
+.dropdown-user-details-container {
+  display: flex;
+  padding: 35px 20px;
+  background-color: #dc3545;
+  margin-top: -10px;
+
+  flex-direction: column;
+  justify-content: center;
+
+  color: white;
+
+  .dropdown-user-name {
+    font-size: 28px;
+  }
+
+  .dropdown-user-role {
+    font-size: 12px;
+    margin-top: -8px;
+  }
+}
+
+.test1 {
+  margin-top: 0px;
+}
