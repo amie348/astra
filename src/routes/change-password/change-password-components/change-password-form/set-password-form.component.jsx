@@ -32,16 +32,13 @@ const SetPasswordForm = () => {
     })
 
     const handleSubmit = ({ password }) => {
+        const queryParams = new URLSearchParams(window.location.search)
+        const activationToken = queryParams.get("activation_token")
+
         setSigningIn(true)
-        axios.post(`${BASE_API_URL}/api/user/signin`, {
+        axios.patch(`${BASE_API_URL}/api/user/set/password`, {
+            activationToken,
             password
-        }, {
-            mode: 'no-cors',
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
         }
         ).then((response) => {
             console.log(response);
