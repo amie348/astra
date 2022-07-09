@@ -1,5 +1,6 @@
 import { Button, Form, Col, Row } from 'react-bootstrap'
 import { useState } from 'react'
+import { useRef } from 'react';
 
 import profileAvatar from '../../../../assets/images/profileAvatar.png'
 import Card from '@mui/material/Card';
@@ -8,6 +9,9 @@ import CardContent from '@mui/material/CardContent';
 import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import IconButton from '@mui/material/IconButton';
+
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 import axios from 'axios';
 import { BASE_API_URL } from '../../../../assets/config';
@@ -22,10 +26,18 @@ import { useSelector } from 'react-redux'
 import { isSideNavBarOpenSelector } from '../../../../store/dashboard/dashboard.selector'
 
 const CreateUsersForm = () => {
-    // const [base64code, setBase64Code] = useState('')
+    const [isValidName, setIsValidName] = useState('')
+    const [showNameSpinner, setShowNameSpinner] = useState(false)
+
+    const [isValidEmail, setIsValidEmail] = useState('')
+    const [showEmailSpinner, setShowEmailSpinner] = useState(false)
+
+    const [isValidCompanyName, setIsValidCompanyName] = useState('')
+    const [showCompanyNameSpinner, setShowCompanyNameSpinner] = useState(false)
+
     const [profileImage, setProfileImage] = useState('')
     const [formValues, setFormValues] = useState({
-        base64code: '',
+        dp: '',
         name: '',
         email: '',
         phone: '',
@@ -34,10 +46,12 @@ const CreateUsersForm = () => {
         zapierWebhook: '',
     })
 
-    const { name, email, phone, companyName } = formValues
+    const { name, email, phone, companyName, zapierWebhook } = formValues
 
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
     const { accessToken } = useSelector(currentUserSelector)
+
+    const inputFile = useRef(null)
 
     const profilePictureOnChange = (e) => {
         const files = e.target.files
@@ -58,7 +72,7 @@ const CreateUsersForm = () => {
                 reader.onload = () => {
                     console.log(reader.result);
 
-                    setFormValues({ ...formValues, base64code: reader.result })
+                    setFormValues({ ...formValues, dp: reader.result })
                     console.log(formValues);
                     // setBase64Code(reader.result)
                     // console.log(base64code);
@@ -67,8 +81,55 @@ const CreateUsersForm = () => {
         }
     }
 
+    const checkAvailability = (e) => {
+        const { name, value } = e.target
+        if (value != '') {
+            if (name == 'name') {
+                setIsValidName('')
+                setShowNameSpinner(true)
+            }
+            else if (name == 'email') {
+                setIsValidEmail('')
+                setShowEmailSpinner(true)
+            }
+            else if (name == 'companyName') {
+                setIsValidCompanyName('')
+                setShowCompanyNameSpinner(true)
+            }
+            checkUniqueEntry(name, value)
+        }
+    }
+
+    const checkUniqueEntry = (name, value) => {
+        console.log(name, value);
+        axios.post(`${BASE_API_URL}/api/get/unique/users`, { [name]: value }, {
+            headers: {
+                authorization: `${accessToken}`
+            },
+        }
+        ).then((response) => {
+            console.log(response.data.data.unique);
+            if (name == 'name') {
+                setIsValidName(response.data.data.unique)
+                setShowNameSpinner(false)
+            }
+            if (name == 'email') {
+                setIsValidEmail(response.data.data.unique)
+                setShowEmailSpinner(false)
+            }
+            if (name == 'companyName') {
+                setIsValidCompanyName(response.data.data.unique)
+                setShowCompanyNameSpinner(false)
+            }
+
+        }).catch(error => {
+
+        })
+    }
+
+
     const createUser = () => {
-        if (name != '' & email != '' & phone != '' & companyName != '') {
+        if (name != '' & email != '' & phone != '' & companyName != '' & zapierWebhook != '') {
             console.log(formValues);
             axios.post(`${BASE_API_URL}/api/user/add`, formValues, {
                 headers: {
@@ -78,6 +139,15 @@ const CreateUsersForm = () => {
             ).then((response) => {
                 console.log(response);
                 ErrorHandling('newUserCreatedSuccessfully')
+                setFormValues({
+                    dp: '',
+                    name: '',
+                    email: '',
+                    phone: '',
+                    companyName: '',
+                    notionUrl: '',
+                    zapierWebhook: '',
+                })
             }).catch(error => {
                 ErrorHandling(error)
             })
@@ -105,36 +175,57 @@ const CreateUsersForm = () => {
                                 <CardContent sx={{ display: 'flex', justifyContent: 'center' }} >
 
                                     <Form style={{ width: '500px' }}>
-                                        <Row className='mb-3'>
-                                            {profileImage ? <img src={URL.createObjectURL(profileImage)} alt="" style={{ width: '150px', height: '150px', border: '2px solid gray', borderRadius: '80px', objectFit: 'cover', padding: '2px', margin: 'auto' }} /> : <img src={profileAvatar} style={{ width: '150px', height: '1   50px', border: 'none', borderRadius: '80px', objectFit: 'contain', padding: '0px', margin: 'auto' }} />}
-                                        </Row>
-                                        <Row className='mb-3'>
-                                            <Form.Group controlId="formGridFile">
-                                                <Form.Label>Upload Profile Picture</Form.Label>
-                                                <Form.Control type="file" onChange={profilePictureOnChange} />
-                                            </Form.Group>
+                                        <Row className='mb-4' >
+                                            {profileImage ?
+                                                <img src={URL.createObjectURL(profileImage)} alt="" style={{ width: '150px', height: '150px', border: '2px solid gray', borderRadius: '80px', objectFit: 'cover', padding: '2px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />
+                                                :
+                                                <img src={profileAvatar} style={{ width: '150px', height: '1   50px', border: 'none', borderRadius: '80px', objectFit: 'contain', padding: '0px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />}
+
+                                            <input type='file' id='file' ref={inputFile} onChange={profilePictureOnChange} style={{ display: 'none' }} />
+
+                                            <p style={{ textAlign: 'center', marginTop: '3px' }}>Upload Profile Picture</p>
                                         </Row>
 
-                                        {/* <h2 style={{ marginBottom: '30px', fontWeight: '700' }}>Create New User</h2> */}
                                         <Row className="mb-3">
                                             <Form.Group as={Col} className='input-field-container' controlId="formGridName">
-                                                <span>Name<span style={{ color: 'red' }}> *</span></span>
+                                                <span className='cu-input-label' >Name<span style={{ color: 'red' }}> *</span></span>
+
+                                                {showNameSpinner ? <div class="spinner-border spinner-border-sm text-danger" role="status">
+                                                    <span class="sr-only"></span>
+                                                </div> : ''
+                                                }
 
                                                 <Form.Control className='cu-input-field' size='md' name='name' type="text" placeholder="Name" onChange={(e) => {
                                                     const { name, value } = e.target;
                                                     setFormValues({ ...formValues, [name]: value })
-                                                }} value={formValues.name} />
+                                                }} value={formValues.name} onBlur={(e) => { checkAvailability(e) }} />
+
+
                                             </Form.Group>
+                                            <span className={`${isValidName ? 'field-subtext-success' : 'field-subtext-error'} ${showNameSpinner ? 'field-subtext-adjust' : ''} `}>
+                                                {isValidName === '' ? '' : isValidName ? 'Name Available' : 'Name already selected'}
+                                            </span>
                                         </Row>
 
                                         <Row className="mb-3">
                                             <Form.Group as={Col} className='input-field-container' controlId="formGridEmail">
-                                                <span>Email<span style={{ color: 'red' }}> *</span></span>
+                                                <span className='cu-input-label'>Email<span style={{ color: 'red' }}> *</span></span>
+
+                                                {showEmailSpinner ? <div class="spinner-border spinner-border-sm text-danger" role="status">
+                                                    <span class="sr-only"></span>
+                                                </div> : ''
+                                                }
+
                                                 <Form.Control className='cu-input-field' size='md' name='email' type="email" placeholder="Email" onChange={(e) => {
                                                     const { name, value } = e.target;
                                                     setFormValues({ ...formValues, [name]: value })
-                                                }} value={formValues.email} />
+                                                }} value={formValues.email} onBlur={(e) => { checkAvailability(e) }} />
+
+
                                             </Form.Group>
+                                            <span className={`${isValidEmail ? 'field-subtext-success' : 'field-subtext-error'} ${showEmailSpinner ? 'field-subtext-adjust' : ''} `}>
+                                                {isValidEmail === '' ? '' : isValidEmail ? 'Email Available' : 'Email already selected'}
+                                            </span>
                                         </Row>
 
                                         <Row className="mb-3">
@@ -149,12 +240,23 @@ const CreateUsersForm = () => {
 
                                         <Row className="mb-3">
                                             <Form.Group as={Col} className='input-field-container' controlId="formGridCompanyName">
-                                                <span>Company Name<span style={{ color: 'red' }}> *</span></span>
+                                                <span className='cu-input-label'>Company Name<span style={{ color: 'red' }}> *</span></span>
+
+                                                {showCompanyNameSpinner ? <div class="spinner-border spinner-border-sm text-danger" role="status">
+                                                    <span class="sr-only"></span>
+                                                </div> : ''
+                                                }
+
                                                 <Form.Control className='cu-input-field' size='md' name='companyName' type="text" placeholder="Enter Company Name" onChange={(e) => {
                                                     const { name, value } = e.target;
                                                     setFormValues({ ...formValues, [name]: value })
-                                                }} value={formValues.companyName} />
+                                                }} value={formValues.companyName} onBlur={(e) => { checkAvailability(e) }} />
+
+
                                             </Form.Group>
+                                            <span className={`${isValidCompanyName ? 'field-subtext-success' : 'field-subtext-error'} ${showCompanyNameSpinner ? 'field-subtext-adjust' : ''} `}>
+                                                {isValidCompanyName === '' ? '' : isValidCompanyName ? 'Company Name Available' : 'Company Name already selected'}
+                                            </span>
                                         </Row>
 
                                         <Row className="mb-3">
@@ -174,7 +276,7 @@ const CreateUsersForm = () => {
 
                                         <Row className="mb-3">
                                             <Form.Group as={Col} className='input-field-container' controlId="formGridZapierWebHook">
-                                                <span>Zapier Web Hook</span>
+                                                <span>Zapier Web Hook<span style={{ color: 'red' }}> *</span></span>
                                                 <Form.Control className='cu-input-field' size='md'
                                                     name='zapierWebhook'
                                                     type="text"
@@ -187,9 +289,12 @@ const CreateUsersForm = () => {
                                             </Form.Group>
                                         </Row>
 
-                                        <Button variant="danger" type="button" disabled={false} style={{ minWidth: '70px' }} onClick={() => {
-                                            createUser()
-                                        }}>
+                                        <Button variant="danger" type="button"
+                                            disabled={!(name != '' && email != '' && phone != '' && companyName != '' && zapierWebhook != '')}
+                                            style={{ minWidth: '70px' }}
+                                            onClick={() => {
+                                                createUser()
+                                            }}>
                                             {false ? <div className="spinner-border spinner-border-sm text-light" role="status">
                                                 <span className="sr-only"></span>
                                             </div> : 'Create User'}

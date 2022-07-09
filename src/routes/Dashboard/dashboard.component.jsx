@@ -11,7 +11,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 import AppsIcon from '@mui/icons-material/Apps';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-import { Bar, Line  } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 import moment from 'moment'
 import { Tooltip as MuiToolTip } from '@mui/material';
 
@@ -138,7 +138,7 @@ const Dashboard = () => {
                                 <div className="row justify-content-between flex-wrap mb-4">
                                     <div className={`dashboard-item d-item-s px-4 py-4`}>
                                         <div className="row align-items-center justify-content-between">
-                                            <h2 className="col-9 m-0">{`£${totalRevenue?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</h2>
+                                            <h2 className="col-9 m-0">{`£${totalRevenue ? totalRevenue?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}`}</h2>
                                             <span className="col-auto"><AppsIcon /></span>
                                         </div>
                                         <div className="row mt-1">
@@ -153,7 +153,7 @@ const Dashboard = () => {
 
                                     <div className={`dashboard-item d-item-s px-4 py-4`}>
                                         <div className="row align-items-center justify-content-between">
-                                            <h2 className="col-9 m-0">{`£${potentialRevenue?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</h2>
+                                            <h2 className="col-9 m-0">{`£${potentialRevenue ? potentialRevenue?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}`}</h2>
                                             <span className="col-auto"><AppsIcon /></span>
                                         </div>
                                         <div className="row mt-1">
@@ -170,7 +170,7 @@ const Dashboard = () => {
 
                                     <div className={`dashboard-item d-item-s px-4 py-4`}>
                                         <div className="row align-items-center justify-content-between">
-                                            <h2 className="col-9 m-0">{conversionRate}</h2>
+                                            <h2 className="col-9 m-0">{conversionRate ? conversionRate : 0}</h2>
                                             <span className="col-auto"><AppsIcon /></span>
                                         </div>
                                         <div className="row mt-1">
@@ -178,7 +178,7 @@ const Dashboard = () => {
                                         </div>
                                         <div className="row">
                                             <div className="col">
-                                                <ProgressBar now={conversionRate} style={{ backgroundColor: '#df374854', height: '22px' }} />
+                                                <ProgressBar now={conversionRate ? conversionRate : 0} style={{ backgroundColor: '#df374854', height: '22px' }} />
                                             </div>
                                         </div>
                                     </div>
@@ -188,7 +188,7 @@ const Dashboard = () => {
 
                                     <div className={`dashboard-item d-item-s px-4 py-4`}>
                                         <div className="row align-items-center justify-content-between">
-                                            <h2 className="col-9 m-0">{totlaLeads}</h2>
+                                            <h2 className="col-9 m-0">{totlaLeads ? totlaLeads : 0}</h2>
                                             <span className="col-auto"><AppsIcon /></span>
                                         </div>
                                         <div className="row mt-1">
@@ -203,7 +203,7 @@ const Dashboard = () => {
 
                                     <div className={`dashboard-item d-item-s px-4 py-4`}>
                                         <div className="row align-items-center justify-content-between">
-                                            <h2 className="col-9 m-0">{totalConsultationBooked}</h2>
+                                            <h2 className="col-9 m-0">{totalConsultationBooked ? totalConsultationBooked : 0}</h2>
                                             <span className="col-auto"><AppsIcon /></span>
                                         </div>
                                         <div className="row mt-1">
@@ -218,7 +218,7 @@ const Dashboard = () => {
 
                                     <div className={`dashboard-item d-item-s px-4 py-4`}>
                                         <div className="row align-items-center justify-content-between">
-                                            <h2 className="col-9 m-0">{totalPurchased}</h2>
+                                            <h2 className="col-9 m-0">{totalPurchased ? totalPurchased : 0}</h2>
                                             <span className="col-auto"><AppsIcon /></span>
                                         </div>
                                         <div className="row mt-1">

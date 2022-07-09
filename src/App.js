@@ -5,6 +5,7 @@ import './App.css';
 import Login from './routes/login/login.component';
 import Dashboard from './routes/Dashboard/dashboard.component'
 import Leads from './routes/leads/leads.component';
+import SetPassword from './routes/change-password/change-password.component';
 
 import { useSelector } from 'react-redux'
 import { currentUserSelector } from '../src/store/user/user.selectors'
@@ -22,7 +23,7 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<Navigate to={`${accessToken ? '/dashboard' : '/login'}`} />} />
-      {/* <Route path='/' element={<CreateUsersForm />} /> */}
+      <Route path='/set-password' element={<SetPassword />} />
       <Route path='login' element={<Login />} />
 
       <Route element={<AppLayout />}>
