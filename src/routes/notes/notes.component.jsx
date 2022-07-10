@@ -9,6 +9,11 @@ const Notes = () => {
                 <div className="layout-content">
                     <h1>Notes</h1>
                 </div>
+                <div>
+                    <iframe src="https://www.agents.veronicasins.com/" width={1000} height={600}>
+
+                    </iframe>
+                </div>
             </div>
         </div>
     )

@@ -71,9 +71,9 @@ const CreateUsersForm = () => {
                 },
             }
             ).then((response) => {
-                console.log(response.data.data);
+
                 const { name, email, companyName, dp, phone, zapierWebhook, notionUrl } = response.data.data
-                setFormValues({ ...formValues, name, email, companyName, dp })
+                setFormValues({ name, email, companyName, dp, phone, zapierWebhook, notionUrl })
                 setId(id)
             }).catch(error => {
 
@@ -194,7 +194,8 @@ const CreateUsersForm = () => {
     }
 
     const updateUser = () => {
-        setIsLoading(true)
+        setIsLoading(true);
+        
         axios.patch(`${BASE_API_URL}/api/user/update/${id}`, formValues, {
             headers: {
                 authorization: `${accessToken}`

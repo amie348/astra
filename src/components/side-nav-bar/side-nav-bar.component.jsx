@@ -6,6 +6,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import PeopleIcon from '@mui/icons-material/People';
+import NoteAltIcon from '@mui/icons-material/NoteAlt';
 
 import { isSideNavBarOpenSelector } from '../../store/dashboard/dashboard.selector';
 import { currentUserSelector } from '../../store/user/user.selectors';
@@ -38,10 +39,10 @@ const SideNavBar = () => {
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Leads</div>
                         </NavLink>
 
-                        <NavLink className="item" activeClassName='active dg-danger' to='/notes'>
-                            <div className="item-icon"> <LeaderboardIcon /> </div>
+                        {/* <NavLink className="item" activeClassName='active dg-danger' to='/notes'>
+                            <div className="item-icon"> <NoteAltIcon /> </div>
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Notes</div>
-                        </NavLink>
+                        </NavLink> */}
 
                         {
                             role == 'SUPERADMIN' ?

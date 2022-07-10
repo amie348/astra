@@ -11,6 +11,8 @@ import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
+
 
 import { currentUserSelector } from '../../store/user/user.selectors';
 import { useSelector } from 'react-redux';
@@ -30,7 +32,7 @@ const resetUser = {
 const ProfileDropDown = () => {
 
     const { user } = useSelector(currentUserSelector)
-    const { name, role } = user
+    const { name, role, notionUrl } = user
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -43,6 +45,19 @@ const ProfileDropDown = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+
+    const openNotes = () => {
+
+        if(notionUrl){
+            const newWindow = window.open(notionUrl, '_blank', 'noopener,noreferrer')
+            if (newWindow) newWindow.opener = null
+        } else {
+            const newWindow = window.open("https://astra-advertising.notion.site/Client-1-6f6bd5f3bc7b45eab30b9b83f661b8cc", '_blank', 'noopener,noreferrer')
+            if (newWindow) newWindow.opener = null
+        }
+    }
+
     return (
         <React.Fragment>
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -66,7 +81,6 @@ const ProfileDropDown = () => {
                 id="account-menu"
                 open={open}
                 onClose={handleClose}
-                onClick={handleClose}
 
                 PaperProps={{
                     elevation: 0,
@@ -94,6 +108,13 @@ const ProfileDropDown = () => {
                 <MenuItem sx={{ margin: '10px 0px' }} onClick={() => { navigate('/user-profile') }}>
                     <Avatar /> My Profile
                 </MenuItem>
+                <MenuItem sx={{ margin: '10px 0px' }} onClick={openNotes}>
+                    <ListItemIcon>
+                        <NoteAltOutlinedIcon fontSize="small" />
+                    </ListItemIcon> 
+                    Notes
+                </MenuItem>
+                
                 <hr style={{ marginTop: '0px', marginBottom: '8px' }} />
                 <MenuItem onClick={() => {
                     dispatch(setIsProfileDropDownOpen(false))

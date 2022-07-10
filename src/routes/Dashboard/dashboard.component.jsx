@@ -76,13 +76,13 @@ const Dashboard = () => {
             },
         }
         ).then((response) => {
-            console.log(response);
+            let months = [];
             for (let i = 0; i < 12; i++) {
-                monthsFullNames.push(moment().subtract(i, 'months').format('MMM'))
+                months.push(moment().subtract(i, 'months').format('MMM'))
             }
 
-            setLabels(monthsFullNames)
-            console.log(monthsFullNames)
+            setLabels(months)
+            // console.log(monthsFullNames)
 
             dispatch(fetchDashboardStatsSuccess(response.data.data))
         }).catch(error => {
@@ -139,60 +139,12 @@ const Dashboard = () => {
                                     <div className={`dashboard-item d-item-s px-4 py-4`}>
                                         <div className="row align-items-center justify-content-between">
                                             <h2 className="col-9 m-0">{`£${totalRevenue ? totalRevenue?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}`}</h2>
-                                            <span className="col-auto"><AppsIcon /></span>
+                                            {/* <span className="col-auto"><AppsIcon /></span> */}
                                         </div>
                                         <div className="row mt-1">
-                                            <div className="col item-text">{`Total Revenue Generated (Add up revenue column)`}</div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col">
-                                                <ProgressBar now={40} style={{ backgroundColor: '#df374854', height: '22px' }} />
+                                            <div className="col item-text">
+                                             <h6>Total Revenue Generated</h6>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    <div className={`dashboard-item d-item-s px-4 py-4`}>
-                                        <div className="row align-items-center justify-content-between">
-                                            <h2 className="col-9 m-0">{`£${potentialRevenue ? potentialRevenue?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}`}</h2>
-                                            <span className="col-auto"><AppsIcon /></span>
-                                        </div>
-                                        <div className="row mt-1">
-                                            <div className="col item-text">Potential Revenue. <br />
-                                                {`Average Purcahse Revenue x (number of leads(expect deed leads = Purchase))`} <span style={{ fontWeight: '800', color: 'black', marginLeft: '30px' }}>40%</span></div>
-
-                                        </div>
-                                        <div className="row">
-                                            <div className="col">
-                                                <ProgressBar now={40} style={{ backgroundColor: '#df374854', height: '22px' }} />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className={`dashboard-item d-item-s px-4 py-4`}>
-                                        <div className="row align-items-center justify-content-between">
-                                            <h2 className="col-9 m-0">{conversionRate ? conversionRate : 0}</h2>
-                                            <span className="col-auto"><AppsIcon /></span>
-                                        </div>
-                                        <div className="row mt-1">
-                                            <div className="col item-text">{`CONVERSION RATE % (Leads purchased/Total number of leads`}</div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col">
-                                                <ProgressBar now={conversionRate ? conversionRate : 0} style={{ backgroundColor: '#df374854', height: '22px' }} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="row justify-content-between flex-wrap mb-4">
-
-                                    <div className={`dashboard-item d-item-s px-4 py-4`}>
-                                        <div className="row align-items-center justify-content-between">
-                                            <h2 className="col-9 m-0">{totlaLeads ? totlaLeads : 0}</h2>
-                                            <span className="col-auto"><AppsIcon /></span>
-                                        </div>
-                                        <div className="row mt-1">
-                                            <div className="col item-text">{`Total Leads Generated`}</div>
                                         </div>
                                         {/* <div className="row">
                                             <div className="col">
@@ -203,11 +155,31 @@ const Dashboard = () => {
 
                                     <div className={`dashboard-item d-item-s px-4 py-4`}>
                                         <div className="row align-items-center justify-content-between">
-                                            <h2 className="col-9 m-0">{totalConsultationBooked ? totalConsultationBooked : 0}</h2>
-                                            <span className="col-auto"><AppsIcon /></span>
+                                            <h2 className="col-9 m-0">{`£${potentialRevenue ? potentialRevenue?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}`}</h2>
+                                            {/* <span className="col-auto"><AppsIcon /></span> */}
                                         </div>
                                         <div className="row mt-1">
-                                            <div className="col item-text">{`Consulations Booked`}</div>
+                                            <div className="col item-text">
+                                                <h6>Potential Revenue</h6>
+                                            </div>
+                                        </div>
+                                        {/* <div className="row">
+                                            <div className="col">
+                                                <ProgressBar now={40} style={{ backgroundColor: '#df374854', height: '22px' }} />
+                                            </div>
+                                        </div> */}
+                                    </div>
+
+                                    
+                                    <div className={`dashboard-item d-item-s px-4 py-4`}>
+                                        <div className="row align-items-center justify-content-between">
+                                            <h2 className="col-9 m-0">{totlaLeads ? totlaLeads : 0}</h2>
+                                            {/* <span className="col-auto"><AppsIcon /></span> */}
+                                        </div>
+                                        <div className="row mt-1">
+                                            <div className="col item-text">
+                                                <h6>Total Leads Generated</h6>
+                                            </div>
                                         </div>
                                         {/* <div className="row">
                                             <div className="col">
@@ -219,31 +191,59 @@ const Dashboard = () => {
                                     <div className={`dashboard-item d-item-s px-4 py-4`}>
                                         <div className="row align-items-center justify-content-between">
                                             <h2 className="col-9 m-0">{totalPurchased ? totalPurchased : 0}</h2>
-                                            <span className="col-auto"><AppsIcon /></span>
+                                            {/* <span className="col-auto"><AppsIcon /></span> */}
                                         </div>
                                         <div className="row mt-1">
-                                            <div className="col item-text">{`Leads Purchased`}</div>
+                                            <div className="col item-text">
+                                                <h6>Leads Purchased</h6>
+                                            </div>
                                         </div>
                                         <div className="row">
                                             <div className="col">
-                                                <ProgressBar now={(totalPurchased * 100) / totlaLeads} style={{ backgroundColor: '#df374854', height: '22px' }} />
+                                                {/* <ProgressBar now={(totalPurchased * 100) / totlaLeads} style={{ backgroundColor: '#df374854', height: '22px' }} /> */}
                                             </div>
                                             {/* <div className="col" style={{ textAlign: 'right', fontWeight: '800', fontSize: '9px' }}>
                                                 +32% <br /> from last week
                                             </div> */}
                                         </div>
                                     </div>
+
+                                    
+                                    
                                 </div>
 
                                 <div className="row justify-content-between flex-wrap mb-4">
 
-                                    <div className={`dashboard-item px-4 py-4 col-5 d-item-l`}>
+                                    
+                                    <div className={`dashboard-item px-4 py-4 col-5 d-item-xl`}>
                                         <div className="row">
                                             <div className="col">
                                                 <Bar options={options} data={data} />
                                             </div>
                                         </div>
                                     </div>
+                                    
+                                    <div className={`dashboard-item d-item-m px-4 py-4`}>
+                                        <div className="row align-items-center justify-content-between">
+                                            <h2 className="col-9 m-0">{conversionRate ? conversionRate : 0}%</h2>
+                                            {/* <span className="col-auto"><AppsIcon /></span> */}
+                                        </div>
+                                        <div className="row mt-1">
+                                            <div className="col item-text">
+                                                <h6>Converstion Rate </h6>     
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col">
+                                                <ProgressBar now={conversionRate ? conversionRate : 0} style={{ backgroundColor: '#df374854', height: '22px' }} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row justify-content-between flex-wrap mb-4">
+
+                                    
 
                                     <div className={`dashboard-item px-4 py-4 d-item-xl`}>
                                         <div className="row align-items-center justify-content-between mb-4">
@@ -275,6 +275,24 @@ const Dashboard = () => {
                                             ))
                                         }
                                     </div>
+                                    
+                                    <div className={`dashboard-item d-item-m px-4 py-4`}>
+                                        <div className="row align-items-center justify-content-between">
+                                            <h2 className="col-9 m-0">{totalConsultationBooked ? totalConsultationBooked : 0}</h2>
+                                            {/* <span className="col-auto"><AppsIcon /></span> */}
+                                        </div>
+                                        <div className="row mt-1">
+                                            <div className="col item-text">
+                                                <h6>Consulations Booked</h6>
+                                            </div>
+                                        </div>
+                                        {/* <div className="row">
+                                            <div className="col">
+                                                <ProgressBar now={40} style={{ backgroundColor: '#df374854', height: '22px' }} />
+                                            </div>
+                                        </div> */}
+                                    </div>
+
                                 </div>
                             </>
                         }
