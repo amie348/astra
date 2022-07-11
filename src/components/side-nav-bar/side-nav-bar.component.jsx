@@ -7,10 +7,12 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import PeopleIcon from '@mui/icons-material/People';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
-
+import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import { isSideNavBarOpenSelector } from '../../store/dashboard/dashboard.selector';
 import { currentUserSelector } from '../../store/user/user.selectors';
 import { setIsSideNavBarOpen } from '../../store/dashboard/dashboard.action';
+
+import { Tooltip, IconButton } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
@@ -21,7 +23,17 @@ const SideNavBar = () => {
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
     const { user } = useSelector(currentUserSelector)
 
-    const { role } = user
+    const { role, notionUrl } = user
+
+
+    const openNotes = () => {
+
+        if(notionUrl){
+            const newWindow = window.open(notionUrl, '_blank', 'noopener,noreferrer')
+            if (newWindow) newWindow.opener = null
+        }
+    }
+
     return (
         <>
             <div className={`${isSideNavBarOpen ? 'sideNavBar-container' : 'closeSideNavBar'} `}>
@@ -39,7 +51,7 @@ const SideNavBar = () => {
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Leads</div>
                         </NavLink>
 
-                        {/* <NavLink className="item" activeClassName='active dg-danger' to='/notes'>
+                        {/* <NavLink className="item" activeClassName='active dg-danger' to='/dashboard'>
                             <div className="item-icon"> <NoteAltIcon /> </div>
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Notes</div>
                         </NavLink> */}
@@ -56,10 +68,25 @@ const SideNavBar = () => {
                     </div>
                 </div>
 
-                <div className="sideNavBar-close" onClick={() => { dispatch(setIsSideNavBarOpen(!isSideNavBarOpen)) }}>
+                <div>
+
+                    <div style={{display: "flex", justifyContent: "center"}}>
+                        <Tooltip title="Open Notes">
+                            <span onClick={openNotes}>
+                                <IconButton>
+                                    <NoteAltIcon  fontSize='large' />
+                                </IconButton>
+                            </span>
+                        </Tooltip> 
+                    </div>
+
+                    <div className="sideNavBar-close" onClick={() => { dispatch(setIsSideNavBarOpen(!isSideNavBarOpen)) }}>
 
                     {isSideNavBarOpen ? <ArrowBackIosNewIcon sx={{ fontSize: '15px', marginRight: '30px', color: 'gray' }} /> : <ArrowForwardIosIcon sx={{ fontSize: '15px', margin: 'auto', color: 'gray' }} />}
+
+                    </div>
                 </div>
+                
             </div>
         </>
     )

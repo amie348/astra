@@ -32,7 +32,7 @@ const resetUser = {
 const ProfileDropDown = () => {
 
     const { user } = useSelector(currentUserSelector)
-    const { name, role, notionUrl } = user
+    const { name, role, notionUrl, dp } = user
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -71,7 +71,11 @@ const ProfileDropDown = () => {
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                     >
-                        <Avatar sx={{ width: 32, height: 32, backgroundColor: '#dc3545' }}>{name[0].toUpperCase()}</Avatar>
+                        <Avatar sx={{ width: 32, height: 32, backgroundColor: '#dc3545' }} src={dp} >{dp ? 
+                        '' 
+                        : 
+                        name[0].toUpperCase()}
+                        </Avatar>
                     </IconButton>
                 </Tooltip>
             </Box>
