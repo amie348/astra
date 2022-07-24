@@ -51,10 +51,10 @@ const SideNavBar = () => {
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Leads</div>
                         </NavLink>
 
-                        {/* <NavLink className="item" activeClassName='active dg-danger' to='/dashboard'>
+                        <NavLink className="item" activeClassName='active dg-danger' to='/ad-reporting'>
                             <div className="item-icon"> <NoteAltIcon /> </div>
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Notes</div>
-                        </NavLink> */}
+                        </NavLink>
 
                         {
                             role == 'SUPERADMIN' ?

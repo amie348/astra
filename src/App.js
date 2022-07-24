@@ -35,7 +35,7 @@ function App() {
         <Route path='update-users/:id' element={<CreateUsersForm />} />
         <Route path='create-user' element={<CreateUsersForm />} />
 
-        <Route path='notes' element={<Notes />} />
+        <Route path='ad-reporting' element={<Notes />} />
         <Route path='user-profile' element={<UserProfile />} />
       </Route>
     </Routes >
