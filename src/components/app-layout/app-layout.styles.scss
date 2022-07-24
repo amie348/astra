@@ -6,7 +6,7 @@
     background-color: rgba(242, 242, 242, 0.448);
 
     .layout-body {
-        padding-left: 40px;
+        padding-left: 4%;
         height: 100%;
         width: 100%;
 
@@ -17,13 +17,32 @@
     }
 
     .layout-body-compressed {
-        padding-left: 200px;
         height: 100%;
+        width: 100%;
 
         .layout-content {
-            padding: 30px;
+            padding: 30px 30px 30px 40px;
+            margin-top: 60px;
         }
     }
 
 
+}
+
+@media screen and (max-width: 1025px) {
+    .layout-body-compressed {
+        padding-left: 20%;
+    }
+}
+
+@media screen and (max-width: 1441px) and (min-width: 1025px) {
+    .layout-body-compressed {
+        padding-left: 14%;
+    }
+}
+
+@media screen and (min-width: 1441px) {
+    .layout-body-compressed {
+        padding-left: 8%;
+    }
 }

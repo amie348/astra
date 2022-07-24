@@ -126,7 +126,7 @@ const Dashboard = () => {
         <>
 
             <div className='layout-container'>
-                <div className={`${isSideNavBarOpen ? 'layout-body layout-body-compressed' : 'layout-body'}`} >
+                <div className={`${isSideNavBarOpen ? 'layout-body-compressed' : 'layout-body'}`} >
 
                     <div className="layout-content">
                         {isDashboardStatsLoading ? <div className="dashboard-spinner">
@@ -143,7 +143,7 @@ const Dashboard = () => {
                                         </div>
                                         <div className="row mt-1">
                                             <div className="col item-text">
-                                             <h6>Total Revenue Generated</h6>
+                                                <h6>Total Revenue Generated</h6>
                                             </div>
                                         </div>
                                         {/* <div className="row">
@@ -170,7 +170,7 @@ const Dashboard = () => {
                                         </div> */}
                                     </div>
 
-                                    
+
                                     <div className={`dashboard-item d-item-s px-4 py-4`}>
                                         <div className="row align-items-center justify-content-between">
                                             <h2 className="col-9 m-0">{totlaLeads ? totlaLeads : 0}</h2>
@@ -208,13 +208,13 @@ const Dashboard = () => {
                                         </div>
                                     </div>
 
-                                    
-                                    
+
+
                                 </div>
 
                                 <div className="row justify-content-between flex-wrap mb-4">
 
-                                    
+
                                     <div className={`dashboard-item px-4 py-4 col-5 d-item-xl`}>
                                         <div className="row">
                                             <div className="col">
@@ -222,7 +222,7 @@ const Dashboard = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div className={`dashboard-item d-item-m px-4 py-4`}>
                                         <div className="row align-items-center justify-content-between">
                                             <h2 className="col-9 m-0">{conversionRate ? conversionRate : 0}%</h2>
@@ -230,7 +230,7 @@ const Dashboard = () => {
                                         </div>
                                         <div className="row mt-1">
                                             <div className="col item-text">
-                                                <h6>Converstion Rate </h6>     
+                                                <h6>Converstion Rate </h6>
                                             </div>
                                         </div>
                                         <div className="row">
@@ -243,7 +243,7 @@ const Dashboard = () => {
 
                                 <div className="row justify-content-between flex-wrap mb-4">
 
-                                    
+
 
                                     <div className={`dashboard-item px-4 py-4 d-item-xl`}>
                                         <div className="row align-items-center justify-content-between mb-4">
@@ -275,7 +275,7 @@ const Dashboard = () => {
                                             ))
                                         }
                                     </div>
-                                    
+
                                     <div className={`dashboard-item d-item-m px-4 py-4`}>
                                         <div className="row align-items-center justify-content-between">
                                             <h2 className="col-9 m-0">{totalConsultationBooked ? totalConsultationBooked : 0}</h2>

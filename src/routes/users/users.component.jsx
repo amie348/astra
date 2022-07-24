@@ -58,7 +58,7 @@ const Users = () => {
         })
 
 
-    }, [usersPageNumber, usersOffset, usersSearchFilters])
+    }, [usersPageNumber, usersOffset, usersSearchFilters, reRender])
 
     const handleChangeShowDeleteModal = () => {
         setShowDeleteModal(false)
@@ -70,10 +70,10 @@ const Users = () => {
 
     return (
         <div className="layout-container">
-            <div className={`${isSideNavBarOpen ? 'layout-body layout-body-compressed' : 'layout-body'}`}>
+            <div className={`${isSideNavBarOpen ? 'layout-body-compressed' : 'layout-body'}`}>
                 <div className="layout-content">
 
-                    <DeleteUserDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal} />
+                    <DeleteUserDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal} setReRender={setReRender} reRender={reRender} />
                     <EditUserModal setShowEditModal={setShowEditModal} show={showEditModal} onHide={handleChangeShowEditModal} />
 
                     <div style={{ marginBottom: "30px" }}>

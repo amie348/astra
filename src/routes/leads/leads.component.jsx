@@ -63,7 +63,7 @@ const Leads = () => {
 
     return (
         <div className="layout-container">
-            <div className={`${isSideNavBarOpen ? 'layout-body layout-body-compressed' : 'layout-body'}`}>
+            <div className={`${isSideNavBarOpen ? 'layout-body-compressed' : 'layout-body'}`}>
                 <div className="layout-content">
 
                     <DeleteLeadDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal} />

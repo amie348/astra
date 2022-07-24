@@ -50,6 +50,7 @@ const CreateUsersForm = () => {
         companyName: '',
         notionUrl: '',
         zapierWebhook: '',
+        landingPage: ''
     })
 
     const { name, email, phone, companyName, zapierWebhook } = formValues
@@ -72,8 +73,8 @@ const CreateUsersForm = () => {
             }
             ).then((response) => {
 
-                const { name, email, companyName, dp, phone, zapierWebhook, notionUrl } = response.data.data
-                setFormValues({ name, email, companyName, dp, phone, zapierWebhook, notionUrl })
+                const { name, email, companyName, dp, phone, zapierWebhook, notionUrl, landingPage } = response.data.data
+                setFormValues({ name, email, companyName, dp, phone, zapierWebhook, notionUrl, landingPage })
                 setId(id)
             }).catch(error => {
 
@@ -182,7 +183,9 @@ const CreateUsersForm = () => {
                     companyName: '',
                     notionUrl: '',
                     zapierWebhook: '',
+                    landingPage: ''
                 })
+                navigate('/users')
             }).catch(error => {
                 setIsLoading(false)
                 ErrorHandling(error)
@@ -195,7 +198,7 @@ const CreateUsersForm = () => {
 
     const updateUser = () => {
         setIsLoading(true);
-        
+
         axios.patch(`${BASE_API_URL}/api/user/update/${id}`, formValues, {
             headers: {
                 authorization: `${accessToken}`
@@ -348,6 +351,22 @@ const CreateUsersForm = () => {
                                                         setFormValues({ ...formValues, [name]: value })
                                                     }}
                                                     value={formValues.zapierWebhook} />
+                                            </Form.Group>
+                                        </Row>
+
+                                        <Row className="mb-3">
+                                            <Form.Group as={Col} className='input-field-container' controlId="formLandingPage">
+                                                <span>Landing Page</span>
+                                                <Form.Control className='cu-input-field' size='md'
+                                                    name='landingPage'
+                                                    type="text"
+                                                    placeholder="Enter Landing Page Link"
+                                                    onChange={(e) => {
+                                                        const { name, value } = e.target;
+                                                        setFormValues({ ...formValues, [name]: value })
+                                                    }}
+                                                    value={formValues.landingPage}
+                                                    disabled={isUpdate} />
                                             </Form.Group>
                                         </Row>
 

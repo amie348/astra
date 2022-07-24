@@ -11,7 +11,7 @@ import ErrorHandling from "../../../../components/errorHandler";
 import { useDispatch } from "react-redux";
 import { fetchUsersStart, fetchUsersSuccess, setUsersRawData } from "../../../../store/users/users.action";
 
-export function DeleteUserDialogue({ show, onHide }) {
+export function DeleteUserDialogue({ show, onHide, setReRender, reRender }) {
 
   const { usersPageNumber, usersOffset, usersClickedRow } = useSelector(usersSelector)
   const { accessToken } = useSelector(currentUserSelector)
@@ -33,21 +33,7 @@ export function DeleteUserDialogue({ show, onHide }) {
       setIsLoading(false)
       onHide();
 
-      dispatch(fetchUsersStart())
-      axios.post('https://astra-crm.herokuapp.com/api/lead/get', {
-        pageNumber: usersPageNumber,
-        offset: usersOffset,
-        searchFilters: {}
-      }, {
-        headers: {
-          authorization: `${accessToken}`
-        },
-      }
-      ).then((response) => {
-        console.log(response);
-        dispatch(fetchUsersSuccess(response.data.leads))
-        dispatch(setUsersRawData(response.data))
-      })
+      setReRender(!reRender)
     }).catch(error => {
       ErrorHandling('ErrorFailedToDeleteUser')
       onHide()
