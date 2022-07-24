@@ -51,7 +51,6 @@ const Users = () => {
             console.log(response);
             dispatch(setUsersRawData(response.data))
             dispatch(fetchUsersSuccess(response.data.users))
-            setReRender(true)
         }).catch(error => {
             dispatch(fetchUsersFailed(error))
             ErrorHandling(error)

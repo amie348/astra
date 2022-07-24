@@ -26,7 +26,6 @@
         }
     }
 
-
 }
 
 @media screen and (max-width: 1025px) {
@@ -37,12 +36,12 @@
 
 @media screen and (max-width: 1441px) and (min-width: 1025px) {
     .layout-body-compressed {
-        padding-left: 14%;
+        padding-left: 15%;
     }
 }
 
 @media screen and (min-width: 1441px) {
     .layout-body-compressed {
-        padding-left: 8%;
+        // padding-left: 8%;
     }
 }

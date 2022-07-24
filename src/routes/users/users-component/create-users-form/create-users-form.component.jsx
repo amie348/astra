@@ -49,12 +49,12 @@ const CreateUsersForm = () => {
         phone: '',
         companyName: '',
         notionUrl: '',
-        zapierWebhook: '',
-        landingPage: ''
+        zapierWebhook: ''
     })
 
     const { name, email, phone, companyName, zapierWebhook } = formValues
     const [isLoading, setIsLoading] = useState(false)
+    const [landingPage, setLandingPage] = useState('')
 
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
     const { accessToken } = useSelector(currentUserSelector)
@@ -74,7 +74,8 @@ const CreateUsersForm = () => {
             ).then((response) => {
 
                 const { name, email, companyName, dp, phone, zapierWebhook, notionUrl, landingPage } = response.data.data
-                setFormValues({ name, email, companyName, dp, phone, zapierWebhook, notionUrl, landingPage })
+                setFormValues({ name, email, companyName, dp, phone, zapierWebhook, notionUrl })
+                setLandingPage(landingPage)
                 setId(id)
             }).catch(error => {
 
@@ -182,8 +183,7 @@ const CreateUsersForm = () => {
                     phone: '',
                     companyName: '',
                     notionUrl: '',
-                    zapierWebhook: '',
-                    landingPage: ''
+                    zapierWebhook: ''
                 })
                 navigate('/users')
             }).catch(error => {
@@ -217,7 +217,7 @@ const CreateUsersForm = () => {
     return (
         <>
             <div className="layout-container">
-                <div className={`${isSideNavBarOpen ? 'layout-body layout-body-compressed' : 'layout-body'}`}>
+                <div className={`${isSideNavBarOpen ? 'layout-body-compressed' : 'layout-body'}`}>
                     <div className="layout-content">
 
                         <Card sx={{ maxWidth: "100%" }} >
@@ -354,21 +354,18 @@ const CreateUsersForm = () => {
                                             </Form.Group>
                                         </Row>
 
-                                        <Row className="mb-3">
+                                        {isUpdate ? <Row className="mb-3">
                                             <Form.Group as={Col} className='input-field-container' controlId="formLandingPage">
                                                 <span>Landing Page</span>
                                                 <Form.Control className='cu-input-field' size='md'
                                                     name='landingPage'
                                                     type="text"
                                                     placeholder="Enter Landing Page Link"
-                                                    onChange={(e) => {
-                                                        const { name, value } = e.target;
-                                                        setFormValues({ ...formValues, [name]: value })
-                                                    }}
-                                                    value={formValues.landingPage}
-                                                    disabled={isUpdate} />
+
+                                                    value={landingPage}
+                                                    disabled={true} />
                                             </Form.Group>
-                                        </Row>
+                                        </Row> : <></>}
 
                                         <Button variant="danger" type="button"
                                             disabled={!(name != '' && email != '' && phone != '' && companyName != '' && zapierWebhook != '')}
