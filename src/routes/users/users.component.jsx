@@ -48,7 +48,7 @@ const Users = () => {
             }
         },
         ).then((response) => {
-            console.log(response);
+            // console.log(response);
             dispatch(setUsersRawData(response.data))
             dispatch(fetchUsersSuccess(response.data.users))
         }).catch(error => {

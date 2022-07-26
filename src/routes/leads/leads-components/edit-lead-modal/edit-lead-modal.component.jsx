@@ -12,11 +12,6 @@ import ErrorHandling from '../../../../components/errorHandler';
 
 import Alert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
-// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-// import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-
-// import DatePicker from 'react-date-picker';
 
 import axios from 'axios';
 
@@ -38,19 +33,23 @@ const defaultFormFields = {
     followUpDate: '',
     funnelStage: '',
     purchasesPrice: 0,
-    finance: "",
-    paidInFull: "",
-    futureRevenue: 0
+    service: '',
+    platform: '',
+    bestTimeToContact: '',
+    consultationDate: '',
+    consultationTime: '',
 }
 
 function Example() {
-    const [updatedAtDate, setUpdatedAtDate] = useState()
     const [isLoading, setIsLoading] = useState(false);
     const [fetchAgain, setFetchAgain] = useState(false);
+
     const dispatch = useDispatch()
-    const { showEditModal, clickedRow, showConfirmUpdateModal, pageNumber, offset, deleteError, updateError, successfullyDeleted, successfullyUpdated } = useSelector(leadsSelector)
+
+    const { showEditModal, clickedRow, showConfirmUpdateModal, pageNumber, offset } = useSelector(leadsSelector)
     const { accessToken } = useSelector(currentUserSelector)
-    const { _id, createdAt, email, firstName, lastName, phone, updatedAt, lastContacted, contactType, response, followUpDate, noOfTimesContacted, funnelStage, finance, paidInFull, futureRevenue, purchasesPrice } = clickedRow
+
+    const { _id, createdAt, email, firstName, lastName, phone, updatedAt, lastContacted, contactType, response, followUpDate, noOfTimesContacted, funnelStage, purchasesPrice, service, platform, bestTimeToContact, consultationDate, consultationTime } = clickedRow
 
     const [updatedValues, setUpdatedValues] = useState(defaultFormFields)
 
@@ -68,10 +67,12 @@ function Example() {
             noOfTimesContacted,
             response,
             funnelStage,
-            finance,
-            paidInFull,
-            futureRevenue,
-            purchasesPrice
+            purchasesPrice,
+            service,
+            platform,
+            bestTimeToContact,
+            consultationDate: consultationDate ? moment(consultationDate).format(moment.HTML5_FMT.DATE) : null,
+            consultationTime: consultationTime ? moment(consultationTime).format(moment.HTML5_FMT.TIME) : null
         })
         // setFollowUp(moment(followUpDate).format(moment.HTML5_FMT.DATE))
         // setUpdatedAtDate(moment(updatedAt).format(moment.HTML5_FMT.DATE))
@@ -88,7 +89,6 @@ function Example() {
         ).then((response) => {
             setIsLoading(false)
             ErrorHandling('SuccessLeadUpdated')
-            // dispatch(setLeadsSuccessFullyUpdated(true))
             dispatch(setShowConfirmUpdateModal(false))
             dispatch(setShowEditModal(false))
 
@@ -109,8 +109,6 @@ function Example() {
 
         }).catch(error => {
             setIsLoading(false)
-            // setIsError(true)
-            // dispatch(setLeadsUpdateError(true))
             ErrorHandling('ErrorFailedToUpdateLead')
             dispatch(setShowConfirmUpdateModal(false))
             dispatch(setShowEditModal(false))
@@ -119,22 +117,6 @@ function Example() {
 
     return (
         <>
-            {/* {successfullyUpdated ? <Alert onClose={() => { dispatch(setLeadsSuccessFullyUpdated(false)) }} sx={{ marginBottom: '10px' }} variant="filled" severity="success" >
-                Success - Lead Updated SuccessFully!
-            </Alert > : <></>}
-
-            {successfullyDeleted ? <Alert onClose={() => { dispatch(setLeadsSuccessFullyDeleted(false)) }} sx={{ marginBottom: '10px' }} variant="filled" severity="success" >
-                Success - Lead Deleted SuccessFully!
-            </Alert > : <></>}
-
-            {deleteError ? <Alert onClose={() => { dispatch(setLeadsDeleteError(false)) }} sx={{ marginBottom: '10px' }} variant="filled" severity="error" >
-                Error - Couldn't Delete the lead try again!
-            </Alert > : <></>
-            }
-
-            {updateError ? <Alert onClose={() => { dispatch(setLeadsUpdateError(false)) }} sx={{ marginBottom: '10px' }} variant="filled" severity="error">
-                Error - Couldn't Update the lead try again!
-            </Alert> : <></>} */}
             <Modal
                 show={showEditModal}
                 onHide={() => {
@@ -157,7 +139,7 @@ function Example() {
                         <Row className="mb-3">
                             <Form.Group as={Col} controlId="formGridFirstName">
                                 <Form.Label>First Name</Form.Label>
-                                <Form.Control size='sm' name='firstName' type="text" placeholder="Enter First Name" onChange={(e) => {
+                                <Form.Control size='sm' name='firstName' type="text" placeholder="Enter First Name" disabled={true} onChange={(e) => {
                                     const { name, value } = e.target;
                                     setUpdatedValues({ ...updatedValues, [name]: value })
                                 }} value={updatedValues.firstName} />
@@ -165,7 +147,7 @@ function Example() {
 
                             <Form.Group as={Col} controlId="formGridLastName">
                                 <Form.Label>Last Name</Form.Label>
-                                <Form.Control size='sm' name='lastName' type="text" placeholder="Enter Last Name" onChange={(e) => {
+                                <Form.Control size='sm' name='lastName' type="text" placeholder="Enter Last Name" disabled={true} onChange={(e) => {
                                     const { name, value } = e.target;
                                     setUpdatedValues({ ...updatedValues, [name]: value })
                                 }} value={updatedValues.lastName} />
@@ -173,7 +155,7 @@ function Example() {
 
                             <Form.Group as={Col} controlId="formGridEmail">
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control size='sm' name='email' type="email" placeholder="Email" onChange={(e) => {
+                                <Form.Control size='sm' name='email' type="email" placeholder="Email" disabled={true} onChange={(e) => {
                                     const { name, value } = e.target;
                                     setUpdatedValues({ ...updatedValues, [name]: value })
                                 }} value={updatedValues.email} />
@@ -181,29 +163,48 @@ function Example() {
                         </Row>
 
                         <Row className="mb-3">
+                            <Form.Group as={Col} controlId="formGridService">
+                                <Form.Label>Service</Form.Label>
+                                <Form.Control size='sm' name='service' type="text" placeholder="Enter Service" disabled={true} onChange={(e) => {
+                                    const { name, value } = e.target;
+                                    setUpdatedValues({ ...updatedValues, [name]: value })
+                                }} value={updatedValues.service} />
+                            </Form.Group>
+
+                            <Form.Group as={Col} controlId="formGridPlatform">
+                                <Form.Label>Platform</Form.Label>
+                                <Form.Control size='sm' name='platform' type="text" placeholder="Enter Platform" disabled={true} onChange={(e) => {
+                                    const { name, value } = e.target;
+                                    setUpdatedValues({ ...updatedValues, [name]: value })
+                                }} value={updatedValues.platform} />
+                            </Form.Group>
+
                             <Form.Group as={Col} controlId="formGridPhone">
                                 <Form.Label>Phone</Form.Label>
-                                <Form.Control size='sm' name='phone' type="phone" placeholder="Enter Phone" onChange={(e) => {
+                                <Form.Control size='sm' name='phone' type="phone" placeholder="Enter Phone" disabled={true} onChange={(e) => {
                                     const { name, value } = e.target;
                                     setUpdatedValues({ ...updatedValues, [name]: value })
                                 }} value={updatedValues.phone} />
                             </Form.Group>
+                        </Row>
+
+                        <Row className="mb-3">
+
+                            <Form.Group as={Col} controlId="formGridBestTimeToContact">
+                                <Form.Label>Best Time To Contact</Form.Label>
+                                <Form.Control size='sm'
+                                    name='bestTimeToContact'
+                                    type="text"
+                                    placeholder="Enter Best Time To Contact"
+                                    disabled={true}
+                                    onChange={(e) => {
+                                        const { name, value } = e.target;
+                                        setUpdatedValues({ ...updatedValues, [name]: value })
+                                    }}
+                                    value={updatedValues.bestTimeToContact} />
+                            </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridLastContacted">
-                                {/*                                 
-                            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <DesktopDatePicker
-                                    label="Last Contacted"
-                                    inputFormat="MM/dd/yyyy"
-                                    value={lastContacted}
-                                    onChange={(value) => {
-                                        // const { name, value } = e.target;
-                                        setUpdatedValues({ ...updatedValues, lastContacted: value })
-                                    }}
-                                    renderInput={(params) => <TextField {...params} />}
-                                    />
-                            </LocalizationProvider> */}
-
                                 <Form.Label>Last Contacted</Form.Label>
                                 <Form.Control size='sm'
                                     name='lastContacted'
@@ -258,7 +259,6 @@ function Example() {
                                     name='followUpDate'
                                     type="date"
                                     placeholder=""
-                                    defaultValue="dd/mm/yyyy"
                                     onChange={(e) => {
                                         const { name, value } = e.target;
                                         setUpdatedValues({ ...updatedValues, [name]: value })
@@ -297,7 +297,7 @@ function Example() {
                             </Form.Group>
                         </Row>
 
-                        <Row className="mb-3">
+                        <Row>
                             <Form.Group as={Col} controlId="formGridPurchasesPrice">
                                 <Form.Label>Purchases Price</Form.Label>
                                 <Form.Control size='sm' name='purchasesPrice' type="number" placeholder="Enter Purchases Price" onChange={(e) => {
@@ -306,56 +306,40 @@ function Example() {
                                 }} value={updatedValues.purchasesPrice} />
                             </Form.Group>
 
-                            <Form.Group as={Col} controlId="formGridFinance">
-                                <Form.Label>Finance</Form.Label>
-                                <Form.Select size='sm' aria-label="Default select example"
-                                    name='finance'
-                                    placeholder=""
+                            <Form.Group as={Col} controlId="formGridConsultationDate">
+                                <Form.Label>Last Contacted</Form.Label>
+                                <Form.Control size='sm'
+                                    name='consultationDate'
+                                    type="date"
+                                    placeholder="Enter Consultation Date"
                                     onChange={(e) => {
                                         const { name, value } = e.target;
                                         setUpdatedValues({ ...updatedValues, [name]: value })
                                     }}
-                                    value={updatedValues.finance}
-                                >
-                                    <option value="">Select</option>
-                                    <option value="true">Yes</option>
-                                    <option value="false">No</option>
-                                </Form.Select>
+                                    value={updatedValues.consultationDate} />
                             </Form.Group>
 
-                            <Form.Group as={Col} controlId="formGridPaidInFull">
-                                <Form.Label>Paid In Full</Form.Label>
-                                <Form.Select size='sm' aria-label="Default select example"
-                                    name='paidInFull'
-                                    placeholder=""
+                            <Form.Group as={Col} controlId="formGridConsultationTime">
+                                <Form.Label>Consultation Time</Form.Label>
+                                <Form.Control size='sm'
+                                    name='consultationTime'
+                                    type="time"
+                                    placeholder="Enter Best Consultation Time"
                                     onChange={(e) => {
                                         const { name, value } = e.target;
                                         setUpdatedValues({ ...updatedValues, [name]: value })
                                     }}
-                                    value={updatedValues.paidInFull}
-                                >
-                                    <option value="">Select</option>
-                                    <option value="true">Yes</option>
-                                    <option value="false">No</option>
-                                </Form.Select>
-
-                            </Form.Group>
-
-                            <Form.Group as={Col} controlId="formGridFutureRevenue">
-                                <Form.Label>Future Revenue</Form.Label>
-                                <Form.Control size='sm' name='futureRevenue' type="number" placeholder="Enter Future Revenue" onChange={(e) => {
-                                    const { name, value } = e.target;
-                                    setUpdatedValues({ ...updatedValues, [name]: value })
-                                }} value={updatedValues.futureRevenue} />
+                                    value={updatedValues.consultationTime} />
                             </Form.Group>
                         </Row>
 
                         <Form.Group className="mb-3" controlId="formGridResponse">
                             <Form.Label>Response</Form.Label>
-                            <Form.Control size='sm' name='response' type="text" placeholder="Enter Rsponse" onChange={(e) => {
+                            <Form.Control as="textarea" rows={3} size='sm' name='response' onChange={(e) => {
                                 const { name, value } = e.target;
                                 setUpdatedValues({ ...updatedValues, [name]: value })
                             }} value={updatedValues.response} />
+
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formGridCreatedAt">

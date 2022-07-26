@@ -153,14 +153,30 @@ const Dashboard = () => {
                                         </div> */}
                                     </div>
 
-                                    <div className={`dashboard-item d-item-s px-4 py-4`}>
+                                    {/* <div className={`dashboard-item d-item-s px-4 py-4`}>
                                         <div className="row align-items-center justify-content-between">
                                             <h2 className="col-9 m-0">{`£${potentialRevenue ? potentialRevenue?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}`}</h2>
-                                            {/* <span className="col-auto"><AppsIcon /></span> */}
                                         </div>
                                         <div className="row mt-1">
                                             <div className="col item-text">
                                                 <h6>Potential Revenue</h6>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col">
+                                                <ProgressBar now={40} style={{ backgroundColor: '#df374854', height: '22px' }} />
+                                            </div>
+                                        </div>
+                                    </div> */}
+
+                                    <div className={`dashboard-item d-item-s px-4 py-4`}>
+                                        <div className="row align-items-center justify-content-between">
+                                            <h2 className="col-9 m-0">{totalConsultationBooked ? totalConsultationBooked : 0}</h2>
+                                            {/* <span className="col-auto"><AppsIcon /></span> */}
+                                        </div>
+                                        <div className="row mt-1">
+                                            <div className="col item-text">
+                                                <h6>Consulations Booked</h6>
                                             </div>
                                         </div>
                                         {/* <div className="row">
@@ -243,9 +259,7 @@ const Dashboard = () => {
 
                                 <div className="row justify-content-between flex-wrap mb-4">
 
-
-
-                                    <div className={`dashboard-item px-4 py-4 d-item-xl`}>
+                                    {/* <div className={`dashboard-item px-4 py-4 d-item-xl`}>
                                         <div className="row align-items-center justify-content-between mb-4">
                                             <h5 className="col-5 m-0">Leads To Follow Up</h5>
                                             <span className="col-7" style={{ fontSize: '12px' }}>{`(All the leads that need to be followed up - Show the days remaining in order)`}</span>
@@ -274,32 +288,17 @@ const Dashboard = () => {
                                                 </div>
                                             ))
                                         }
-                                    </div>
+                                    </div> */}
 
-                                    <div className={`dashboard-item d-item-m px-4 py-4`}>
-                                        <div className="row align-items-center justify-content-between">
-                                            <h2 className="col-9 m-0">{totalConsultationBooked ? totalConsultationBooked : 0}</h2>
-                                            {/* <span className="col-auto"><AppsIcon /></span> */}
-                                        </div>
-                                        <div className="row mt-1">
-                                            <div className="col item-text">
-                                                <h6>Consulations Booked</h6>
-                                            </div>
-                                        </div>
-                                        {/* <div className="row">
-                                            <div className="col">
-                                                <ProgressBar now={40} style={{ backgroundColor: '#df374854', height: '22px' }} />
-                                            </div>
-                                        </div> */}
-                                    </div>
+
 
                                 </div>
                             </>
                         }
                     </div>
 
-                </div>
-            </div>
+                </div >
+            </div >
 
         </>
     )

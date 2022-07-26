@@ -49,7 +49,8 @@ const CreateUsersForm = () => {
         phone: '',
         companyName: '',
         notionUrl: '',
-        zapierWebhook: ''
+        zapierWebhook: '',
+        addReportingUrl: ''
     })
 
     const { name, email, phone, companyName, zapierWebhook } = formValues
@@ -73,8 +74,8 @@ const CreateUsersForm = () => {
             }
             ).then((response) => {
 
-                const { name, email, companyName, dp, phone, zapierWebhook, notionUrl, landingPage } = response.data.data
-                setFormValues({ name, email, companyName, dp, phone, zapierWebhook, notionUrl })
+                const { name, email, companyName, dp, phone, zapierWebhook, notionUrl, landingPage, addReportingUrl } = response.data.data
+                setFormValues({ name, email, companyName, dp, phone, zapierWebhook, notionUrl, addReportingUrl })
                 setLandingPage(landingPage)
                 setId(id)
             }).catch(error => {
@@ -183,7 +184,8 @@ const CreateUsersForm = () => {
                     phone: '',
                     companyName: '',
                     notionUrl: '',
-                    zapierWebhook: ''
+                    zapierWebhook: '',
+                    addReportingUrl: ''
                 })
                 navigate('/users')
             }).catch(error => {
@@ -206,7 +208,7 @@ const CreateUsersForm = () => {
         }
         ).then((response) => {
             setIsLoading(false)
-            console.log(response);
+            // console.log(response);
             navigate('/users')
         }).catch(error => {
             setIsLoading(false)
@@ -351,6 +353,21 @@ const CreateUsersForm = () => {
                                                         setFormValues({ ...formValues, [name]: value })
                                                     }}
                                                     value={formValues.zapierWebhook} />
+                                            </Form.Group>
+                                        </Row>
+
+                                        <Row className="mb-3">
+                                            <Form.Group as={Col} className='input-field-container' controlId="formGridAddReportingUrl">
+                                                <span>Add Reporting Url</span>
+                                                <Form.Control className='cu-input-field' size='md'
+                                                    name='addReportingUrl'
+                                                    type="text"
+                                                    placeholder="Enter Reporting Url"
+                                                    onChange={(e) => {
+                                                        const { name, value } = e.target;
+                                                        setFormValues({ ...formValues, [name]: value })
+                                                    }}
+                                                    value={formValues.addReportingUrl} />
                                             </Form.Group>
                                         </Row>
 

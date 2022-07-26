@@ -22,8 +22,7 @@ const defaultFormFields = {
     name: '',
     email: '',
     companyName: '',
-    notionUrl: '',
-    zapierWebhook: '',
+    phone: '',
     active: null
 }
 
@@ -111,30 +110,17 @@ export function UsersFilters() {
                         </Row>
 
                         <Row className="mb-3">
-                            <Form.Group as={Col} controlId="formGridNotionUrl">
-                                <Form.Label>Notion Url</Form.Label>
+                            <Form.Group as={Col} controlId="formGridPhone">
+                                <Form.Label>Phone</Form.Label>
                                 <Form.Control size='sm'
-                                    name='notionUrl'
+                                    name='phone'
                                     type="text"
-                                    placeholder="Enter Notion URL"
+                                    placeholder="Enter Phone"
                                     onChange={(e) => {
                                         const { name, value } = e.target;
                                         setFiltersValues({ ...filtersValues, [name]: value })
                                     }}
-                                    value={filtersValues.notionUrl} />
-                            </Form.Group>
-
-                            <Form.Group as={Col} controlId="formGridZapierWebHook">
-                                <Form.Label>Zapier Web Hook</Form.Label>
-                                <Form.Control size='sm'
-                                    name='zapierWebhook'
-                                    type="text"
-                                    placeholder="Enter Zapier Web Hook"
-                                    onChange={(e) => {
-                                        const { name, value } = e.target;
-                                        setFiltersValues({ ...filtersValues, [name]: value })
-                                    }}
-                                    value={filtersValues.zapierWebhook} />
+                                    value={filtersValues.phone} />
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridStatus">

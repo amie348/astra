@@ -27,12 +27,16 @@ const defaultFormFields = {
     phone: '',
     lastContacted: '',
     contactType: '',
-    noOfTimesContacted: '',
+    noOfTimesContacted: 0,
+    response: '',
     followUpDate: '',
     funnelStage: '',
-    purchasesPrice: null,
-    finance: null,
-    paidInFull: null,
+    purchasesPrice: 0,
+    service: '',
+    platform: '',
+    bestTimeToContact: '',
+    consultationDate: '',
+    consultationTime: '',
 }
 
 const ExpandMore = styled((props) => {
@@ -96,7 +100,7 @@ export function LeadFIlters() {
                         <Row className="mb-3">
                             <Form.Group as={Col} controlId="formGridFirstName">
                                 <Form.Label>First Name</Form.Label>
-                                <Form.Control size='sm' name='firstName' type="text" placeholder="First Name" onChange={(e) => {
+                                <Form.Control size='sm' name='firstName' type="text" placeholder="Enter First Name" onChange={(e) => {
                                     const { name, value } = e.target;
                                     setFiltersValues({ ...filtersValues, [name]: value })
                                 }} value={filtersValues.firstName} />
@@ -120,12 +124,45 @@ export function LeadFIlters() {
                         </Row>
 
                         <Row className="mb-3">
+                            <Form.Group as={Col} controlId="formGridService">
+                                <Form.Label>Service</Form.Label>
+                                <Form.Control size='sm' name='service' type="text" placeholder="Enter Service" onChange={(e) => {
+                                    const { name, value } = e.target;
+                                    setFiltersValues({ ...filtersValues, [name]: value })
+                                }} value={filtersValues.service} />
+                            </Form.Group>
+
+                            <Form.Group as={Col} controlId="formGridPlatform">
+                                <Form.Label>Platform</Form.Label>
+                                <Form.Control size='sm' name='platform' type="text" placeholder="Enter Platform" onChange={(e) => {
+                                    const { name, value } = e.target;
+                                    setFiltersValues({ ...filtersValues, [name]: value })
+                                }} value={filtersValues.platform} />
+                            </Form.Group>
+
                             <Form.Group as={Col} controlId="formGridPhone">
                                 <Form.Label>Phone</Form.Label>
                                 <Form.Control size='sm' name='phone' type="phone" placeholder="Enter Phone" onChange={(e) => {
                                     const { name, value } = e.target;
                                     setFiltersValues({ ...filtersValues, [name]: value })
                                 }} value={filtersValues.phone} />
+                            </Form.Group>
+                        </Row>
+
+                        <Row className="mb-3">
+
+                            <Form.Group as={Col} controlId="formGridBestTimeToContact">
+                                <Form.Label>Best Time To Contact</Form.Label>
+                                <Form.Control size='sm'
+                                    name='bestTimeToContact'
+                                    type="text"
+                                    placeholder="Enter Best Time To Contact"
+
+                                    onChange={(e) => {
+                                        const { name, value } = e.target;
+                                        setFiltersValues({ ...filtersValues, [name]: value })
+                                    }}
+                                    value={filtersValues.bestTimeToContact} />
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridLastContacted">
@@ -144,6 +181,11 @@ export function LeadFIlters() {
 
                             <Form.Group as={Col} controlId="formGridContactType">
                                 <Form.Label>Contact Type</Form.Label>
+                                {/* <Form.Control size='sm' name='contactType' type="text" placeholder="Contact Type" onChange={(e) => {
+                                    const { name, value } = e.target;
+                                    setFiltersValues({ ...filtersValues, [name]: value })
+                                }} value={filtersValues.contactType} /> */}
+
                                 <Form.Select size='sm' aria-label="Default select example"
                                     name='contactType'
                                     placeholder=""
@@ -178,7 +220,6 @@ export function LeadFIlters() {
                                     name='followUpDate'
                                     type="date"
                                     placeholder=""
-                                    defaultValue="dd/mm/yyyy"
                                     onChange={(e) => {
                                         const { name, value } = e.target;
                                         setFiltersValues({ ...filtersValues, [name]: value })
@@ -191,12 +232,15 @@ export function LeadFIlters() {
 
                             <Form.Group as={Col} controlId="formGridFunnelStage">
                                 <Form.Label>Funnel Stage</Form.Label>
+                                {/* <Form.Control size='sm' name='funnelStage' placeholder="" onChange={(e) => {
+                                    const { name, value } = e.target;
+                                    setFiltersValues({ ...filtersValues, [name]: value })
+                                }} value={filtersValues.funnelStage} /> */}
                                 <Form.Select size='sm' aria-label="Default select example"
                                     name='funnelStage'
                                     placeholder=""
                                     onChange={(e) => {
                                         const { name, value } = e.target;
-                                        console.log(`value`, value)
                                         setFiltersValues({ ...filtersValues, [name]: value })
                                     }}
                                     value={filtersValues.funnelStage}
@@ -215,65 +259,40 @@ export function LeadFIlters() {
                         </Row>
 
                         <Row className="mb-3">
-                            {/* <Form.Group as={Col} controlId="formGridPurchasesPrice">
+                            <Form.Group as={Col} controlId="formGridPurchasesPrice">
                                 <Form.Label>Purchases Price</Form.Label>
                                 <Form.Control size='sm' name='purchasesPrice' type="number" placeholder="Enter Purchases Price" onChange={(e) => {
                                     const { name, value } = e.target;
                                     setFiltersValues({ ...filtersValues, [name]: value })
                                 }} value={filtersValues.purchasesPrice} />
-                            </Form.Group> */}
+                            </Form.Group>
 
-                            <Form.Group as={Col} controlId="formGridFinance">
-                                <Form.Label>Finance</Form.Label>
-                                <Form.Select size='sm' aria-label="Default select example"
-                                    name='finance'
-                                    placeholder=""
+                            <Form.Group as={Col} controlId="formGridConsultationDate">
+                                <Form.Label>Last Contacted</Form.Label>
+                                <Form.Control size='sm'
+                                    name='consultationDate'
+                                    type="date"
+                                    placeholder="Enter Consultation Date"
                                     onChange={(e) => {
                                         const { name, value } = e.target;
                                         setFiltersValues({ ...filtersValues, [name]: value })
                                     }}
-                                    value={filtersValues.finance}
-                                >
-                                    <option value="">Select</option>
-                                    <option value={true}>Yes</option>
-                                    <option value={false}>No</option>
-                                </Form.Select>
+                                    value={filtersValues.consultationDate} />
                             </Form.Group>
 
-                            <Form.Group as={Col} controlId="formGridPaidInFull">
-                                <Form.Label>Paid In Full</Form.Label>
-                                <Form.Select size='sm' aria-label="Default select example"
-                                    name='paidInFull'
-                                    placeholder=""
+                            <Form.Group as={Col} controlId="formGridConsultationTime">
+                                <Form.Label>Consultation Time</Form.Label>
+                                <Form.Control size='sm'
+                                    name='consultationTime'
+                                    type="time"
+                                    placeholder="Enter Best Consultation Time"
                                     onChange={(e) => {
                                         const { name, value } = e.target;
                                         setFiltersValues({ ...filtersValues, [name]: value })
                                     }}
-                                    value={filtersValues.paidInFull}
-                                >
-                                    <option value="">Select</option>
-                                    <option value={true}>Yes</option>
-                                    <option value={false}>No</option>
-                                </Form.Select>
-
+                                    value={filtersValues.consultationTime} />
                             </Form.Group>
-
-                            {/* <Form.Group as={Col} controlId="formGridFutureRevenue">
-                                <Form.Label>Future Revenue</Form.Label>
-                                <Form.Control size='sm' name='futureRevenue' type="number" placeholder="Enter Future Revenue" onChange={(e) => {
-                                    const { name, value } = e.target;
-                                    setFiltersValues({ ...filtersValues, [name]: value })
-                                }} value={filtersValues.futureRevenue} />
-                            </Form.Group> */}
                         </Row>
-
-                        {/* <Form.Group className="mb-3" controlId="formGridResponse">
-                            <Form.Label>Response</Form.Label>
-                            <Form.Control size='sm' name='response' type="text" placeholder="Enter Rsponse" onChange={(e) => {
-                                const { name, value } = e.target;
-                                setFiltersValues({ ...filtersValues, [name]: value })
-                            }} value={filtersValues.response} />
-                        </Form.Group> */}
 
                         <Button variant="danger" type="button" disabled={isLoading} style={{ minWidth: '70px' }} onClick={() => {
                             searchLead()
@@ -291,14 +310,16 @@ export function LeadFIlters() {
                                 phone: '',
                                 lastContacted: '',
                                 contactType: '',
-                                noOfTimesContacted: '',
+                                noOfTimesContacted: 0,
                                 response: '',
                                 followUpDate: '',
                                 funnelStage: '',
-                                purchasesPrice: null,
-                                finance: '',
-                                paidInFull: '',
-                                futureRevenue: null
+                                purchasesPrice: 0,
+                                service: '',
+                                platform: '',
+                                bestTimeToContact: '',
+                                consultationDate: '',
+                                consultationTime: '',
                             });
 
                             dispatch(setSearchFilters({}))
