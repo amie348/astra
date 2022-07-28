@@ -33,7 +33,7 @@ const FollowUpLeads = () => {
         axios.post(`${BASE_API_URL}/api/lead/get`, {
             pageNumber,
             offset,
-            searchFilters : {...searchFilters, funnelStage: "NEW LEAD"} 
+            searchFilters : {...searchFilters, funnelStage: "FOLLOW UP"} 
         }, {
             headers: {
                 authorization: `${accessToken}`
