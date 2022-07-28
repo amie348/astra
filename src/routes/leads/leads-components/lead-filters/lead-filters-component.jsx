@@ -213,53 +213,53 @@ export function LeadFIlters({funnelStage}) {
                                     setFiltersValues({ ...filtersValues, [name]: value })
                                 }} value={filtersValues.noOfTimesContacted} />
                             </Form.Group>
-
-                            <Form.Group as={Col} controlId="formGridFollowUpDate">
-                                <Form.Label>Follow Up Date</Form.Label>
-                                <Form.Control size='sm'
-                                    name='followUpDate'
-                                    type="date"
-                                    placeholder=""
-                                    onChange={(e) => {
-                                        const { name, value } = e.target;
-                                        setFiltersValues({ ...filtersValues, [name]: value })
-                                    }}
-                                    value={(filtersValues.funnelStage == "NEW LEAD" || filtersValues.funnelStage == "FOLLOW UP") ? filtersValues.followUpDate : null}
-                                    disable={(filtersValues.funnelStage == "NEW LEAD" || filtersValues.funnelStage == "FOLLOW UP") ? false : true}
-
-                                />
-                            </Form.Group>
                             {
-                            
                             funnelStage ? null 
                             :
-                            <Form.Group as={Col} controlId="formGridFunnelStage">
-                                <Form.Label>Funnel Stage</Form.Label>
-                                {/* <Form.Control size='sm' name='funnelStage' placeholder="" onChange={(e) => {
-                                    const { name, value } = e.target;
-                                    setFiltersValues({ ...filtersValues, [name]: value })
-                                }} value={filtersValues.funnelStage} /> */}
-                                <Form.Select size='sm' aria-label="Default select example"
-                                    name='funnelStage'
-                                    placeholder=""
-                                    onChange={(e) => {
+                            <>
+                                <Form.Group as={Col} controlId="formGridFollowUpDate">
+                                    <Form.Label>Follow Up Date</Form.Label>
+                                    <Form.Control size='sm'
+                                        name='followUpDate'
+                                        type="date"
+                                        placeholder=""
+                                        onChange={(e) => {
+                                            const { name, value } = e.target;
+                                            setFiltersValues({ ...filtersValues, [name]: value })
+                                        }}
+                                        value={(filtersValues.funnelStage == "NEW LEAD" || filtersValues.funnelStage == "FOLLOW UP") ? filtersValues.followUpDate : null}
+                                        disable={(filtersValues.funnelStage == "NEW LEAD" || filtersValues.funnelStage == "FOLLOW UP") ? false : true}
+
+                                    />
+                                </Form.Group>
+                                
+                                <Form.Group as={Col} controlId="formGridFunnelStage">
+                                    <Form.Label>Funnel Stage</Form.Label>
+                                    {/* <Form.Control size='sm' name='funnelStage' placeholder="" onChange={(e) => {
                                         const { name, value } = e.target;
                                         setFiltersValues({ ...filtersValues, [name]: value })
-                                    }}
-                                    value={filtersValues.funnelStage}
-                                >
-                                    <option value="">Select</option>
-                                    <option value="NEW LEAD">NEW LEAD</option>
-                                    <option value="CONSULTATION BOOKED">CONSULTATION BOOKED</option>
-                                    <option value="CONSULTATION COMPLETE">CONSULTATION COMPLETE</option>
-                                    <option value="FOLLOW UP">FOLLOW UP</option>
-                                    <option value="OBJECTION">OBJECTION</option>
-                                    <option value="WAITING FOR">WAITING FOR</option>
-                                    <option value="DEAD">DEAD</option>
-                                    <option value="PURCHASED">PURCHASED</option>
-                                </Form.Select>
-                            </Form.Group>
-                            
+                                    }} value={filtersValues.funnelStage} /> */}
+                                    <Form.Select size='sm' aria-label="Default select example"
+                                        name='funnelStage'
+                                        placeholder=""
+                                        onChange={(e) => {
+                                            const { name, value } = e.target;
+                                            setFiltersValues({ ...filtersValues, [name]: value })
+                                        }}
+                                        value={filtersValues.funnelStage}
+                                    >
+                                        <option value="">Select</option>
+                                        <option value="NEW LEAD">NEW LEAD</option>
+                                        <option value="CONSULTATION BOOKED">CONSULTATION BOOKED</option>
+                                        <option value="CONSULTATION COMPLETE">CONSULTATION COMPLETE</option>
+                                        <option value="FOLLOW UP">FOLLOW UP</option>
+                                        <option value="OBJECTION">OBJECTION</option>
+                                        <option value="WAITING FOR">WAITING FOR</option>
+                                        <option value="DEAD">DEAD</option>
+                                        <option value="PURCHASED">PURCHASED</option>
+                                    </Form.Select>
+                                </Form.Group>
+                            </>
 
                             }
 
