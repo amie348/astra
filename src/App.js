@@ -5,6 +5,8 @@ import './App.css';
 import Login from './routes/login/login.component';
 import Dashboard from './routes/Dashboard/dashboard.component'
 import Leads from './routes/leads/leads.component';
+import FollowUpLeads from './routes/leads/FollowLeads.component';
+import NewLeads from './routes/leads/NewLeads.component';
 import SetPassword from './routes/change-password/change-password.component';
 
 import { useSelector } from 'react-redux'
@@ -31,6 +33,8 @@ function App() {
       <Route element={<AppLayout />}>
         <Route path='dashboard' element={<Dashboard />} />
         <Route path='leads' element={<Leads />} />
+        <Route path='new-leads' element={<NewLeads />} />
+        <Route path='follow-up-leads' element={<FollowUpLeads/>} />
         <Route path='users' element={role == 'SUPERADMIN' ? <Users /> : <Navigate to={'/dashboard'} />} />
         <Route path='update-users/:id' element={<CreateUsersForm />} />
         <Route path='create-user' element={<CreateUsersForm />} />

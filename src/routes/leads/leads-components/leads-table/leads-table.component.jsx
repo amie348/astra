@@ -80,7 +80,7 @@ const paginationTheme = createTheme({
     },
 });
 
-function ReactBootstrapTable({ setShowDeleteModal }) {
+function ReactBootstrapTable({ setShowDeleteModal, funnelStage }) {
 
 
     const classes = useStyles()
@@ -116,15 +116,18 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
     const columns = [
         {
             dataField: 'firstName',
-            text: 'First Name',
+            text: 'Name',
             headerStyle: (colum, colIndex) => {
-                return { width: '10%' };
+                return { width: '13%' };
+            },
+            formatter: (cell, row) => {
+                return `${row.firstName} ${row.lastName}`
             }
         }, {
-            dataField: 'lastName',
-            text: 'Last Name',
+            dataField: 'service',
+            text: 'Service',
             headerStyle: (colum, colIndex) => {
-                return { width: '10%' };
+                return { width: '12%' };
             }
         }, {
             dataField: 'email',
@@ -309,7 +312,7 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
             dataField: 'actions',
             text: 'Actions',
             headerStyle: (colum, colIndex) => {
-                return { width: '15%', textAlign: 'center' };
+                return { width: '10%', textAlign: 'center' };
             },
             formatter: (cell, row) => (
                 cell ? cell :
@@ -349,7 +352,7 @@ function ReactBootstrapTable({ setShowDeleteModal }) {
                             <ExpandMoreIcon />
                         </ExpandMore>
                     }
-                    title="Leads"
+                    title={ funnelStage ? funnelStage : "All Leads"}
                 >
 
                 </CardHeader>

@@ -51,7 +51,7 @@ const ExpandMore = styled((props) => {
 }));
 
 
-export function LeadFIlters() {
+export function LeadFIlters({funnelStage}) {
 
     const { isLoading } = useSelector(leadsSelector)
     const { accessToken } = useSelector(currentUserSelector)
@@ -229,7 +229,10 @@ export function LeadFIlters() {
 
                                 />
                             </Form.Group>
-
+                            {
+                            
+                            funnelStage ? null 
+                            :
                             <Form.Group as={Col} controlId="formGridFunnelStage">
                                 <Form.Label>Funnel Stage</Form.Label>
                                 {/* <Form.Control size='sm' name='funnelStage' placeholder="" onChange={(e) => {
@@ -256,6 +259,10 @@ export function LeadFIlters() {
                                     <option value="PURCHASED">PURCHASED</option>
                                 </Form.Select>
                             </Form.Group>
+                            
+
+                            }
+
                         </Row>
 
                         <Row className="mb-3">

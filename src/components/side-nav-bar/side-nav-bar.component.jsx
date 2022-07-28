@@ -8,9 +8,12 @@ import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import PeopleIcon from '@mui/icons-material/People';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
+import SummarizeIcon from '@mui/icons-material/Summarize';
+
 import { isSideNavBarOpenSelector } from '../../store/dashboard/dashboard.selector';
 import { currentUserSelector } from '../../store/user/user.selectors';
 import { setIsSideNavBarOpen } from '../../store/dashboard/dashboard.action';
+
 
 import { Tooltip, IconButton } from '@mui/material';
 import { useDispatch } from 'react-redux';
@@ -46,15 +49,30 @@ const SideNavBar = () => {
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Dashboard</div>
                         </NavLink>
 
+                        <NavLink className="item" activeClassName='active dg-danger' to='/new-leads'>
+                            <div className="item-icon"> <LeaderboardIcon /> </div>
+                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>New Leads</div>
+                        </NavLink>
+
+                        <NavLink className="item" activeClassName='active dg-danger' to='/follow-up-leads'>
+                            <div className="item-icon"> <LeaderboardIcon /> </div>
+                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Follow Up Leads</div>
+                        </NavLink>
+
                         <NavLink className="item" activeClassName='active dg-danger' to='/leads'>
                             <div className="item-icon"> <LeaderboardIcon /> </div>
-                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Leads</div>
+                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>All Leads</div>
                         </NavLink>
 
                         <NavLink className="item" activeClassName='active dg-danger' to='/ad-reporting'>
-                            <div className="item-icon"> <NoteAltIcon /> </div>
-                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Notes</div>
+                            <div className="item-icon"> <SummarizeIcon /> </div>
+                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Ad Reporting</div>
                         </NavLink>
+
+                        <div className="item" activeClassName='active dg-danger' onClick={openNotes} >
+                            <div className="item-icon"> <NoteAltIcon /> </div>
+                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Practice Portal</div>
+                        </div>
 
                         {
                             role == 'SUPERADMIN' ?
@@ -70,7 +88,7 @@ const SideNavBar = () => {
 
                 <div>
 
-                    <div style={{display: "flex", justifyContent: "center"}}>
+                    {/* <div style={{display: "flex", justifyContent: "center"}}>
                         <Tooltip title="Open Notes">
                             <span onClick={openNotes}>
                                 <IconButton>
@@ -78,7 +96,7 @@ const SideNavBar = () => {
                                 </IconButton>
                             </span>
                         </Tooltip> 
-                    </div>
+                    </div> */}
 
                     <div className="sideNavBar-close" onClick={() => { dispatch(setIsSideNavBarOpen(!isSideNavBarOpen)) }}>
 
