@@ -26,6 +26,7 @@ const NewLeads = () => {
 
     const { isLoading, pageNumber, offset, clickedRow, leadsRawData, searchFilters } = useSelector(leadsSelector)
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [newLeadReRender, setNewLeadReRender] = useState(false)
 
     useEffect(() => {
 
@@ -33,7 +34,7 @@ const NewLeads = () => {
         axios.post(`${BASE_API_URL}/api/lead/get`, {
             pageNumber,
             offset,
-            searchFilters : {...searchFilters, funnelStage: "NEW LEAD"} 
+            searchFilters: { ...searchFilters, funnelStage: "NEW LEAD" }
         }, {
             headers: {
                 authorization: `${accessToken}`
@@ -53,7 +54,7 @@ const NewLeads = () => {
         })
 
 
-    }, [pageNumber, offset, searchFilters])
+    }, [pageNumber, offset, searchFilters, newLeadReRender])
 
 
 
@@ -66,12 +67,12 @@ const NewLeads = () => {
             <div className={`${isSideNavBarOpen ? 'layout-body-compressed' : 'layout-body'}`}>
                 <div className="layout-content">
 
-                    <DeleteLeadDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal} />
+                    <DeleteLeadDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal} newLeadReRender={newLeadReRender} setNewLeadReRender={setNewLeadReRender} />
 
                     <div style={{ marginBottom: "30px" }}>
-                        <LeadFIlters funnelStage={"NEW LEAD"}/>
+                        <LeadFIlters funnelStage={"NEW LEAD"} />
                     </div>
-                    <ReactBootstrapTable setShowDeleteModal={setShowDeleteModal} funnelStage={"NEW LEAD"}/>
+                    <ReactBootstrapTable setShowDeleteModal={setShowDeleteModal} funnelStage={"NEW LEAD"} newLeadReRender={newLeadReRender} setNewLeadReRender={setNewLeadReRender} />
 
                 </div>
             </div>

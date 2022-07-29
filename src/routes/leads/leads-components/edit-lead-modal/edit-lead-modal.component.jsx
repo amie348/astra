@@ -10,13 +10,10 @@ import { currentUserSelector } from '../../../../store/user/user.selectors';
 import { BASE_API_URL } from "../../../../assets/config";
 import ErrorHandling from '../../../../components/errorHandler';
 
-import Alert from '@mui/material/Alert';
-import TextField from '@mui/material/TextField';
-
 import axios from 'axios';
 
 import { useDispatch } from 'react-redux';
-import { setShowEditModal, setShowConfirmUpdateModal, fetchLeadsStart, fetchLeadsSuccess, setLeadsRawData, setLeadsUpdateError, setLeadsDeleteError, setLeadsSuccessFullyUpdated, setLeadsSuccessFullyDeleted, setClickedRow } from '../../../../store/leads/leads.action';
+import { setShowEditModal, setShowConfirmUpdateModal, fetchLeadsStart, fetchLeadsSuccess, setLeadsRawData, setClickedRow } from '../../../../store/leads/leads.action';
 
 import moment from 'moment';
 import { Tooltip } from '@mui/material';
@@ -40,7 +37,7 @@ const defaultFormFields = {
     consultationTime: '',
 }
 
-function Example() {
+function Example({ reRender, setReRender, newLeadReRender, setNewLeadReRender, followLeadReRender, setFollowLeadReRender }) {
     const [isLoading, setIsLoading] = useState(false);
     const [fetchAgain, setFetchAgain] = useState(false);
 
@@ -49,39 +46,58 @@ function Example() {
     const { showEditModal, clickedRow, showConfirmUpdateModal, pageNumber, offset } = useSelector(leadsSelector)
     const { accessToken } = useSelector(currentUserSelector)
 
-    const { _id, createdAt, email, firstName, lastName, phone, updatedAt, lastContacted, contactType, response, followUpDate, noOfTimesContacted, funnelStage, purchasesPrice, service, platform, bestTimeToContact, consultationDate, consultationTime } = clickedRow
-
     const [updatedValues, setUpdatedValues] = useState(defaultFormFields)
+    const [createdUpdatedAt, setCreatedUpdatedAt] = useState({})
 
     useEffect(() => {
-        console.log(clickedRow);
-        setUpdatedValues({
-            ...updatedValues,
-            lastContacted: lastContacted ? moment(lastContacted).format(moment.HTML5_FMT.DATE) : null,
-            followUpDate: followUpDate ? moment(followUpDate).format(moment.HTML5_FMT.DATE) : null,
-            firstName,
-            lastName,
-            email,
-            phone,
-            contactType,
-            noOfTimesContacted,
-            response,
-            funnelStage,
-            purchasesPrice,
-            service,
-            platform,
-            bestTimeToContact,
-            consultationDate: consultationDate ? moment(consultationDate).format(moment.HTML5_FMT.DATE) : null,
-            consultationTime: consultationTime ? moment(consultationTime).format(moment.HTML5_FMT.TIME) : null
-        })
-        // setFollowUp(moment(followUpDate).format(moment.HTML5_FMT.DATE))
-        // setUpdatedAtDate(moment(updatedAt).format(moment.HTML5_FMT.DATE))
+        // console.log(clickedRow);
 
-    }, [lastContacted, followUpDate, updatedAt, fetchAgain])
+        if (clickedRow._id) {
+            axios.get(`${BASE_API_URL}/api/lead/get/${clickedRow._id}`,
+                {
+                    headers: {
+                        authorization: `${accessToken}`
+                    },
+                }
+            ).then((res) => {
+                // console.log(res.data.data);
+                const result = res.data.data
+
+                setUpdatedValues({
+                    ...updatedValues,
+                    lastContacted: result.lastContacted ? moment(result.lastContacted).format(moment.HTML5_FMT.DATE) : '',
+                    followUpDate: result.followUpDate ? moment(result.followUpDate).format(moment.HTML5_FMT.DATE) : '',
+                    firstName: result.firstName,
+                    lastName: result.lastName,
+                    email: result.email,
+                    phone: result.phone,
+                    contactType: result.contactType,
+                    noOfTimesContacted: result.noOfTimesContacted,
+                    response: result.response,
+                    funnelStage: result.funnelStage,
+                    purchasesPrice: result.purchasesPrice,
+                    service: result.service,
+                    platform: result.platform,
+                    bestTimeToContact: result.bestTimeToContact,
+                    consultationDate: result.consultationBooked ? moment(result.consultationBooked).format(moment.HTML5_FMT.DATE) : '',
+                    consultationTime: result.consultationBooked ? moment(result.consultationBooked).format(moment.HTML5_FMT.TIME) : '',
+                })
+
+                setCreatedUpdatedAt({
+                    createdAt: result.createdAt,
+                    updatedAt: result.updatedAt
+                })
+
+            }).catch(error => {
+                ErrorHandling(error)
+            })
+        }
+
+    }, [clickedRow, fetchAgain])
 
     const updateLead = () => {
         setIsLoading(true)
-        axios.patch(`${BASE_API_URL}/api/lead/update/${_id}`, updatedValues, {
+        axios.patch(`${BASE_API_URL}/api/lead/update/${clickedRow._id}`, updatedValues, {
             headers: {
                 authorization: `${accessToken}`
             },
@@ -91,21 +107,16 @@ function Example() {
             ErrorHandling('SuccessLeadUpdated')
             dispatch(setShowConfirmUpdateModal(false))
             dispatch(setShowEditModal(false))
-
-            dispatch(fetchLeadsStart())
-            axios.post(`${BASE_API_URL}/api/lead/get`, {
-                pageNumber,
-                offset,
-                searchFilters: {}
-            }, {
-                headers: {
-                    authorization: `${accessToken}`
-                },
+            if (reRender !== undefined) {
+                console.log('rerender');
+                setReRender(!reRender)
+            } else if (newLeadReRender !== undefined) {
+                console.log('newleadrerender');
+                setNewLeadReRender(!newLeadReRender)
+            } else if (followLeadReRender !== undefined) {
+                console.log('followleadrerender');
+                setFollowLeadReRender(!followLeadReRender)
             }
-            ).then((response) => {
-                dispatch(setLeadsRawData(response.data))
-                dispatch(fetchLeadsSuccess(response.data.leads))
-            })
 
         }).catch(error => {
             setIsLoading(false)
@@ -209,7 +220,6 @@ function Example() {
                                 <Form.Control size='sm'
                                     name='lastContacted'
                                     type="date"
-                                    defaultValue="dd/mm/yyyy"
                                     placeholder="Enter Last Contacted"
                                     onChange={(e) => {
                                         const { name, value } = e.target;
@@ -307,7 +317,7 @@ function Example() {
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridConsultationDate">
-                                <Form.Label>Last Contacted</Form.Label>
+                                <Form.Label>Consultation Date</Form.Label>
                                 <Form.Control size='sm'
                                     name='consultationDate'
                                     type="date"
@@ -345,8 +355,8 @@ function Example() {
                         <Form.Group className="mb-3" controlId="formGridCreatedAt">
                             <Form.Label>Created:</Form.Label>
                             <span style={{ cursor: "pointer" }} >
-                                <Tooltip title={moment(createdAt).format(`MMMM Do YYYY, h:mm:ss a`)}>
-                                    <span>{" " + moment(createdAt).fromNow()}</span>
+                                <Tooltip title={moment(createdUpdatedAt.createdAt).format(`MMMM Do YYYY, h:mm:ss a`)}>
+                                    <span>{" " + moment(createdUpdatedAt.createdAt).fromNow()}</span>
                                 </Tooltip>
                             </span>
                         </Form.Group>
@@ -354,8 +364,8 @@ function Example() {
                         <Form.Group className="mb-3" controlId="formGridUpdatedAt">
                             <Form.Label>Updated:</Form.Label>
                             <span style={{ cursor: "pointer" }} >
-                                <Tooltip title={moment(updatedAt).format(`MMMM Do YYYY, h:mm:ss a`)}>
-                                    <span>{" " + moment(updatedAt).fromNow()}</span>
+                                <Tooltip title={moment(createdUpdatedAt.updatedAt).format(`MMMM Do YYYY, h:mm:ss a`)}>
+                                    <span>{" " + moment(createdUpdatedAt.updatedAt).fromNow()}</span>
                                 </Tooltip>
                             </span>
                         </Form.Group>
@@ -381,8 +391,7 @@ function Example() {
                 </Modal.Body>
             </Modal>
 
-            <Modal
-                show={showConfirmUpdateModal}
+            <Modal show={showConfirmUpdateModal}
                 onHide={() => {
                     dispatch(setShowConfirmUpdateModal(false))
                     dispatch(setShowEditModal(true))

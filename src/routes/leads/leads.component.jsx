@@ -26,6 +26,7 @@ const Leads = () => {
 
     const { isLoading, pageNumber, offset, clickedRow, leadsRawData, searchFilters } = useSelector(leadsSelector)
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [reRender, setReRender] = useState(false);
 
     useEffect(() => {
 
@@ -40,8 +41,8 @@ const Leads = () => {
             },
         }
         ).then((response) => {
-            console.log(response);
-            console.log(user);
+            // console.log(response);
+            // console.log(user);
             dispatch(setIsLoading(false))
             dispatch(setLeadsRawData(response.data))
             dispatch(fetchLeadsSuccess(response.data.leads))
@@ -53,7 +54,7 @@ const Leads = () => {
         })
 
 
-    }, [pageNumber, offset, searchFilters])
+    }, [pageNumber, offset, searchFilters, reRender])
 
 
 
@@ -66,12 +67,11 @@ const Leads = () => {
             <div className={`${isSideNavBarOpen ? 'layout-body-compressed' : 'layout-body'}`}>
                 <div className="layout-content">
 
-                    <DeleteLeadDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal} />
-
+                    <DeleteLeadDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal} reRender={reRender} setReRender={setReRender} />
                     <div style={{ marginBottom: "30px" }}>
                         <LeadFIlters />
                     </div>
-                    <ReactBootstrapTable setShowDeleteModal={setShowDeleteModal} />
+                    <ReactBootstrapTable setShowDeleteModal={setShowDeleteModal} reRender={reRender} setReRender={setReRender} />
 
                 </div>
             </div>

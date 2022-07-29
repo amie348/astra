@@ -15,7 +15,7 @@ import Alert from '@mui/material/Alert';
 
 // import { ModalProgressBar } from "../../../../../../_metronic/_partials/controls";
 
-export function DeleteLeadDialogue({ show, onHide }) {
+export function DeleteLeadDialogue({ show, onHide, reRender, setReRender, newLeadReRender, setNewLeadReRender, followLeadReRender, setFollowLeadReRender }) {
 
   const { clickedRow, pageNumber, offset, successfullyDeleted } = useSelector(leadsSelector)
   const { accessToken } = useSelector(currentUserSelector)
@@ -37,27 +37,18 @@ export function DeleteLeadDialogue({ show, onHide }) {
       },
     }
     ).then((response) => {
-      // dispatch(setLeadsSuccessFullyDeleted(true))
       ErrorHandling('SuccessLeadDeleted')
       setIsLoading(false)
       console.log('delete:', response);
-      // dispatch(fetchLeadsSuccess(response.data.leads))
       onHide();
 
-      dispatch(fetchLeadsStart())
-      axios.post('https://astra-crm.herokuapp.com/api/lead/get', {
-        pageNumber,
-        offset,
-        searchFilters: {}
-      }, {
-        headers: {
-          authorization: `${accessToken}`
-        },
+      if (reRender !== undefined) {
+        setReRender(!reRender)
+      } else if (newLeadReRender !== undefined) {
+        setNewLeadReRender(!newLeadReRender)
+      } else if (followLeadReRender !== undefined) {
+        setFollowLeadReRender(!followLeadReRender)
       }
-      ).then((response) => {
-        console.log(response);
-        dispatch(fetchLeadsSuccess(response.data.leads))
-      })
     }).catch(error => {
       // dispatch(setLeadsDeleteError(true))
       ErrorHandling('ErrorFailedToDeleteLead')

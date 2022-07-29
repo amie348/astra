@@ -26,6 +26,7 @@ const FollowUpLeads = () => {
 
     const { isLoading, pageNumber, offset, clickedRow, leadsRawData, searchFilters } = useSelector(leadsSelector)
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [followLeadReRender, setFollowLeadReRender] = useState(false)
 
     useEffect(() => {
 
@@ -33,7 +34,7 @@ const FollowUpLeads = () => {
         axios.post(`${BASE_API_URL}/api/lead/get`, {
             pageNumber,
             offset,
-            searchFilters : {...searchFilters, funnelStage: "FOLLOW UP"} 
+            searchFilters: { ...searchFilters, funnelStage: "FOLLOW UP" }
         }, {
             headers: {
                 authorization: `${accessToken}`
@@ -53,7 +54,7 @@ const FollowUpLeads = () => {
         })
 
 
-    }, [pageNumber, offset, searchFilters])
+    }, [pageNumber, offset, searchFilters, followLeadReRender])
 
 
 
@@ -66,12 +67,12 @@ const FollowUpLeads = () => {
             <div className={`${isSideNavBarOpen ? 'layout-body-compressed' : 'layout-body'}`}>
                 <div className="layout-content">
 
-                    <DeleteLeadDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal} />
+                    <DeleteLeadDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal} followLeadReRender={followLeadReRender} setFollowLeadReRender={setFollowLeadReRender} />
 
                     <div style={{ marginBottom: "30px" }}>
-                        <LeadFIlters funnelStage={"FOLLOW UP"}/>
+                        <LeadFIlters funnelStage={"FOLLOW UP"} />
                     </div>
-                    <ReactBootstrapTable setShowDeleteModal={setShowDeleteModal} funnelStage={"FOLLOW UP"}/>
+                    <ReactBootstrapTable setShowDeleteModal={setShowDeleteModal} funnelStage={"FOLLOW UP"} followLeadReRender={followLeadReRender} setFollowLeadReRender={setFollowLeadReRender} />
 
                 </div>
             </div>

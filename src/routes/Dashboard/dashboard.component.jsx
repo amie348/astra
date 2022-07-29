@@ -124,7 +124,6 @@ const Dashboard = () => {
 
     return (
         <>
-
             <div className='layout-container'>
                 <div className={`${isSideNavBarOpen ? 'layout-body-compressed' : 'layout-body'}`} >
 
@@ -146,28 +145,7 @@ const Dashboard = () => {
                                                 <h6>Total Revenue Generated</h6>
                                             </div>
                                         </div>
-                                        {/* <div className="row">
-                                            <div className="col">
-                                                <ProgressBar now={40} style={{ backgroundColor: '#df374854', height: '22px' }} />
-                                            </div>
-                                        </div> */}
                                     </div>
-
-                                    {/* <div className={`dashboard-item d-item-s px-4 py-4`}>
-                                        <div className="row align-items-center justify-content-between">
-                                            <h2 className="col-9 m-0">{`£${potentialRevenue ? potentialRevenue?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0}`}</h2>
-                                        </div>
-                                        <div className="row mt-1">
-                                            <div className="col item-text">
-                                                <h6>Potential Revenue</h6>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col">
-                                                <ProgressBar now={40} style={{ backgroundColor: '#df374854', height: '22px' }} />
-                                            </div>
-                                        </div>
-                                    </div> */}
 
                                     <div className={`dashboard-item d-item-s px-4 py-4`}>
                                         <div className="row align-items-center justify-content-between">
@@ -185,7 +163,6 @@ const Dashboard = () => {
                                             </div>
                                         </div> */}
                                     </div>
-
 
                                     <div className={`dashboard-item d-item-s px-4 py-4`}>
                                         <div className="row align-items-center justify-content-between">
@@ -223,9 +200,6 @@ const Dashboard = () => {
                                             </div> */}
                                         </div>
                                     </div>
-
-
-
                                 </div>
 
                                 <div className="row justify-content-between flex-wrap mb-4">
@@ -296,10 +270,8 @@ const Dashboard = () => {
                             </>
                         }
                     </div>
-
-                </div >
-            </div >
-
+                </div>
+            </div>
         </>
     )
 }

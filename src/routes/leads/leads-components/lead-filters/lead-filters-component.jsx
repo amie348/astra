@@ -25,13 +25,13 @@ const defaultFormFields = {
     lastName: '',
     email: '',
     phone: '',
-    lastContacted: '',
+    // lastContacted: '',
     contactType: '',
-    noOfTimesContacted: 0,
+    // noOfTimesContacted: 0,
     response: '',
     followUpDate: '',
     funnelStage: '',
-    purchasesPrice: 0,
+    // purchasesPrice: 0,
     service: '',
     platform: '',
     bestTimeToContact: '',
@@ -51,7 +51,7 @@ const ExpandMore = styled((props) => {
 }));
 
 
-export function LeadFIlters({funnelStage}) {
+export function LeadFIlters({ funnelStage }) {
 
     const { isLoading } = useSelector(leadsSelector)
     const { accessToken } = useSelector(currentUserSelector)
@@ -150,7 +150,6 @@ export function LeadFIlters({funnelStage}) {
                         </Row>
 
                         <Row className="mb-3">
-
                             <Form.Group as={Col} controlId="formGridBestTimeToContact">
                                 <Form.Label>Best Time To Contact</Form.Label>
                                 <Form.Control size='sm'
@@ -165,7 +164,7 @@ export function LeadFIlters({funnelStage}) {
                                     value={filtersValues.bestTimeToContact} />
                             </Form.Group>
 
-                            <Form.Group as={Col} controlId="formGridLastContacted">
+                            {/* <Form.Group as={Col} controlId="formGridLastContacted">
                                 <Form.Label>Last Contacted</Form.Label>
                                 <Form.Control size='sm'
                                     name='lastContacted'
@@ -177,15 +176,23 @@ export function LeadFIlters({funnelStage}) {
                                         setFiltersValues({ ...filtersValues, [name]: value })
                                     }}
                                     value={filtersValues.lastContacted} />
+                            </Form.Group> */}
+
+                            <Form.Group as={Col} controlId="formGridConsultationTime">
+                                <Form.Label>Consultation Time</Form.Label>
+                                <Form.Control size='sm'
+                                    name='consultationTime'
+                                    type="time"
+                                    placeholder="Enter Best Consultation Time"
+                                    onChange={(e) => {
+                                        const { name, value } = e.target;
+                                        setFiltersValues({ ...filtersValues, [name]: value })
+                                    }}
+                                    value={filtersValues.consultationTime} />
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridContactType">
                                 <Form.Label>Contact Type</Form.Label>
-                                {/* <Form.Control size='sm' name='contactType' type="text" placeholder="Contact Type" onChange={(e) => {
-                                    const { name, value } = e.target;
-                                    setFiltersValues({ ...filtersValues, [name]: value })
-                                }} value={filtersValues.contactType} /> */}
-
                                 <Form.Select size='sm' aria-label="Default select example"
                                     name='contactType'
                                     placeholder=""
@@ -201,81 +208,20 @@ export function LeadFIlters({funnelStage}) {
                                     <option value="PHONE AND EMAIL">PHONE AND EMAIL</option>
 
                                 </Form.Select>
-
                             </Form.Group>
                         </Row>
 
                         <Row className="mb-3">
-                            <Form.Group as={Col} controlId="formGridNoOfTimesContacted">
+                            {/* <Form.Group as={Col} controlId="formGridNoOfTimesContacted">
                                 <Form.Label>No. of times contacted</Form.Label>
                                 <Form.Control size='sm' name='noOfTimesContacted' type="number" placeholder="" onChange={(e) => {
                                     const { name, value } = e.target;
                                     setFiltersValues({ ...filtersValues, [name]: value })
                                 }} value={filtersValues.noOfTimesContacted} />
-                            </Form.Group>
-                            {
-                            funnelStage ? null 
-                            :
-                            <>
-                                <Form.Group as={Col} controlId="formGridFollowUpDate">
-                                    <Form.Label>Follow Up Date</Form.Label>
-                                    <Form.Control size='sm'
-                                        name='followUpDate'
-                                        type="date"
-                                        placeholder=""
-                                        onChange={(e) => {
-                                            const { name, value } = e.target;
-                                            setFiltersValues({ ...filtersValues, [name]: value })
-                                        }}
-                                        value={(filtersValues.funnelStage == "NEW LEAD" || filtersValues.funnelStage == "FOLLOW UP") ? filtersValues.followUpDate : null}
-                                        disable={(filtersValues.funnelStage == "NEW LEAD" || filtersValues.funnelStage == "FOLLOW UP") ? false : true}
-
-                                    />
-                                </Form.Group>
-                                
-                                <Form.Group as={Col} controlId="formGridFunnelStage">
-                                    <Form.Label>Funnel Stage</Form.Label>
-                                    {/* <Form.Control size='sm' name='funnelStage' placeholder="" onChange={(e) => {
-                                        const { name, value } = e.target;
-                                        setFiltersValues({ ...filtersValues, [name]: value })
-                                    }} value={filtersValues.funnelStage} /> */}
-                                    <Form.Select size='sm' aria-label="Default select example"
-                                        name='funnelStage'
-                                        placeholder=""
-                                        onChange={(e) => {
-                                            const { name, value } = e.target;
-                                            setFiltersValues({ ...filtersValues, [name]: value })
-                                        }}
-                                        value={filtersValues.funnelStage}
-                                    >
-                                        <option value="">Select</option>
-                                        <option value="NEW LEAD">NEW LEAD</option>
-                                        <option value="CONSULTATION BOOKED">CONSULTATION BOOKED</option>
-                                        <option value="CONSULTATION COMPLETE">CONSULTATION COMPLETE</option>
-                                        <option value="FOLLOW UP">FOLLOW UP</option>
-                                        <option value="OBJECTION">OBJECTION</option>
-                                        <option value="WAITING FOR">WAITING FOR</option>
-                                        <option value="DEAD">DEAD</option>
-                                        <option value="PURCHASED">PURCHASED</option>
-                                    </Form.Select>
-                                </Form.Group>
-                            </>
-
-                            }
-
-                        </Row>
-
-                        <Row className="mb-3">
-                            <Form.Group as={Col} controlId="formGridPurchasesPrice">
-                                <Form.Label>Purchases Price</Form.Label>
-                                <Form.Control size='sm' name='purchasesPrice' type="number" placeholder="Enter Purchases Price" onChange={(e) => {
-                                    const { name, value } = e.target;
-                                    setFiltersValues({ ...filtersValues, [name]: value })
-                                }} value={filtersValues.purchasesPrice} />
-                            </Form.Group>
+                            </Form.Group> */}
 
                             <Form.Group as={Col} controlId="formGridConsultationDate">
-                                <Form.Label>Last Contacted</Form.Label>
+                                <Form.Label>Consultation Date</Form.Label>
                                 <Form.Control size='sm'
                                     name='consultationDate'
                                     type="date"
@@ -287,18 +233,70 @@ export function LeadFIlters({funnelStage}) {
                                     value={filtersValues.consultationDate} />
                             </Form.Group>
 
-                            <Form.Group as={Col} controlId="formGridConsultationTime">
-                                <Form.Label>Consultation Time</Form.Label>
-                                <Form.Control size='sm'
-                                    name='consultationTime'
-                                    type="time"
-                                    placeholder="Enter Best Consultation Time"
-                                    onChange={(e) => {
+                            {
+                                funnelStage ? null
+                                    :
+                                    <>
+                                        <Form.Group as={Col} controlId="formGridFollowUpDate">
+                                            <Form.Label>Follow Up Date</Form.Label>
+                                            <Form.Control size='sm'
+                                                name='followUpDate'
+                                                type="date"
+                                                placeholder=""
+                                                onChange={(e) => {
+                                                    const { name, value } = e.target;
+                                                    setFiltersValues({ ...filtersValues, [name]: value })
+                                                }}
+                                                value={(filtersValues.funnelStage == "NEW LEAD" || filtersValues.funnelStage == "FOLLOW UP") ? filtersValues.followUpDate : null}
+                                                disable={(filtersValues.funnelStage == "NEW LEAD" || filtersValues.funnelStage == "FOLLOW UP") ? false : true}
+
+                                            />
+                                        </Form.Group>
+
+                                        <Form.Group as={Col} controlId="formGridFunnelStage">
+                                            <Form.Label>Funnel Stage</Form.Label>
+                                            {/* <Form.Control size='sm' name='funnelStage' placeholder="" onChange={(e) => {
                                         const { name, value } = e.target;
                                         setFiltersValues({ ...filtersValues, [name]: value })
-                                    }}
-                                    value={filtersValues.consultationTime} />
-                            </Form.Group>
+                                    }} value={filtersValues.funnelStage} /> */}
+                                            <Form.Select size='sm' aria-label="Default select example"
+                                                name='funnelStage'
+                                                placeholder=""
+                                                onChange={(e) => {
+                                                    const { name, value } = e.target;
+                                                    setFiltersValues({ ...filtersValues, [name]: value })
+                                                }}
+                                                value={filtersValues.funnelStage}
+                                            >
+                                                <option value="">Select</option>
+                                                <option value="NEW LEAD">NEW LEAD</option>
+                                                <option value="CONSULTATION BOOKED">CONSULTATION BOOKED</option>
+                                                <option value="CONSULTATION COMPLETE">CONSULTATION COMPLETE</option>
+                                                <option value="FOLLOW UP">FOLLOW UP</option>
+                                                <option value="OBJECTION">OBJECTION</option>
+                                                <option value="WAITING FOR">WAITING FOR</option>
+                                                <option value="DEAD">DEAD</option>
+                                                <option value="PURCHASED">PURCHASED</option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                    </>
+
+                            }
+
+                        </Row>
+
+                        <Row className="mb-3">
+                            {/* <Form.Group as={Col} controlId="formGridPurchasesPrice">
+                                <Form.Label>Purchases Price</Form.Label>
+                                <Form.Control size='sm' name='purchasesPrice' type="number" placeholder="Enter Purchases Price" onChange={(e) => {
+                                    const { name, value } = e.target;
+                                    setFiltersValues({ ...filtersValues, [name]: value })
+                                }} value={filtersValues.purchasesPrice} />
+                            </Form.Group> */}
+
+
+
+
                         </Row>
 
                         <Button variant="danger" type="button" disabled={isLoading} style={{ minWidth: '70px' }} onClick={() => {
@@ -315,13 +313,13 @@ export function LeadFIlters({funnelStage}) {
                                 lastName: '',
                                 email: '',
                                 phone: '',
-                                lastContacted: '',
+                                // lastContacted: '',
                                 contactType: '',
-                                noOfTimesContacted: 0,
+                                // noOfTimesContacted: 0,
                                 response: '',
                                 followUpDate: '',
                                 funnelStage: '',
-                                purchasesPrice: 0,
+                                // purchasesPrice: 0,
                                 service: '',
                                 platform: '',
                                 bestTimeToContact: '',

@@ -36,6 +36,7 @@ import moment from "moment";
 
 import { useDispatch } from 'react-redux';
 import { setLeadsPageNumber, setLeadsOffset, setClickedRow, setShowEditModal } from '../../../../store/leads/leads.action';
+
 import Example from '../edit-lead-modal/edit-lead-modal.component';
 
 // import Pagination from 'react-bootstrap/Pagination'
@@ -80,9 +81,7 @@ const paginationTheme = createTheme({
     },
 });
 
-function ReactBootstrapTable({ setShowDeleteModal, funnelStage }) {
-
-
+function ReactBootstrapTable({ setShowDeleteModal, funnelStage, reRender, setReRender, newLeadReRender, setNewLeadReRender, followLeadReRender, setFollowLeadReRender }) {
     const classes = useStyles()
     const { leadsData, isLoading, leadsRawData, pageNumber, offset } = useSelector(leadsSelector)
     const [expanded, setExpanded] = useState(true);
@@ -339,7 +338,7 @@ function ReactBootstrapTable({ setShowDeleteModal, funnelStage }) {
 
     return (
         <div className="table-container">
-            <Example />
+            <Example reRender={reRender} setReRender={setReRender} newLeadReRender={newLeadReRender} setNewLeadReRender={setNewLeadReRender} followLeadReRender={followLeadReRender} setFollowLeadReRender={setFollowLeadReRender} />
             <Card sx={{ maxWidth: "100%" }} >
                 <CardHeader
                     action={
@@ -352,7 +351,7 @@ function ReactBootstrapTable({ setShowDeleteModal, funnelStage }) {
                             <ExpandMoreIcon />
                         </ExpandMore>
                     }
-                    title={ funnelStage ? funnelStage : "All Leads"}
+                    title={funnelStage ? funnelStage : "All Leads"}
                 >
 
                 </CardHeader>
@@ -378,7 +377,6 @@ function ReactBootstrapTable({ setShowDeleteModal, funnelStage }) {
                                         columns={columns} />
 
                                     <Stack spacing={2}>
-
                                         <div style={{ display: "flex", justifyContent: "space-between" }} >
 
 
@@ -418,7 +416,6 @@ function ReactBootstrapTable({ setShowDeleteModal, funnelStage }) {
 
 
                                         </div>
-
                                     </Stack>
                                 </>
                                 :
