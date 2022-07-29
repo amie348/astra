@@ -8,7 +8,9 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 import IconButton from '@mui/material/IconButton';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -26,6 +28,7 @@ import { useSelector } from 'react-redux'
 import { isSideNavBarOpenSelector } from '../../../../store/dashboard/dashboard.selector'
 import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { Tooltip } from '@mui/material';
 
 const CreateUsersForm = () => {
     const navigate = useNavigate()
@@ -74,9 +77,9 @@ const CreateUsersForm = () => {
             }
             ).then((response) => {
 
-                const { name, email, companyName, dp, phone, zapierWebhook, notionUrl, landingPage, addReportingUrl } = response.data.data
+                const { name, email, companyName, dp, phone, zapierWebhook, notionUrl, addReportingUrl } = response.data.data
                 setFormValues({ name, email, companyName, dp, phone, zapierWebhook, notionUrl, addReportingUrl })
-                setLandingPage(landingPage)
+                setLandingPage(`${BASE_API_URL}/api/lead/add/${id}`)
                 setId(id)
             }).catch(error => {
 
@@ -162,6 +165,9 @@ const CreateUsersForm = () => {
         })
     }
 
+    const copyLandingPage = () => {
+        navigator.clipboard.writeText(landingPage);
+    }
 
     const createUser = () => {
 
@@ -374,14 +380,27 @@ const CreateUsersForm = () => {
                                         {isUpdate ? <Row className="mb-3">
                                             <Form.Group as={Col} className='input-field-container' controlId="formLandingPage">
                                                 <span>Landing Page</span>
+
+                                                <div >
+
+                                                    <IconButton onClick={copyLandingPage}>
+                                                        <Tooltip title="copy landing page url" >
+                                                            <ContentCopyIcon>
+
+                                                            </ContentCopyIcon>
+                                                        </Tooltip>
+                                                    </IconButton>
+
+                                                </div>
                                                 <Form.Control className='cu-input-field' size='md'
                                                     name='landingPage'
                                                     type="text"
-                                                    placeholder="Enter Landing Page Link"
 
                                                     value={landingPage}
                                                     disabled={true} />
-                                            </Form.Group>
+                                                </Form.Group>
+
+
                                         </Row> : <></>}
 
                                         <Button variant="danger" type="button"

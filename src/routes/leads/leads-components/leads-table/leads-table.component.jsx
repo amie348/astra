@@ -286,7 +286,11 @@ function ReactBootstrapTable({ setShowDeleteModal, funnelStage, reRender, setReR
             headerStyle: (colum, colIndex) => {
                 return { width: '10%', textAlign: 'center' };
             },
-            formatter: (cell) => (
+            formatter: (cell) => {
+                
+                console.log(moment(cell).isAfter(moment().format(), `day`))
+
+                return (
                 <span style={{
                     textAlign: "center",
                     cursor: "pointer",
@@ -297,7 +301,7 @@ function ReactBootstrapTable({ setShowDeleteModal, funnelStage, reRender, setReR
                 }} >
                     {cell ?
                         <Tooltip title={moment(cell).format(`MMMM Do YYYY`)}>
-                            <span>{" " + moment(cell).fromNow()}</span>
+                            <span>{" " + moment(cell).format(`MMM Do YY`)===moment().format(`MMM Do YY`) ? moment(cell).fromNow() : `Today`}</span>
                         </Tooltip>
                         :
                         "-"
@@ -306,7 +310,7 @@ function ReactBootstrapTable({ setShowDeleteModal, funnelStage, reRender, setReR
                 </span>
 
 
-            )
+            )}
         }, {
             dataField: 'actions',
             text: 'Actions',

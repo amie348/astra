@@ -26,7 +26,7 @@ const SideNavBar = () => {
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
     const { user } = useSelector(currentUserSelector)
 
-    const { role, notionUrl } = user
+    const { role, notionUrl, adReportingUrl } = user
 
 
     const openNotes = () => {
@@ -63,17 +63,6 @@ const SideNavBar = () => {
                             <div className="item-icon"> <LeaderboardIcon /> </div>
                             <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>All Leads</div>
                         </NavLink>
-
-                        <NavLink className="item" activeClassName='active dg-danger' to='/ad-reporting'>
-                            <div className="item-icon"> <SummarizeIcon /> </div>
-                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Ad Reporting</div>
-                        </NavLink>
-
-                        <div className="item" activeClassName='active dg-danger' onClick={openNotes} >
-                            <div className="item-icon"> <NoteAltIcon /> </div>
-                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Practice Portal</div>
-                        </div>
-
                         {
                             role == 'SUPERADMIN' ?
                                 <NavLink className="item" activeClassName='active dg-danger' to='/users'>
@@ -83,6 +72,22 @@ const SideNavBar = () => {
 
                                 ''
                         }
+                        
+                        {adReportingUrl ? 
+                            <NavLink className="item" activeClassName='active dg-danger' to='/ad-reporting'>
+                            <div className="item-icon"> <SummarizeIcon /> </div>
+                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Ad Reporting</div>
+                            </NavLink>
+                            : 
+                            null
+                        }
+                        
+
+                        <div className="item" activeClassName='active dg-danger' onClick={openNotes} >
+                            <div className="item-icon"> <NoteAltIcon /> </div>
+                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Practice Portal</div>
+                        </div>
+
                     </div>
                 </div>
 
