@@ -209,11 +209,11 @@ function UsersTable({ setShowEditModal, setShowDeleteModal }) {
                 cell ? cell :
                     <div style={{ display: "flex", justifyContent: "center" }}>
 
-                        <Tooltip title="Delete User">
+                        {/* <Tooltip title="Delete User">
                             <span onClick={() => { deleteItem(row) }}>
                                 <DeleteIcon fontSize='small' className={classes.root} />
                             </span>
-                        </Tooltip>
+                        </Tooltip> */}
 
                         <Tooltip title="Edit User">
                             <span onClick={() => { editItem(row) }} >

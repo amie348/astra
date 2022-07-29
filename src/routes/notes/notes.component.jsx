@@ -5,8 +5,9 @@ import { currentUserSelector } from '../../store/user/user.selectors';
 const Notes = () => {
     
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
-    const {adReportingUrl} = useSelector(currentUserSelector)
+    const {user} = useSelector(currentUserSelector)
 
+    const {addReportingUrl} = user
     
     return (
         <div className="layout-container">
@@ -14,8 +15,8 @@ const Notes = () => {
                 <div className="layout-content">
                     <h1>Add Reportings</h1>
 
-                    <div>
-                        <iframe src={adReportingUrl} width={`${isSideNavBarOpen ? 1000 : 1120}`} height={600}>
+                    <div style={{height: "900px", width:"98%"}}>
+                        <iframe src={addReportingUrl} width={`${isSideNavBarOpen ? 1000 : 1120}`} height={550}>
                         </iframe>
                     </div>
                 </div>

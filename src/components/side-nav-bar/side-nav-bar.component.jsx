@@ -26,7 +26,7 @@ const SideNavBar = () => {
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
     const { user } = useSelector(currentUserSelector)
 
-    const { role, notionUrl, adReportingUrl } = user
+    const { role, notionUrl, addReportingUrl } = user
 
 
     const openNotes = () => {
@@ -73,7 +73,7 @@ const SideNavBar = () => {
                                 ''
                         }
 
-                        {adReportingUrl ?
+                        {addReportingUrl ?
                             <NavLink className="item" activeClassName='active dg-danger' to='/ad-reporting'>
                                 <div className="item-icon"> <SummarizeIcon /> </div>
                                 <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Ad Reporting</div>
