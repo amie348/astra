@@ -36,6 +36,15 @@ const UserProfile = () => {
     const isSideNavBarOpen = useSelector(isSideNavBarOpenSelector)
     const { accessToken } = useSelector(currentUserSelector)
 
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        const pageDoneLoading = () => {
+            setTimeout(() => { setIsLoading(false) }, 1000)
+        }
+        pageDoneLoading()
+    }, [])
+
     return (
         <>
             <div className="layout-container">
@@ -52,70 +61,79 @@ const UserProfile = () => {
                             <Collapse in={true} unmountOnExit>
                                 <hr style={{ margin: '0px' }} />
                                 <CardContent sx={{ display: 'flex', justifyContent: 'center' }} >
+                                    {isLoading ?
+                                        <div className="SpinnerOverlay">
+                                            <div className="spinner-border text-danger mt-3" role="status">
+                                                <span className="sr-only"></span>
+                                            </div>
+                                        </div> :
+                                        <Form style={{ width: '500px' }}>
+                                            <Row className='mb-4'>
+                                                {formValues.dp ?
+                                                    <img src={formValues.dp} alt="" style={{ width: '150px', height: '150px', border: '2px solid gray', borderRadius: '80px', objectFit: 'cover', padding: '2px', margin: 'auto' }} />
+                                                    :
+                                                    <img src={profileAvatar} style={{ width: '150px', height: '1   50px', border: 'none', borderRadius: '80px', objectFit: 'contain', padding: '0px', margin: 'auto' }} />}
 
-                                    <Form style={{ width: '500px' }}>
-                                        <Row className='mb-4'>
-                                            {formValues.dp ?
-                                                <img src={formValues.dp} alt="" style={{ width: '150px', height: '150px', border: '2px solid gray', borderRadius: '80px', objectFit: 'cover', padding: '2px', margin: 'auto' }} />
-                                                :
-                                                <img src={profileAvatar} style={{ width: '150px', height: '1   50px', border: 'none', borderRadius: '80px', objectFit: 'contain', padding: '0px', margin: 'auto' }} />}
+                                                <p style={{ textAlign: 'center', marginTop: '3px' }}>Profile Picture</p>
+                                            </Row>
 
-                                            <p style={{ textAlign: 'center', marginTop: '3px' }}>Profile Picture</p>
-                                        </Row>
+                                            <Row className="mb-3">
+                                                <Form.Group as={Col} className='input-field-container' controlId="formGridName">
+                                                    <span className='cu-input-label' >Name</span>
 
-                                        <Row className="mb-3">
-                                            <Form.Group as={Col} className='input-field-container' controlId="formGridName">
-                                                <span className='cu-input-label' >Name</span>
+                                                    <Form.Control disabled={true} className='cu-input-field' size='md' name='name' type="text" placeholder="Name" value={formValues.name} />
+                                                </Form.Group>
+                                            </Row>
 
-                                                <Form.Control disabled={true} className='cu-input-field' size='md' name='name' type="text" placeholder="Name" value={formValues.name} />
-                                            </Form.Group>
-                                        </Row>
+                                            <Row className="mb-3">
+                                                <Form.Group as={Col} className='input-field-container' controlId="formGridEmail">
+                                                    <span className='cu-input-label'>Email</span>
 
-                                        <Row className="mb-3">
-                                            <Form.Group as={Col} className='input-field-container' controlId="formGridEmail">
-                                                <span className='cu-input-label'>Email</span>
+                                                    <Form.Control disabled={true} className='cu-input-field' size='md' name='email' type="email" placeholder="Email" value={formValues.email} />
+                                                </Form.Group>
+                                            </Row>
 
-                                                <Form.Control disabled={true} className='cu-input-field' size='md' name='email' type="email" placeholder="Email" value={formValues.email} />
-                                            </Form.Group>
-                                        </Row>
+                                            <Row className="mb-3">
+                                                <Form.Group as={Col} className='input-field-container' controlId="formGridPhone">
+                                                    <span>Phone</span>
+                                                    <Form.Control disabled={true} className='cu-input-field' size='md' name='phone' type="text" placeholder="Phone No" value={formValues.phone} />
+                                                </Form.Group>
+                                            </Row>
 
-                                        <Row className="mb-3">
-                                            <Form.Group as={Col} className='input-field-container' controlId="formGridPhone">
-                                                <span>Phone</span>
-                                                <Form.Control disabled={true} className='cu-input-field' size='md' name='phone' type="text" placeholder="Phone No" value={formValues.phone} />
-                                            </Form.Group>
-                                        </Row>
+                                            <Row className="mb-3">
+                                                <Form.Group as={Col} className='input-field-container' controlId="formGridCompanyName">
+                                                    <span className='cu-input-label'>Company Name</span>
 
-                                        <Row className="mb-3">
-                                            <Form.Group as={Col} className='input-field-container' controlId="formGridCompanyName">
-                                                <span className='cu-input-label'>Company Name</span>
+                                                    <Form.Control disabled={true} className='cu-input-field' size='md' name='companyName' type="text" placeholder="Company Name" value={formValues.companyName} />
+                                                </Form.Group>
+                                            </Row>
 
-                                                <Form.Control disabled={true} className='cu-input-field' size='md' name='companyName' type="text" placeholder="Company Name" value={formValues.companyName} />
-                                            </Form.Group>
-                                        </Row>
+                                            <Row className="mb-3">
+                                                <Form.Group as={Col} className='input-field-container' controlId="formGridNotionUrl">
+                                                    <span>Notion Url</span>
+                                                    <Form.Control disabled={true} className='cu-input-field' size='md'
+                                                        name='notionUrl'
+                                                        type="text"
+                                                        placeholder="Notion URL"
+                                                        value={formValues.notionUrl} />
+                                                </Form.Group>
+                                            </Row>
 
-                                        <Row className="mb-3">
-                                            <Form.Group as={Col} className='input-field-container' controlId="formGridNotionUrl">
-                                                <span>Notion Url</span>
-                                                <Form.Control disabled={true} className='cu-input-field' size='md'
-                                                    name='notionUrl'
-                                                    type="text"
-                                                    placeholder="Notion URL"
-                                                    value={formValues.notionUrl} />
-                                            </Form.Group>
-                                        </Row>
+                                            <Row className="mb-3">
+                                                <Form.Group as={Col} className='input-field-container' controlId="formGridZapierWebHook">
+                                                    <span>Zapier Web Hook</span>
+                                                    <Form.Control disabled={true} className='cu-input-field' size='md'
+                                                        name='zapierWebhook'
+                                                        type="text"
+                                                        placeholder="Zapier Web Hook"
+                                                        value={formValues.zapierWebhook} />
+                                                </Form.Group>
+                                            </Row>
+                                        </Form>
 
-                                        <Row className="mb-3">
-                                            <Form.Group as={Col} className='input-field-container' controlId="formGridZapierWebHook">
-                                                <span>Zapier Web Hook</span>
-                                                <Form.Control disabled={true} className='cu-input-field' size='md'
-                                                    name='zapierWebhook'
-                                                    type="text"
-                                                    placeholder="Zapier Web Hook"
-                                                    value={formValues.zapierWebhook} />
-                                            </Form.Group>
-                                        </Row>
-                                    </Form>
+                                    }
+
+
 
                                 </CardContent>
 

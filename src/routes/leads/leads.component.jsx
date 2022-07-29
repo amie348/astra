@@ -69,7 +69,7 @@ const Leads = () => {
 
                     <DeleteLeadDialogue show={showDeleteModal} onHide={handleChangeShowDeleteModal} reRender={reRender} setReRender={setReRender} />
                     <div style={{ marginBottom: "30px" }}>
-                        <LeadFIlters />
+                        <LeadFIlters funnelStage={"ALL LEADS"} />
                     </div>
                     <ReactBootstrapTable setShowDeleteModal={setShowDeleteModal} reRender={reRender} setReRender={setReRender} />
 

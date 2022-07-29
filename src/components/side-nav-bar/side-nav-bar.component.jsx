@@ -31,7 +31,7 @@ const SideNavBar = () => {
 
     const openNotes = () => {
 
-        if(notionUrl){
+        if (notionUrl) {
             const newWindow = window.open(notionUrl, '_blank', 'noopener,noreferrer')
             if (newWindow) newWindow.opener = null
         }
@@ -72,16 +72,16 @@ const SideNavBar = () => {
 
                                 ''
                         }
-                        
-                        {adReportingUrl ? 
+
+                        {adReportingUrl ?
                             <NavLink className="item" activeClassName='active dg-danger' to='/ad-reporting'>
-                            <div className="item-icon"> <SummarizeIcon /> </div>
-                            <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Ad Reporting</div>
+                                <div className="item-icon"> <SummarizeIcon /> </div>
+                                <div className={`${isSideNavBarOpen ? 'item-name' : 'no-item-name'}`}>Ad Reporting</div>
                             </NavLink>
-                            : 
+                            :
                             null
                         }
-                        
+
 
                         <div className="item" activeClassName='active dg-danger' onClick={openNotes} >
                             <div className="item-icon"> <NoteAltIcon /> </div>
@@ -105,11 +105,11 @@ const SideNavBar = () => {
 
                     <div className="sideNavBar-close" onClick={() => { dispatch(setIsSideNavBarOpen(!isSideNavBarOpen)) }}>
 
-                    {isSideNavBarOpen ? <ArrowBackIosNewIcon sx={{ fontSize: '15px', marginRight: '30px', color: 'gray' }} /> : <ArrowForwardIosIcon sx={{ fontSize: '15px', margin: 'auto', color: 'gray' }} />}
+                        {isSideNavBarOpen ? <ArrowBackIosNewIcon sx={{ fontSize: '15px', marginRight: '30px', color: 'gray' }} /> : <ArrowForwardIosIcon sx={{ fontSize: '15px', margin: 'auto', color: 'gray' }} />}
 
                     </div>
                 </div>
-                
+
             </div>
         </>
     )

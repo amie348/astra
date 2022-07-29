@@ -69,6 +69,7 @@ const CreateUsersForm = () => {
         const id = window.location.href.split('/')[4]
 
         if (id) {
+            setIsLoading(true)
             setIsUpdate(true)
             axios.get(`${BASE_API_URL}/api/user/${id}`, {
                 headers: {
@@ -81,10 +82,10 @@ const CreateUsersForm = () => {
                 setFormValues({ name, email, companyName, dp, phone, zapierWebhook, notionUrl, addReportingUrl })
                 setLandingPage(`${BASE_API_URL}/api/lead/add/${id}`)
                 setId(id)
+                setIsLoading(false)
             }).catch(error => {
-
                 ErrorHandling(error)
-
+                setIsLoading(false)
             })
         }
     }, [])
@@ -238,182 +239,191 @@ const CreateUsersForm = () => {
                             <Collapse in={true} unmountOnExit>
                                 <hr style={{ margin: '0px' }} />
                                 <CardContent sx={{ display: 'flex', justifyContent: 'center' }} >
+                                    {isLoading ?
+                                        <div className="SpinnerOverlay">
+                                            <div className="spinner-border text-danger mt-3" role="status">
+                                                <span className="sr-only"></span>
+                                            </div>
+                                        </div> :
+                                        <Form style={{ width: '500px' }}>
+                                            <Row className='mb-4' >
+                                                {isUpdate ? formValues.dp ?
 
-                                    <Form style={{ width: '500px' }}>
-                                        <Row className='mb-4' >
-                                            {isUpdate ? formValues.dp ?
+                                                    <img src={`${formValues.dp}`} alt="" style={{ width: '150px', height: '150px', border: '2px solid gray', borderRadius: '80px', objectFit: 'cover', padding: '2px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />
 
-                                                <img src={`${formValues.dp}`} alt="" style={{ width: '150px', height: '150px', border: '2px solid gray', borderRadius: '80px', objectFit: 'cover', padding: '2px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />
-
-                                                :
-
-                                                <img src={profileAvatar} style={{ width: '150px', height: '1   50px', border: 'none', borderRadius: '80px', objectFit: 'contain', padding: '0px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' /> :
-
-                                                profileImage ?
-                                                    <img src={`${URL.createObjectURL(profileImage)}`} alt="" style={{ width: '150px', height: '150px', border: '2px solid gray', borderRadius: '80px', objectFit: 'cover', padding: '2px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />
                                                     :
-                                                    <img src={profileAvatar} style={{ width: '150px', height: '1   50px', border: 'none', borderRadius: '80px', objectFit: 'contain', padding: '0px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />}
 
-                                            <input type='file' id='file' ref={inputFile} onChange={profilePictureOnChange} style={{ display: 'none' }} />
+                                                    <img src={profileAvatar} style={{ width: '150px', height: '1   50px', border: 'none', borderRadius: '80px', objectFit: 'contain', padding: '0px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' /> :
 
-                                            <p style={{ textAlign: 'center', marginTop: '3px' }}>Upload Profile Picture</p>
-                                        </Row>
+                                                    profileImage ?
+                                                        <img src={`${URL.createObjectURL(profileImage)}`} alt="" style={{ width: '150px', height: '150px', border: '2px solid gray', borderRadius: '80px', objectFit: 'cover', padding: '2px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />
+                                                        :
+                                                        <img src={profileAvatar} style={{ width: '150px', height: '1   50px', border: 'none', borderRadius: '80px', objectFit: 'contain', padding: '0px', margin: 'auto' }} onClick={() => { inputFile.current.click() }} className='profilePicture' />}
 
-                                        <Row className="mb-3">
-                                            <Form.Group as={Col} className='input-field-container' controlId="formGridName">
-                                                <span className='cu-input-label' >Name<span style={{ color: 'red' }}> *</span></span>
+                                                <input type='file' id='file' ref={inputFile} onChange={profilePictureOnChange} style={{ display: 'none' }} />
 
-                                                {showNameSpinner ? <div class="spinner-border spinner-border-sm text-danger" role="status">
-                                                    <span class="sr-only"></span>
-                                                </div> : ''
-                                                }
+                                                <p style={{ textAlign: 'center', marginTop: '3px' }}>Upload Profile Picture</p>
+                                            </Row>
 
-                                                <Form.Control className='cu-input-field' size='md' name='name' type="text" placeholder="Name" onChange={(e) => {
-                                                    const { name, value } = e.target;
-                                                    setFormValues({ ...formValues, [name]: value })
-                                                }} value={formValues.name} onBlur={(e) => { checkAvailability(e) }} />
+                                            <Row className="mb-3">
+                                                <Form.Group as={Col} className='input-field-container' controlId="formGridName">
+                                                    <span className='cu-input-label' >Name<span style={{ color: 'red' }}> *</span></span>
 
+                                                    {showNameSpinner ? <div class="spinner-border spinner-border-sm text-danger" role="status">
+                                                        <span class="sr-only"></span>
+                                                    </div> : ''
+                                                    }
 
-                                            </Form.Group>
-                                            <span className={`${isValidName ? 'field-subtext-success' : 'field-subtext-error'} ${showNameSpinner ? 'field-subtext-adjust' : ''} `}>
-                                                {isValidName === '' ? '' : isValidName ? 'Name Available' : 'Name already selected'}
-                                            </span>
-                                        </Row>
-
-                                        <Row className="mb-3">
-                                            <Form.Group as={Col} className='input-field-container' controlId="formGridEmail">
-                                                <span className='cu-input-label'>Email<span style={{ color: 'red' }}> *</span></span>
-
-                                                {showEmailSpinner ? <div class="spinner-border spinner-border-sm text-danger" role="status">
-                                                    <span class="sr-only"></span>
-                                                </div> : ''
-                                                }
-
-                                                <Form.Control className='cu-input-field' size='md' name='email' type="email" placeholder="Email" onChange={(e) => {
-                                                    const { name, value } = e.target;
-                                                    setFormValues({ ...formValues, [name]: value })
-                                                }} value={formValues.email} onBlur={(e) => { checkAvailability(e) }} />
-
-
-                                            </Form.Group>
-                                            <span className={`${isValidEmail ? 'field-subtext-success' : 'field-subtext-error'} ${showEmailSpinner ? 'field-subtext-adjust' : ''} `}>
-                                                {isValidEmail === '' ? '' : isValidEmail ? 'Email Available' : 'Email already selected'}
-                                            </span>
-                                        </Row>
-
-                                        <Row className="mb-3">
-                                            <Form.Group as={Col} className='input-field-container' controlId="formGridPhone">
-                                                <span>Phone<span style={{ color: 'red' }}> *</span></span>
-                                                <Form.Control className='cu-input-field' size='md' name='phone' type="text" placeholder="Enter Phone No" onChange={(e) => {
-                                                    const { name, value } = e.target;
-                                                    setFormValues({ ...formValues, [name]: value })
-                                                }} value={formValues.phone} />
-                                            </Form.Group>
-                                        </Row>
-
-                                        <Row className="mb-3">
-                                            <Form.Group as={Col} className='input-field-container' controlId="formGridCompanyName">
-                                                <span className='cu-input-label'>Company Name<span style={{ color: 'red' }}> *</span></span>
-
-                                                {showCompanyNameSpinner ? <div class="spinner-border spinner-border-sm text-danger" role="status">
-                                                    <span class="sr-only"></span>
-                                                </div> : ''
-                                                }
-
-                                                <Form.Control className='cu-input-field' size='md' name='companyName' type="text" placeholder="Enter Company Name" onChange={(e) => {
-                                                    const { name, value } = e.target;
-                                                    setFormValues({ ...formValues, [name]: value })
-                                                }} value={formValues.companyName} onBlur={(e) => { checkAvailability(e) }} />
-
-
-                                            </Form.Group>
-                                            <span className={`${isValidCompanyName ? 'field-subtext-success' : 'field-subtext-error'} ${showCompanyNameSpinner ? 'field-subtext-adjust' : ''} `}>
-                                                {isValidCompanyName === '' ? '' : isValidCompanyName ? 'Company Name Available' : 'Company Name already selected'}
-                                            </span>
-                                        </Row>
-
-                                        <Row className="mb-3">
-                                            <Form.Group as={Col} className='input-field-container' controlId="formGridNotionUrl">
-                                                <span>Notion Url</span>
-                                                <Form.Control className='cu-input-field' size='md'
-                                                    name='notionUrl'
-                                                    type="text"
-                                                    placeholder="Enter Notion URL"
-                                                    onChange={(e) => {
+                                                    <Form.Control className='cu-input-field' size='md' name='name' type="text" placeholder="Name" onChange={(e) => {
                                                         const { name, value } = e.target;
                                                         setFormValues({ ...formValues, [name]: value })
-                                                    }}
-                                                    value={formValues.notionUrl} />
-                                            </Form.Group>
-                                        </Row>
+                                                    }} value={formValues.name} onBlur={(e) => { checkAvailability(e) }} />
 
-                                        <Row className="mb-3">
-                                            <Form.Group as={Col} className='input-field-container' controlId="formGridZapierWebHook">
-                                                <span>Zapier Web Hook<span style={{ color: 'red' }}> *</span></span>
-                                                <Form.Control className='cu-input-field' size='md'
-                                                    name='zapierWebhook'
-                                                    type="text"
-                                                    placeholder="Enter Zapier Web Hook"
-                                                    onChange={(e) => {
+
+                                                </Form.Group>
+                                                <span className={`${isValidName ? 'field-subtext-success' : 'field-subtext-error'} ${showNameSpinner ? 'field-subtext-adjust' : ''} `}>
+                                                    {isValidName === '' ? '' : isValidName ? 'Name Available' : 'Name already selected'}
+                                                </span>
+                                            </Row>
+
+                                            <Row className="mb-3">
+                                                <Form.Group as={Col} className='input-field-container' controlId="formGridEmail">
+                                                    <span className='cu-input-label'>Email<span style={{ color: 'red' }}> *</span></span>
+
+                                                    {showEmailSpinner ? <div class="spinner-border spinner-border-sm text-danger" role="status">
+                                                        <span class="sr-only"></span>
+                                                    </div> : ''
+                                                    }
+
+                                                    <Form.Control className='cu-input-field' size='md' name='email' type="email" placeholder="Email" onChange={(e) => {
                                                         const { name, value } = e.target;
                                                         setFormValues({ ...formValues, [name]: value })
-                                                    }}
-                                                    value={formValues.zapierWebhook} />
-                                            </Form.Group>
-                                        </Row>
+                                                    }} value={formValues.email} onBlur={(e) => { checkAvailability(e) }} />
 
-                                        <Row className="mb-3">
-                                            <Form.Group as={Col} className='input-field-container' controlId="formGridAddReportingUrl">
-                                                <span>Add Reporting Url</span>
-                                                <Form.Control className='cu-input-field' size='md'
-                                                    name='addReportingUrl'
-                                                    type="text"
-                                                    placeholder="Enter Reporting Url"
-                                                    onChange={(e) => {
+
+                                                </Form.Group>
+                                                <span className={`${isValidEmail ? 'field-subtext-success' : 'field-subtext-error'} ${showEmailSpinner ? 'field-subtext-adjust' : ''} `}>
+                                                    {isValidEmail === '' ? '' : isValidEmail ? 'Email Available' : 'Email already selected'}
+                                                </span>
+                                            </Row>
+
+                                            <Row className="mb-3">
+                                                <Form.Group as={Col} className='input-field-container' controlId="formGridPhone">
+                                                    <span>Phone<span style={{ color: 'red' }}> *</span></span>
+                                                    <Form.Control className='cu-input-field' size='md' name='phone' type="text" placeholder="Enter Phone No" onChange={(e) => {
                                                         const { name, value } = e.target;
                                                         setFormValues({ ...formValues, [name]: value })
-                                                    }}
-                                                    value={formValues.addReportingUrl} />
-                                            </Form.Group>
-                                        </Row>
+                                                    }} value={formValues.phone} />
+                                                </Form.Group>
+                                            </Row>
 
-                                        {isUpdate ? <Row className="mb-3">
-                                            <Form.Group as={Col} className='input-field-container' controlId="formLandingPage">
-                                                <span>Landing Page</span>
+                                            <Row className="mb-3">
+                                                <Form.Group as={Col} className='input-field-container' controlId="formGridCompanyName">
+                                                    <span className='cu-input-label'>Company Name<span style={{ color: 'red' }}> *</span></span>
 
-                                                <div >
+                                                    {showCompanyNameSpinner ? <div class="spinner-border spinner-border-sm text-danger" role="status">
+                                                        <span class="sr-only"></span>
+                                                    </div> : ''
+                                                    }
 
-                                                    <IconButton onClick={copyLandingPage}>
-                                                        <Tooltip title="copy landing page url" >
-                                                            <ContentCopyIcon>
+                                                    <Form.Control className='cu-input-field' size='md' name='companyName' type="text" placeholder="Enter Company Name" onChange={(e) => {
+                                                        const { name, value } = e.target;
+                                                        setFormValues({ ...formValues, [name]: value })
+                                                    }} value={formValues.companyName} onBlur={(e) => { checkAvailability(e) }} />
 
-                                                            </ContentCopyIcon>
-                                                        </Tooltip>
-                                                    </IconButton>
 
-                                                </div>
-                                                <Form.Control className='cu-input-field' size='md'
-                                                    name='landingPage'
-                                                    type="text"
+                                                </Form.Group>
+                                                <span className={`${isValidCompanyName ? 'field-subtext-success' : 'field-subtext-error'} ${showCompanyNameSpinner ? 'field-subtext-adjust' : ''} `}>
+                                                    {isValidCompanyName === '' ? '' : isValidCompanyName ? 'Company Name Available' : 'Company Name already selected'}
+                                                </span>
+                                            </Row>
 
-                                                    value={landingPage}
-                                                    disabled={true} />
+                                            <Row className="mb-3">
+                                                <Form.Group as={Col} className='input-field-container' controlId="formGridNotionUrl">
+                                                    <span>Notion Url</span>
+                                                    <Form.Control className='cu-input-field' size='md'
+                                                        name='notionUrl'
+                                                        type="text"
+                                                        placeholder="Enter Notion URL"
+                                                        onChange={(e) => {
+                                                            const { name, value } = e.target;
+                                                            setFormValues({ ...formValues, [name]: value })
+                                                        }}
+                                                        value={formValues.notionUrl} />
+                                                </Form.Group>
+                                            </Row>
+
+                                            <Row className="mb-3">
+                                                <Form.Group as={Col} className='input-field-container' controlId="formGridZapierWebHook">
+                                                    <span>Zapier Web Hook<span style={{ color: 'red' }}> *</span></span>
+                                                    <Form.Control className='cu-input-field' size='md'
+                                                        name='zapierWebhook'
+                                                        type="text"
+                                                        placeholder="Enter Zapier Web Hook"
+                                                        onChange={(e) => {
+                                                            const { name, value } = e.target;
+                                                            setFormValues({ ...formValues, [name]: value })
+                                                        }}
+                                                        value={formValues.zapierWebhook} />
+                                                </Form.Group>
+                                            </Row>
+
+                                            <Row className="mb-3">
+                                                <Form.Group as={Col} className='input-field-container' controlId="formGridAddReportingUrl">
+                                                    <span>Add Reporting Url</span>
+                                                    <Form.Control className='cu-input-field' size='md'
+                                                        name='addReportingUrl'
+                                                        type="text"
+                                                        placeholder="Enter Reporting Url"
+                                                        onChange={(e) => {
+                                                            const { name, value } = e.target;
+                                                            setFormValues({ ...formValues, [name]: value })
+                                                        }}
+                                                        value={formValues.addReportingUrl} />
+                                                </Form.Group>
+                                            </Row>
+
+                                            {isUpdate ? <Row className="mb-3">
+                                                <Form.Group as={Col} className='input-field-container' controlId="formLandingPage">
+                                                    <span>Landing Page</span>
+
+                                                    <div >
+
+                                                        <IconButton onClick={copyLandingPage}>
+                                                            <Tooltip title="copy landing page url" >
+                                                                <ContentCopyIcon>
+
+                                                                </ContentCopyIcon>
+                                                            </Tooltip>
+                                                        </IconButton>
+
+                                                    </div>
+                                                    <Form.Control className='cu-input-field' size='md'
+                                                        name='landingPage'
+                                                        type="text"
+
+                                                        value={landingPage}
+                                                        disabled={true} />
                                                 </Form.Group>
 
 
-                                        </Row> : <></>}
+                                            </Row> : <></>}
 
-                                        <Button variant="danger" type="button"
-                                            disabled={!(name != '' && email != '' && phone != '' && companyName != '' && zapierWebhook != '')}
-                                            style={{ minWidth: '70px' }}
-                                            onClick={() => {
-                                                isUpdate ? updateUser() : createUser()
-                                            }}>
-                                            {isLoading ? <div className="spinner-border spinner-border-sm text-light" role="status">
-                                                <span className="sr-only"></span>
-                                            </div> : isUpdate ? 'Update User' : 'Create User'}
-                                        </Button>
-                                    </Form>
+                                            <Button variant="danger" type="button"
+                                                disabled={!(name != '' && email != '' && phone != '' && companyName != '' && zapierWebhook != '')}
+                                                style={{ minWidth: '70px' }}
+                                                onClick={() => {
+                                                    isUpdate ? updateUser() : createUser()
+                                                }}>
+                                                {isLoading ? <div className="spinner-border spinner-border-sm text-light" role="status">
+                                                    <span className="sr-only"></span>
+                                                </div> : isUpdate ? 'Update User' : 'Create User'}
+                                            </Button>
+                                        </Form>
+                                    }
+
+
+
 
                                 </CardContent>
 
